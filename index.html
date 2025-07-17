@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sherlock Holmes - A Murder Mystery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             /* Background image set to book.jpg */
@@ -37,6 +40,7 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px; /* Space between images */
+            align-items: flex-start; /* Aligns items to the top */
         }
         .gallery-item {
             text-align: center;
@@ -45,6 +49,14 @@
         .gallery-item img {
             width: 100%; /* Make image fill the container */
             border: 2px solid #5c4033;
+        }
+        .sherlock-note {
+            font-family: 'Caveat', cursive;
+            font-style: italic;
+            font-size: 1.2em; /* Make it slightly larger to be legible */
+            color: #d4bf9a; /* A slightly different parchment color */
+            margin-top: 5px; /* A little space from the text above */
+            line-height: 1.2;
         }
         .nav-link {
             display: block;
@@ -64,8 +76,13 @@
     <div class="container">
         <h1>The Secret Beneath The Green</h1>
         <p>
-            Lucien Blackwood, a wealthy Victorian gentleman, invites several guests to his estate, including the famous Sherlock Holmes. The other guests to his estate are Dr. Watson, Lady Camilla, his butler Miles, his accountant Eleanor, and Henry Caldwell. However, before the dinner Lucien is found... murdered. 
-            The Blackwood Estate is awash with clues, and suspicion hangs heavy in the air. As lead detectives, it is up to you to examine the evidence, interrogate the suspects, and help Sherlock in unmasking the killer. The game is afoot!
+            You have been invited to dinner at the beautiful estates of Lord Lucien Blackwood, wealthy Victorian gentleman. Other guests include Dr. Watson, Lady Camilla, and Sir Henry Caldwell. Of course, his butler Miles and his accountant Eleanor are also in attendance. Guest of honour, though, is none other than the world-famous detective, Sherlock Holmes.
+        </p>
+        <p>
+            Then, before the dinner, Lucien is found... murdered. 
+        </p>
+        <p>
+            Now the Blackwood Estate is awash with clues, and suspicion hangs heavy in the air. As lead detectives, it is up to you to examine the evidence, interrogate the suspects, and help Sherlock in unmasking the killer. The game is afoot!
         </p>
 
         <div class="section">
@@ -74,22 +91,27 @@
                 <div class="gallery-item">
                     <img src="images/Camilla1.png" alt="Lady Camilla">
                     <p>Lady Camilla - Lucien’s cousin</p>
+                    <p class="sherlock-note">Blackwood’s cousin, resentful of Lucien’s wealth?</p>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Eleanor1.png" alt="Eleanor">
                     <p>Eleanor - Lucien's Accountant</p>
+                    <p class="sherlock-note">Loyal servant of many years, fears losing her job?</p>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Henry1.png" alt="Henry Caldwell">
-                    <p>Henry Caldwell - Renowned Historian</p>
+                    <p>Sir Henry Caldwell - Renowned Historian</p>
+                    <p class="sherlock-note">Collector of antique books, family reputation is everything</p>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Watson1.png" alt="Dr. Watson">
                     <p>Dr. Watson - Famed Physician</p>
+                    <p class="sherlock-note">First-rate doctor, second-rate assistant</p>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Miles1.png" alt="Miles">
                     <p>Miles - Lucien's Butler</p>
+                    <p class="sherlock-note">Faithful Butler, notable infirmities</p>
                 </div>
             </div>
         </div>
@@ -98,12 +120,6 @@
             <h2>Potential Murder Weapons</h2>
             <div class="gallery">
                 <!-- Add images for your weapons here, like the character examples above -->
-                <!-- Example:
-                <div class="gallery-item">
-                    <img src="images/candlestick.png" alt="A candlestick">
-                    <p>Candlestick</p>
-                </div>
-                -->
             </div>
         </div>
 
