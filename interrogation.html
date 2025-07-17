@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interrogation Room</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('images/book.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: 'Courier New', Courier, monospace;
+            color: #f0e6d2;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 30px;
+            border: 2px solid #8b4513;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+        h1, h2 {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 10px;
+            color: #d4ac6e;
+        }
+        .section {
+            margin-top: 40px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        .gallery-item {
+            text-align: center;
+            max-width: 150px;
+        }
+        .gallery-item img {
+            width: 100%;
+            border: 2px solid #5c4033;
+        }
+        .statement-button {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-top: 10px;
+            background-color: #5c4033;
+            color: #f0e6d2;
+            text-decoration: none;
+            border: 1px solid #d4ac6e;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .statement-button:hover {
+            background-color: #d4ac6e;
+            color: #000;
+        }
+        .nav-link {
+            display: block;
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 40px;
+            color: #ffdead;
+            text-decoration: none;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>The Interrogation Room</h1>
+        <p>
+            The suspects have been gathered and are waiting to be questioned. Their initial statements have been recorded for your review. Proceed with caution, detective—a liar's tongue is a serpent in the grass.
+        </p>
+
+        <div class="section">
+            <h2>Suspects</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="images/Camilla1.png" alt="Lady Camilla">
+                    <p>Lady Camilla</p>
+                    <a href="REPLACE_WITH_CAMILLA_YOUTUBE_LINK" target="_blank" class="statement-button">Initial Statement</a>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Eleanor1.png" alt="Eleanor">
+                    <p>Eleanor</p>
+                    <a href="REPLACE_WITH_ELEANOR_YOUTUBE_LINK" target="_blank" class="statement-button">Initial Statement</a>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Henry1.png" alt="Henry Caldwell">
+                    <p>Sir Henry Caldwell</p>
+                    <a href="REPLACE_WITH_HENRY_YOUTUBE_LINK" target="_blank" class="statement-button">Initial Statement</a>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Watson1.png" alt="Dr. Watson">
+                    <p>Dr. Watson</p>
+                    <a href="REPLACE_WITH_WATSON_YOUTUBE_LINK" target="_blank" class="statement-button">Initial Statement</a>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Miles1.png" alt="Miles">
+                    <p>Miles</p>
+                    <a href="REPLACE_WITH_MILES_YOUTUBE_LINK" target="_blank" class="statement-button">Initial Statement</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <a href="index.html" class="nav-link">Return to Case Overview</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
