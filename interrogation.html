@@ -17,7 +17,7 @@
             line-height: 1.6;
         }
         .container {
-            max-width: 900px;
+            max-width: 1100px; /* Widened container for more space */
             margin: 40px auto;
             background: rgba(0, 0, 0, 0.75);
             padding: 30px;
@@ -37,18 +37,18 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
+            gap: 30px; /* Increased gap */
             align-items: flex-start;
         }
         .gallery-item {
             text-align: center;
-            max-width: 150px;
+            max-width: 160px; /* Slightly wider items */
         }
         .gallery-item img {
             width: 100%;
             border: 2px solid #5c4033;
         }
-        .statement-button {
+        .statement-button, .ask-button {
             display: inline-block;
             padding: 10px 15px;
             margin-top: 10px;
@@ -58,11 +58,23 @@
             border: 1px solid #d4ac6e;
             border-radius: 5px;
             font-family: 'Courier New', Courier, monospace;
-            cursor: pointer; /* Makes it look clickable */
+            cursor: pointer;
+            width: 100%; /* Make buttons full width of gallery item */
+            box-sizing: border-box;
         }
-        .statement-button:hover {
+        .statement-button:hover, .ask-button:hover {
             background-color: #d4ac6e;
             color: #000;
+        }
+        .interrogation-input {
+            width: 100%;
+            margin-top: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+            background-color: #f0e6d2;
+            border: 1px solid #5c4033;
+            color: #000;
+            font-family: 'Courier New', Courier, monospace;
         }
         .nav-link {
             display: block;
@@ -75,15 +87,13 @@
         .nav-link:hover {
             text-decoration: underline;
         }
-
-        /* Styles for the new video player */
         #video-player-container {
-            display: none; /* Hidden by default */
+            display: none;
             margin-bottom: 30px;
         }
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             max-width: 100%;
@@ -98,7 +108,6 @@
             height: 100%;
         }
         #close-video-button {
-             /* Re-uses the statement-button style but makes it a block */
             display: block;
             width: 150px;
             margin: 15px auto 0;
@@ -110,44 +119,52 @@
     <div class="container">
         <h1>The Interrogation Room</h1>
 
-        <!-- This is the new video player area -->
         <div id="video-player-container">
             <div id="video-player"></div>
             <button id="close-video-button" class="statement-button" onclick="closeVideo()">Close Video</button>
         </div>
 
         <p>
-            The suspects have been gathered and are waiting to be questioned. Their initial statements have been recorded for your review. Proceed with caution, detective - a liar's tongue is a serpent in the grass.
+            Present your evidence to the suspects. Ask them about the objects of interest you have discovered. Be precise in your questioning.
         </p>
 
         <div class="section">
             <h2>Suspects</h2>
             <div class="gallery">
-                <!-- Buttons now call the showVideo function with the YouTube ID -->
                 <div class="gallery-item">
                     <img src="images/Camilla1.png" alt="Lady Camilla">
                     <p>Lady Camilla</p>
                     <button onclick="showVideo('WX6TpqeKXnE')" class="statement-button">Initial Statement</button>
+                    <input type="text" id="camilla-input" class="interrogation-input" placeholder="Ask about a clue...">
+                    <button onclick="askQuestion('camilla')" class="ask-button">Ask</button>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Eleanor1.png" alt="Eleanor">
                     <p>Eleanor</p>
                     <button onclick="showVideo('W7S6qDEz578')" class="statement-button">Initial Statement</button>
+                    <input type="text" id="eleanor-input" class="interrogation-input" placeholder="Ask about a clue...">
+                    <button onclick="askQuestion('eleanor')" class="ask-button">Ask</button>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Henry1.png" alt="Henry Caldwell">
                     <p>Sir Henry Caldwell</p>
                     <button onclick="showVideo('lDI4rKPFRS4')" class="statement-button">Initial Statement</button>
+                    <input type="text" id="henry-input" class="interrogation-input" placeholder="Ask about a clue...">
+                    <button onclick="askQuestion('henry')" class="ask-button">Ask</button>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Watson1.png" alt="Dr. Watson">
                     <p>Dr. Watson</p>
                     <button onclick="showVideo('PwDRE0kin04')" class="statement-button">Initial Statement</button>
+                     <input type="text" id="watson-input" class="interrogation-input" placeholder="Ask about a clue...">
+                    <button onclick="askQuestion('watson')" class="ask-button">Ask</button>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Miles1.png" alt="Miles">
                     <p>Miles</p>
                     <button onclick="showVideo('FrVEikgniU8')" class="statement-button">Initial Statement</button>
+                    <input type="text" id="miles-input" class="interrogation-input" placeholder="Ask about a clue...">
+                    <button onclick="askQuestion('miles')" class="ask-button">Ask</button>
                 </div>
             </div>
         </div>
@@ -157,31 +174,95 @@
         </div>
     </div>
 
-    <!-- This is the new JavaScript section -->
     <script>
         const videoContainer = document.getElementById('video-player-container');
         const videoPlayer = document.getElementById('video-player');
 
-        function showVideo(videoId) {
-            // Construct the YouTube embed URL with autoplay
-            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        // --- INTERROGATION DATABASE ---
+        const interrogationData = {
+            // ** IMPORTANT **: Replace the placeholder below with the YouTube ID for Sherlock's "try again" video.
+            no_match_video: 'SHERLOCK_TRY_AGAIN_VIDEO_ID', 
+
+            camilla: {
+                'arguments': 'ecdiRo3fCmY',
+                'laudanum': 'EGNvM5SCth4',
+                'ledger': 'gkyAJE6w0zA',
+                'letter': 'E0Se59bL--E',
+                'paint': 'ppQQNPmgKYo',
+                'whisky,fingerprints': 'Fm3L29c4MTA'
+            },
+            watson: {
+                'laudanum': 'oZ48-HNqmvE',
+                'laudanum,cut': '5PaKfBf_bTA',
+                'ledger': 'fs9VwQZDGkw',
+                'letter': 'FStYr_UZpOI',
+                'paint': 'udpZVjBOIHw',
+                'whisky,fingerprints': '5oVFbAD8f3g'
+            },
+            miles: {
+                'arthritis': 'hioGHHKrFiA',
+                'ledger': 'Nw97s3Pg6xs',
+                'letter': '1iVOlSDks0M',
+                'arthritis,laudanum': 'AdORxRh26HA',
+                'paint': 'o9SZoSLdyMI',
+                'whisky,fingerprints': 'sY5UQ9lpzvY'
+            },
+            henry: {
+                'arsenic': 'AUg1hR86Uvc',
+                'laudanum': '1SHOwR__Yco',
+                'ledger': 'JI7Cxg4YVt8',
+                'letter': 'K6FbTbZSIyo',
+                'lucien,letter': 'dOsJy-SG_z4',
+                'paint': 'HTY8oED1LXA',
+                'whisky,fingerprints': '4HiZKeVgKXo'
+            },
+            eleanor: {
+                'laudanum': '-QN4jdoEy10',
+                'ledger': '9XlsyyINHRs',
+                'letter': 'gIsazqWyt_k',
+                'paint': '4Fc7QEzSepI',
+                'whiskey,fingerprints': 'QKWJzf_cHZw' // Note: corrected from user input to 'whiskey'
+            }
+        };
+
+        function askQuestion(suspectName) {
+            const inputElement = document.getElementById(`${suspectName}-input`);
+            const userInput = inputElement.value.toLowerCase();
+            const suspectClues = interrogationData[suspectName];
             
-            // Set the inner HTML of the player to the iframe
+            let videoId = interrogationData.no_match_video; // Default to the "try again" video
+            let matchFound = false;
+
+            // Loop through the clues for the specific suspect
+            for (const keywords in suspectClues) {
+                const keywordArray = keywords.split(','); // Handles single and multiple keywords
+                
+                // Check if ALL keywords for this clue are in the user's input
+                const allKeywordsMatch = keywordArray.every(keyword => userInput.includes(keyword));
+
+                if (allKeywordsMatch) {
+                    videoId = suspectClues[keywords];
+                    matchFound = true;
+                    break; // Stop checking once a match is found
+                }
+            }
+            
+            showVideo(videoId);
+            inputElement.value = ''; // Clear the input box
+        }
+
+        function showVideo(videoId) {
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
             videoPlayer.innerHTML = `
                 <div class="video-wrapper">
                     <iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             `;
-            
-            // Make the video container visible
             videoContainer.style.display = 'block';
-
-            // Scroll the page to the video player so the user can see it
             videoContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function closeVideo() {
-            // Clear the player content and hide the container
             videoPlayer.innerHTML = '';
             videoContainer.style.display = 'none';
         }
