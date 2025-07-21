@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Files</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('images/book.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: 'Courier New', Courier, monospace;
+            color: #f0e6d2;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 30px;
+            border: 2px solid #8b4513;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+        h1, h2 {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 10px;
+            color: #d4ac6e;
+        }
+        .section {
+            margin-top: 40px;
+        }
+        .sherlock-note {
+            font-family: 'Caveat', cursive;
+            font-style: italic;
+            font-size: 1.2em;
+            color: #d4bf9a;
+            margin-top: 5px;
+            line-height: 1.2;
+        }
+        .nav-link {
+            display: block;
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 40px;
+            color: #ffdead;
+            text-decoration: none;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* New styles for the checklist */
+        .evidence-item {
+            display: flex;
+            align-items: flex-start; /* Aligns checkbox with the top of the text */
+            margin-bottom: 20px; /* Adds space between items */
+        }
+        .evidence-item input[type="checkbox"] {
+            margin-right: 15px;
+            margin-top: 6px; /* Fine-tunes vertical alignment */
+            flex-shrink: 0; /* Prevents checkbox from shrinking */
+        }
+        .evidence-item label {
+            cursor: pointer;
+        }
+        .evidence-term {
+            font-weight: bold;
+            color: #d4ac6e;
+            font-size: 1.1em;
+            display: block; /* Puts term on its own line */
+        }
+        .evidence-desc {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Case Files</h1>
+        <p class="sherlock-note" style="text-align: center; font-size: 1.5em;">
+            A fine summary of our findings. The truth is hidden in these details. - S.H.
+        </p>
+
+        <div class="section">
+            <h2>Evidence and Sherlock's Notes</h2>
+            <p style="text-align: center; margin-bottom: 25px;">Consider and discuss the evidence.</p>
+            
+            <div class="evidence-list">
+                <div class="evidence-item">
+                    <input type="checkbox" id="accounts-check">
+                    <label for="accounts-check">
+                        <span class="evidence-term">Accounts</span>
+                        <span class="evidence-desc">Camilla claims that Lucien was careless with his finances. Eleanor was concerned about large sums of money sent to an unknown account.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="arsenic-check">
+                    <label for="arsenic-check">
+                        <span class="evidence-term">Arsenic</span>
+                        <span class="evidence-desc">Present in the green paint found hidden in the library.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="arthritis-check">
+                    <label for="arthritis-check">
+                        <span class="evidence-term">Arthritis</span>
+                        <span class="evidence-desc">Miles the Butler has recently been suffering from severe arthritis, harming his ability to work.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="argument-check">
+                    <label for="argument-check">
+                        <span class="evidence-term">Argument</span>
+                        <span class="evidence-desc">Camilla claims she and Lucien argued about money.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="blood-check">
+                    <label for="blood-check">
+                        <span class="evidence-term">Blood</span>
+                        <span class="evidence-desc">Miles claims he cut his hand on a broken glass.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="cut-check">
+                    <label for="cut-check">
+                        <span class="evidence-term">Cut</span>
+                        <span class="evidence-desc">Miles claims he cut his hand on a broken glass.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="fingerprints-check">
+                    <label for="fingerprints-check">
+                        <span class="evidence-term">Fingerprints</span>
+                        <span class="evidence-desc">The whisky glass only has Lucien's fingerprints on it. The killer was probably wearing gloves.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="fortune-check">
+                    <label for="fortune-check">
+                        <span class="evidence-term">Fortune</span>
+                        <span class="evidence-desc">No one noted anything out of the ordinary.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="glass-check">
+                    <label for="glass-check">
+                        <span class="evidence-term">Glass</span>
+                        <span class="evidence-desc">Only Lucien's fingerprints on it.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="gloves-check">
+                    <label for="gloves-check">
+                        <span class="evidence-term">Gloves</span>
+                        <span class="evidence-desc">Miles wore gloves for handling the paint. Watson wears gloves when handling dangerous substances. I've noticed Camilla also wears gloves.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="laudanum-check">
+                    <label for="laudanum-check">
+                        <span class="evidence-term">Laudanum</span>
+                        <span class="evidence-desc">Watson noted it was missing from his bag. Who can say when or why it was taken?</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="ledger-check">
+                    <label for="ledger-check">
+                        <span class="evidence-term">Ledger</span>
+                        <span class="evidence-desc">Eleanor claims significant sums of money were going to an unknown account.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="letter-check">
+                    <label for="letter-check">
+                        <span class="evidence-term">Letter</span>
+                        <span class="evidence-desc">Henry claims he tore it up in an argument with Lucien.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="paint-check">
+                    <label for="paint-check">
+                        <span class="evidence-term">Paint</span>
+                        <span class="evidence-desc">Paris green, an arsenic-based paint.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="poison-check">
+                    <label for="poison-check">
+                        <span class="evidence-term">Poison</span>
+                        <span class="evidence-desc">Two possible sources of poison, though I think it's obvious which was used.</span>
+                    </label>
+                </div>
+                <div class="evidence-item">
+                    <input type="checkbox" id="whisky-check">
+                    <label for="whisky-check">
+                        <span class="evidence-term">Whisky</span>
+                        <span class="evidence-desc">Lucien's regular evening drink. Miles claimed he left it unattended due to his cut.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <a href="index.html" class="nav-link">Return to Case Overview</a>
+            <a href="interrogation.html" class="nav-link">Return to Interrogation Room</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
