@@ -9,19 +9,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            /* Background image set to book.jpg */
             background-image: url('images/book.jpg');
             background-size: cover;
             background-attachment: fixed;
-            
             font-family: 'Courier New', Courier, monospace;
-            color: #f0e6d2; /* A light parchment color for text */
+            color: #f0e6d2;
             line-height: 1.6;
         }
         .container {
             max-width: 900px;
-            margin: 40px auto; /* Adds some space from the top */
-            background: rgba(0, 0, 0, 0.75); /* Semi-transparent black background for readability */
+            margin: 40px auto;
+            background: rgba(0, 0, 0, 0.75);
             padding: 30px;
             border: 2px solid #8b4513;
             box-shadow: 0 0 15px rgba(0,0,0,0.5);
@@ -30,7 +28,7 @@
             text-align: center;
             border-bottom: 2px solid #8b4513;
             padding-bottom: 10px;
-            color: #d4ac6e; /* A golden-brown color for headers */
+            color: #d4ac6e;
         }
         .section {
             margin-top: 40px;
@@ -39,23 +37,23 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px; /* Space between images */
-            align-items: flex-start; /* Aligns items to the top */
+            gap: 20px;
+            align-items: flex-start;
         }
         .gallery-item {
             text-align: center;
             max-width: 150px;
         }
         .gallery-item img {
-            width: 100%; /* Make image fill the container */
+            width: 100%;
             border: 2px solid #5c4033;
         }
         .sherlock-note {
             font-family: 'Caveat', cursive;
             font-style: italic;
-            font-size: 1.2em; /* Make it slightly larger to be legible */
-            color: #d4bf9a; /* A slightly different parchment color */
-            margin-top: 5px; /* A little space from the text above */
+            font-size: 1.2em;
+            color: #d4bf9a;
+            margin-top: 5px;
             line-height: 1.2;
         }
         .nav-link {
@@ -63,11 +61,52 @@
             text-align: center;
             font-size: 1.5em;
             margin-top: 40px;
-            color: #ffdead; /* A brighter color for links */
+            color: #ffdead;
             text-decoration: none;
+            cursor: pointer;
         }
         .nav-link:hover {
             text-decoration: underline;
+        }
+
+        /* Styles for the password modal */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: 15% auto;
+            padding: 20px;
+            border: 2px solid #d4ac6e;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .modal-content input {
+            width: 80%;
+            padding: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .modal-button {
+            padding: 10px 20px;
+            border: 1px solid #d4ac6e;
+            background-color: #5c4033;
+            color: #f0e6d2;
+            cursor: pointer;
+        }
+        #password-error {
+            color: #ff4d4d;
+            display: none; /* Hidden by default */
         }
     </style>
 </head>
@@ -137,7 +176,7 @@
                 </div>
                 <div class="gallery-item">
                     <img src="images/vial.jpg" alt="A small vial of liquid">
-                    <p class="sherlock-note">"Laudanum? Known for its medicinal ... and recreational ... uses, but fatal in high doses."</p>
+                    <p class="sherlock-note">"Laudanum? Known for its medicinal ... and recreational... uses, but fatal in high doses."</p>
                 </div>
                 <div class="gallery-item">
                     <img src="images/note.jpg" alt="A torn note">
@@ -148,10 +187,57 @@
 
         <div class="section">
             <a href="interrogation.html" class="nav-link">Enter the Interrogation Room</a>
-            <a href="#" class="nav-link">[LOCKED] Access Case Files</a>
+            <a onclick="openPasswordModal()" class="nav-link">[LOCKED] Access Case Files</a>
         </div>
-
     </div>
+
+    <!-- Password Modal HTML -->
+    <div id="password-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Enter Passkey</h2>
+            <p>Sherlock has secured the case files. Enter the passkey to proceed.</p>
+            <input type="password" id="password-input" placeholder="Passkey...">
+            <p id="password-error">Incorrect passkey. Keep searching.</p>
+            <button onclick="checkPassword()" class="modal-button">Unlock</button>
+            <button onclick="closePasswordModal()" class="modal-button" style="background-color: #8b4513;">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        const passwordModal = document.getElementById('password-modal');
+        const passwordInput = document.getElementById('password-input');
+        const passwordError = document.getElementById('password-error');
+        
+        // You can change the password here
+        const correctPassword = 'elementary';
+
+        function openPasswordModal() {
+            passwordInput.value = ''; // Clear previous attempts
+            passwordError.style.display = 'none'; // Hide error message
+            passwordModal.style.display = 'block';
+        }
+
+        function closePasswordModal() {
+            passwordModal.style.display = 'none';
+        }
+
+        function checkPassword() {
+            if (passwordInput.value.toLowerCase() === correctPassword) {
+                // If correct, go to the case files page
+                window.location.href = 'case-files.html';
+            } else {
+                // If incorrect, show the error message
+                passwordError.style.display = 'block';
+            }
+        }
+
+        // Close modal if user clicks outside of the content box
+        window.onclick = function(event) {
+            if (event.target == passwordModal) {
+                closePasswordModal();
+            }
+        }
+    </script>
 
 </body>
 </html>
