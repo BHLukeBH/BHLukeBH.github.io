@@ -6,7 +6,8 @@
     <title>Sherlock Holmes - A Murder Mystery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Importing both the English and Japanese handwritten fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Yuji+Syuku&display=swap" rel="stylesheet">
     <style>
         body {
             background-image: url('images/book.jpg');
@@ -69,44 +70,42 @@
             text-decoration: underline;
         }
 
-        /* Styles for the password modal */
-        .modal-overlay {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.7);
+        /* --- Styles for Japanese Hint Tooltips --- */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
         }
-        .modal-content {
-            background-color: #1a1a1a;
-            margin: 15% auto;
-            padding: 20px;
-            border: 2px solid #d4ac6e;
-            width: 80%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-        .modal-content input {
-            width: 80%;
-            padding: 10px;
-            margin: 20px 0;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        .modal-button {
-            padding: 10px 20px;
-            border: 1px solid #d4ac6e;
-            background-color: #5c4033;
-            color: #f0e6d2;
+        .tooltip-icon {
             cursor: pointer;
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            vertical-align: middle;
+            margin-left: 4px;
         }
-        #password-error {
-            color: #ff4d4d;
-            display: none; /* Hidden by default */
+        .tooltip-text {
+            visibility: hidden; /* Hidden by default */
+            width: 200px;
+            background-color: #1c1c1c;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            border: 1px solid #d4ac6e;
+            
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px; /* Use half of the width to center */
+
+            /* Use the Japanese font */
+            font-family: 'Yuji Syuku', serif;
+            font-size: 1.2em;
+        }
+        .tooltip-text.show {
+            visibility: visible;
         }
     </style>
 </head>
@@ -115,19 +114,83 @@
     <div class="container">
         <h1>The Secret Beneath The Green</h1>
         <p>
-            You have been invited to dinner at the beautiful estates of Lord Lucien Blackwood, wealthy Victorian gentleman. Other guests include Dr. Watson, Lady Camilla, and Sir Henry Caldwell. Of course, his butler Miles and his accountant Eleanor are also in attendance. Guest of honour, though, is none other than the world-famous detective, Sherlock Holmes.
+            You have been invited to dinner at the beautiful 
+            <span class="tooltip-container">
+                estates of Lord Lucien Blackwood
+                <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                </span>
+                <span class="tooltip-text">ルシアン・ブラックウッド卿の屋敷</span>
+            </span>, 
+            wealthy Victorian gentleman. Other guests include Dr. Watson, Lady Camilla, and Sir Henry Caldwell. Of course, his 
+            <span class="tooltip-container">
+                butler
+                <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                </span>
+                <span class="tooltip-text">執事</span>
+            </span>
+            Miles and his 
+            <span class="tooltip-container">
+                Accountant
+                <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                </span>
+                <span class="tooltip-text">会計係</span>
+            </span>
+            Eleanor are also in attendance. 
+            <span class="tooltip-container">
+                Guest of honour
+                <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                </span>
+                <span class="tooltip-text">主賓</span>
+            </span>, 
+            though, is none other than the world-famous detective, Sherlock Holmes.
         </p>
         <p>
             Then, before the dinner, Lucien is found... murdered. 
         </p>
         <p>
-            Now the Blackwood Estate is awash with clues, and suspicion hangs heavy in the air. As lead detectives, it is up to you to examine the evidence, interrogate the suspects, and help Sherlock in unmasking the killer. The game is afoot!
+            Now the Blackwood Estate is awash with clues, and suspicion hangs heavy in the air. As 
+            <span class="tooltip-container">
+                lead detectives
+                <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                </span>
+                <span class="tooltip-text">主任刑事たち</span>
+            </span>, 
+            it is up to you to 
+            <span class="tooltip-container">
+                examine the evidence
+                <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                </span>
+                <span class="tooltip-text">証拠を調べる</span>
+            </span>, 
+            <span class="tooltip-container">
+                interrogate the suspects
+                <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                </span>
+                <span class="tooltip-text">容疑者を尋問する</span>
+            </span>, 
+            and help Sherlock in 
+            <span class="tooltip-container">
+                unmasking the killer
+                <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                </span>
+                <span class="tooltip-text">犯人の正体を暴く</span>
+            </span>. 
+            The game is afoot!
         </p>
 
         <p class="sherlock-note" style="text-align: center; font-size: 1.5em; margin-top: 25px;">
             I look forward to working with you - Sherlock
         </p>
 
+        <!-- The rest of the page remains the same... -->
         <div class="section">
             <h2>The Suspects</h2>
             <div class="gallery">
@@ -191,7 +254,7 @@
         </div>
     </div>
 
-    <!-- Password Modal HTML -->
+    <!-- Password Modal HTML (No changes here) -->
     <div id="password-modal" class="modal-overlay">
         <div class="modal-content">
             <h2>Enter Passkey</h2>
@@ -204,16 +267,36 @@
     </div>
 
     <script>
+        // --- Tooltip Script ---
+        function toggleTooltip(iconElement) {
+            // Find the tooltip text span that is the next sibling of the icon
+            const tooltip = iconElement.nextElementSibling;
+            // Toggle the 'show' class to make it visible or hidden
+            tooltip.classList.toggle('show');
+        }
+
+        // Close all tooltips if user clicks anywhere else on the page
+        window.addEventListener('click', function(event) {
+            // Check if the click was NOT on a tooltip icon
+            if (!event.target.closest('.tooltip-icon')) {
+                const allTooltips = document.querySelectorAll('.tooltip-text.show');
+                allTooltips.forEach(tooltip => {
+                    tooltip.classList.remove('show');
+                });
+            }
+        });
+
+
+        // --- Password Modal Script (No changes here) ---
         const passwordModal = document.getElementById('password-modal');
         const passwordInput = document.getElementById('password-input');
         const passwordError = document.getElementById('password-error');
         
-        // You can change the password here
         const correctPassword = 'elementary';
 
         function openPasswordModal() {
-            passwordInput.value = ''; // Clear previous attempts
-            passwordError.style.display = 'none'; // Hide error message
+            passwordInput.value = '';
+            passwordError.style.display = 'none';
             passwordModal.style.display = 'block';
         }
 
@@ -223,15 +306,12 @@
 
         function checkPassword() {
             if (passwordInput.value.toLowerCase() === correctPassword) {
-                // If correct, go to the case files page
                 window.location.href = 'case-files.html';
             } else {
-                // If incorrect, show the error message
                 passwordError.style.display = 'block';
             }
         }
 
-        // Close modal if user clicks outside of the content box
         window.onclick = function(event) {
             if (event.target == passwordModal) {
                 closePasswordModal();
