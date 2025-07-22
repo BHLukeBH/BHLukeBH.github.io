@@ -107,6 +107,46 @@
         .tooltip-text.show {
             visibility: visible;
         }
+        
+        /* Styles for the password modal */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: 15% auto;
+            padding: 20px;
+            border: 2px solid #d4ac6e;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .modal-content input {
+            width: 80%;
+            padding: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .modal-button {
+            padding: 10px 20px;
+            border: 1px solid #d4ac6e;
+            background-color: #5c4033;
+            color: #f0e6d2;
+            cursor: pointer;
+        }
+        #password-error {
+            color: #ff4d4d;
+            display: none; /* Hidden by default */
+        }
     </style>
 </head>
 <body>
@@ -254,7 +294,7 @@
         </div>
     </div>
 
-    <!-- Password Modal HTML (No changes here) -->
+    <!-- Password Modal HTML -->
     <div id="password-modal" class="modal-overlay">
         <div class="modal-content">
             <h2>Enter Passkey</h2>
@@ -267,33 +307,18 @@
     </div>
 
     <script>
-        // --- Tooltip Script ---
-        function toggleTooltip(iconElement) {
-            // Find the tooltip text span that is the next sibling of the icon
-            const tooltip = iconElement.nextElementSibling;
-            // Toggle the 'show' class to make it visible or hidden
-            tooltip.classList.toggle('show');
-        }
-
-        // Close all tooltips if user clicks anywhere else on the page
-        window.addEventListener('click', function(event) {
-            // Check if the click was NOT on a tooltip icon
-            if (!event.target.closest('.tooltip-icon')) {
-                const allTooltips = document.querySelectorAll('.tooltip-text.show');
-                allTooltips.forEach(tooltip => {
-                    tooltip.classList.remove('show');
-                });
-            }
-        });
-
-
-        // --- Password Modal Script (No changes here) ---
         const passwordModal = document.getElementById('password-modal');
         const passwordInput = document.getElementById('password-input');
         const passwordError = document.getElementById('password-error');
-        
         const correctPassword = 'elementary';
 
+        // --- Tooltip Script ---
+        function toggleTooltip(iconElement) {
+            const tooltip = iconElement.nextElementSibling;
+            tooltip.classList.toggle('show');
+        }
+
+        // --- Password Modal Script ---
         function openPasswordModal() {
             passwordInput.value = '';
             passwordError.style.display = 'none';
@@ -312,11 +337,22 @@
             }
         }
 
-        window.onclick = function(event) {
+        // --- Combined Click Handler ---
+        // This single function handles closing tooltips AND the password modal
+        window.addEventListener('click', function(event) {
+            // Logic for closing tooltips
+            if (!event.target.closest('.tooltip-icon')) {
+                const allTooltips = document.querySelectorAll('.tooltip-text.show');
+                allTooltips.forEach(tooltip => {
+                    tooltip.classList.remove('show');
+                });
+            }
+
+            // Logic for closing password modal when clicking the overlay
             if (event.target == passwordModal) {
                 closePasswordModal();
             }
-        }
+        });
     </script>
 
 </body>
