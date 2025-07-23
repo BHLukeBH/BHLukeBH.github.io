@@ -26,10 +26,29 @@
             box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
         h1, h2 {
-            text-align: center;
             border-bottom: 2px solid #8b4513;
             padding-bottom: 10px;
             color: #d4ac6e;
+        }
+        /* New layout containers */
+        .title-container, .paragraph-container, .heading-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+        .title-container h1, .heading-container h2 {
+             flex-grow: 1;
+             text-align: center;
+             border-bottom: none; /* Removed border from h1/h2 to use container's border */
+             padding-bottom: 0;
+        }
+        .title-container, .heading-container {
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 10px;
+        }
+        .paragraph-container p {
+            margin: 0;
         }
         .section {
             margin-top: 40px;
@@ -107,19 +126,37 @@
         /* --- Styles for Audio Icons --- */
         .audio-icon {
             cursor: pointer;
-            display: inline-block;
-            width: 1.2em;
-            height: 1.2em;
-            vertical-align: middle;
-            margin-left: 8px;
-            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border: 1px solid #d4ac6e;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.3);
+            transition: all 0.2s;
+            flex-shrink: 0; /* Prevents icon from shrinking */
+        }
+        .audio-icon svg {
+            width: 20px;
+            height: 20px;
         }
         .audio-icon:hover {
             transform: scale(1.1);
+            background-color: rgba(212, 172, 110, 0.3);
+            filter: drop-shadow(0 0 5px #d4ac6e);
         }
         .audio-icon.playing {
-            /* Add a subtle glow when playing */
-            filter: drop-shadow(0 0 5px #d4ac6e);
+            background-color: rgba(212, 172, 110, 0.5);
+            filter: drop-shadow(0 0 8px #ffdead);
+        }
+        .paragraph-container .audio-icon {
+            width: 40px;
+            height: 40px;
+        }
+        .paragraph-container .audio-icon svg {
+            width: 24px;
+            height: 24px;
         }
         
         /* Styles for the password modal */
@@ -166,103 +203,112 @@
 <body>
 
     <div class="container">
-        <h1>The Secret Beneath The Green
+        <div class="title-container">
             <span class="audio-icon" onclick="playAudio('audio/sherlockintro.mp3', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M12.5,2A9.5,9.5,0,1,0,22,11.5,9.5,9.5,0,0,0,12.5,2ZM12.5,20A8.5,8.5,0,1,1,21,11.5,8.5,8.5,0,0,1,12.5,20Z"/><path d="M16,10.25a.74.74,0,0,0-.53-.22H10.83L8.19,7.39a.75.75,0,0,0-1.06,1.06l1.5,1.5A3.76,3.76,0,0,0,7,13.75a3.75,3.75,0,0,0,7.5,0,.75.75,0,0,0-1.5,0,2.25,2.25,0,0,1-4.5,0,2.2,2.2,0,0,1,.47-1.38L10.2,11h5.27a.75.75,0,0,0,.53-1.28Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M18.8,3.3C18.4,3.1,18,3,17.6,3c-1.9,0-3.4,1.5-3.4,3.4v5.8c0,0.9-0.7,1.6-1.6,1.6s-1.6-0.7-1.6-1.6V6c0-2.2-1.8-4-4-4S3,3.8,3,6v6.5c0,3,2.5,5.5,5.5,5.5c2.8,0,5.1-2.1,5.4-4.8l0.3-2.5c0.1-0.6,0.6-1,1.2-1h1.5c0.6,0,1-0.4,1-1V4.3C20,3.9,19.5,3.1,18.8,3.3z"/></svg>
             </span>
+            <h1>The Secret Beneath The Green</h1>
             <span class="audio-icon" onclick="playAudio('audio/Watson1.mp3', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M12.5,2A9.5,9.5,0,1,0,22,11.5,9.5,9.5,0,0,0,12.5,2ZM12.5,20A8.5,8.5,0,1,1,21,11.5,8.5,8.5,0,0,1,12.5,20Z"/><path d="M16,10.25a.74.74,0,0,0-.53-.22H10.83L8.19,7.39a.75.75,0,0,0-1.06,1.06l1.5,1.5A3.76,3.76,0,0,0,7,13.75a3.75,3.75,0,0,0,7.5,0,.75.75,0,0,0-1.5,0,2.25,2.25,0,0,1-4.5,0,2.2,2.2,0,0,1,.47-1.38L10.2,11h5.27a.75.75,0,0,0,.53-1.28Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M18.8,3.3C18.4,3.1,18,3,17.6,3c-1.9,0-3.4,1.5-3.4,3.4v5.8c0,0.9-0.7,1.6-1.6,1.6s-1.6-0.7-1.6-1.6V6c0-2.2-1.8-4-4-4S3,3.8,3,6v6.5c0,3,2.5,5.5,5.5,5.5c2.8,0,5.1-2.1,5.4-4.8l0.3-2.5c0.1-0.6,0.6-1,1.2-1h1.5c0.6,0,1-0.4,1-1V4.3C20,3.9,19.5,3.1,18.8,3.3z"/></svg>
             </span>
-        </h1>
-        <p>
-            You have been invited to dinner at the beautiful 
-            <span class="tooltip-container">
-                estates of Lord Lucien Blackwood
-                <span class="tooltip-icon" onclick="toggleTooltip(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+        </div>
+        
+        <div class="paragraph-container">
+            <p>
+                You have been invited to dinner at the beautiful 
+                <span class="tooltip-container">
+                    estates of Lord Lucien Blackwood
+                    <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                    </span>
+                    <span class="tooltip-text">ルシアン・ブラックウッド卿の屋敷</span>
+                </span>, 
+                wealthy Victorian gentleman. Other guests include Dr. Watson, Lady Camilla, and Henry Caldwell. Of course, his 
+                <span class="tooltip-container">
+                    butler
+                    <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                    </span>
+                    <span class="tooltip-text">執事</span>
                 </span>
-                <span class="tooltip-text">ルシアン・ブラックウッド卿の屋敷</span>
-            </span>, 
-            wealthy Victorian gentleman. Other guests include Dr. Watson, Lady Camilla, and Henry Caldwell. Of course, his 
-            <span class="tooltip-container">
-                butler
-                <span class="tooltip-icon" onclick="toggleTooltip(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                Miles and his 
+                <span class="tooltip-container">
+                    Accountant
+                    <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                    </span>
+                    <span class="tooltip-text">会計係</span>
                 </span>
-                <span class="tooltip-text">執事</span>
-            </span>
-            Miles and his 
-            <span class="tooltip-container">
-                Accountant
-                <span class="tooltip-icon" onclick="toggleTooltip(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
-                </span>
-                <span class="tooltip-text">会計係</span>
-            </span>
-            Eleanor are also in attendance. 
-            <span class="tooltip-container">
-                Guest of honour
-                <span class="tooltip-icon" onclick="toggleTooltip(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
-                </span>
-                <span class="tooltip-text">主賓</span>
-            </span>, 
-            though, is none other than the world-famous detective, Sherlock Holmes.
+                Eleanor are also in attendance. 
+                <span class="tooltip-container">
+                    Guest of honour
+                    <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                    </span>
+                    <span class="tooltip-text">主賓</span>
+                </span>, 
+                though, is none other than the world-famous detective, Sherlock Holmes.
+            </p>
             <span class="audio-icon" onclick="playAudio('audio/Watson2.mp3', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M12.5,2A9.5,9.5,0,1,0,22,11.5,9.5,9.5,0,0,0,12.5,2ZM12.5,20A8.5,8.5,0,1,1,21,11.5,8.5,8.5,0,0,1,12.5,20Z"/><path d="M16,10.25a.74.74,0,0,0-.53-.22H10.83L8.19,7.39a.75.75,0,0,0-1.06,1.06l1.5,1.5A3.76,3.76,0,0,0,7,13.75a3.75,3.75,0,0,0,7.5,0,.75.75,0,0,0-1.5,0,2.25,2.25,0,0,1-4.5,0,2.2,2.2,0,0,1,.47-1.38L10.2,11h5.27a.75.75,0,0,0,.53-1.28Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M18.8,3.3C18.4,3.1,18,3,17.6,3c-1.9,0-3.4,1.5-3.4,3.4v5.8c0,0.9-0.7,1.6-1.6,1.6s-1.6-0.7-1.6-1.6V6c0-2.2-1.8-4-4-4S3,3.8,3,6v6.5c0,3,2.5,5.5,5.5,5.5c2.8,0,5.1-2.1,5.4-4.8l0.3-2.5c0.1-0.6,0.6-1,1.2-1h1.5c0.6,0,1-0.4,1-1V4.3C20,3.9,19.5,3.1,18.8,3.3z"/></svg>
             </span>
-        </p>
+        </div>
+        
         <p>
             Then, before the dinner, Lucien is found... murdered. 
         </p>
-        <p>
-            Now the Blackwood Estate is awash with clues, and suspicion hangs heavy in the air. As 
-            <span class="tooltip-container">
-                lead detectives
-                <span class="tooltip-icon" onclick="toggleTooltip(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
-                </span>
-                <span class="tooltip-text">主任刑事たち</span>
-            </span>, 
-            it is up to you to 
-            <span class="tooltip-container">
-                examine the evidence
-                <span class="tooltip-icon" onclick="toggleTooltip(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
-                </span>
-                <span class="tooltip-text">証拠を調べる</span>
-            </span>, 
-            <span class="tooltip-container">
-                interrogate the suspects
-                <span class="tooltip-icon" onclick="toggleTooltip(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
-                </span>
-                <span class="tooltip-text">容疑者を尋問する</span>
-            </span>, 
-            and help Sherlock in 
-            <span class="tooltip-container">
-                unmasking the killer
-                <span class="tooltip-icon" onclick="toggleTooltip(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
-                </span>
-                <span class="tooltip-text">犯人の正体を暴く</span>
-            </span>. 
-            The game is afoot!
+        
+        <div class="paragraph-container">
+            <p>
+                Now the Blackwood Estate is awash with clues, and suspicion hangs heavy in the air. As 
+                <span class="tooltip-container">
+                    lead detectives
+                    <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                    </span>
+                    <span class="tooltip-text">主任刑事たち</span>
+                </span>, 
+                it is up to you to 
+                <span class="tooltip-container">
+                    examine the evidence
+                    <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                    </span>
+                    <span class="tooltip-text">証拠を調べる</span>
+                </span>, 
+                <span class="tooltip-container">
+                    interrogate the suspects
+                    <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                    </span>
+                    <span class="tooltip-text">容疑者を尋問する</span>
+                </span>, 
+                and help Sherlock in 
+                <span class="tooltip-container">
+                    unmasking the killer
+                    <span class="tooltip-icon" onclick="toggleTooltip(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+                    </span>
+                    <span class="tooltip-text">犯人の正体を暴く</span>
+                </span>. 
+                The game is afoot!
+            </p>
             <span class="audio-icon" onclick="playAudio('audio/Watson3.mp3', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M12.5,2A9.5,9.5,0,1,0,22,11.5,9.5,9.5,0,0,0,12.5,2ZM12.5,20A8.5,8.5,0,1,1,21,11.5,8.5,8.5,0,0,1,12.5,20Z"/><path d="M16,10.25a.74.74,0,0,0-.53-.22H10.83L8.19,7.39a.75.75,0,0,0-1.06,1.06l1.5,1.5A3.76,3.76,0,0,0,7,13.75a3.75,3.75,0,0,0,7.5,0,.75.75,0,0,0-1.5,0,2.25,2.25,0,0,1-4.5,0,2.2,2.2,0,0,1,.47-1.38L10.2,11h5.27a.75.75,0,0,0,.53-1.28Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M18.8,3.3C18.4,3.1,18,3,17.6,3c-1.9,0-3.4,1.5-3.4,3.4v5.8c0,0.9-0.7,1.6-1.6,1.6s-1.6-0.7-1.6-1.6V6c0-2.2-1.8-4-4-4S3,3.8,3,6v6.5c0,3,2.5,5.5,5.5,5.5c2.8,0,5.1-2.1,5.4-4.8l0.3-2.5c0.1-0.6,0.6-1,1.2-1h1.5c0.6,0,1-0.4,1-1V4.3C20,3.9,19.5,3.1,18.8,3.3z"/></svg>
             </span>
-        </p>
-
+        </div>
+        
         <p class="sherlock-note" style="text-align: center; font-size: 1.5em; margin-top: 25px;">
             I look forward to working with you - Sherlock
         </p>
 
         <div class="section">
-            <h2>The Suspects
+            <div class="heading-container">
+                <h2>The Suspects</h2>
                 <span class="audio-icon" onclick="playAudio('audio/Watson4suspects.mp3', this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M12.5,2A9.5,9.5,0,1,0,22,11.5,9.5,9.5,0,0,0,12.5,2ZM12.5,20A8.5,8.5,0,1,1,21,11.5,8.5,8.5,0,0,1,12.5,20Z"/><path d="M16,10.25a.74.74,0,0,0-.53-.22H10.83L8.19,7.39a.75.75,0,0,0-1.06,1.06l1.5,1.5A3.76,3.76,0,0,0,7,13.75a3.75,3.75,0,0,0,7.5,0,.75.75,0,0,0-1.5,0,2.25,2.25,0,0,1-4.5,0,2.2,2.2,0,0,1,.47-1.38L10.2,11h5.27a.75.75,0,0,0,.53-1.28Z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M18.8,3.3C18.4,3.1,18,3,17.6,3c-1.9,0-3.4,1.5-3.4,3.4v5.8c0,0.9-0.7,1.6-1.6,1.6s-1.6-0.7-1.6-1.6V6c0-2.2-1.8-4-4-4S3,3.8,3,6v6.5c0,3,2.5,5.5,5.5,5.5c2.8,0,5.1-2.1,5.4-4.8l0.3-2.5c0.1-0.6,0.6-1,1.2-1h1.5c0.6,0,1-0.4,1-1V4.3C20,3.9,19.5,3.1,18.8,3.3z"/></svg>
                 </span>
-            </h2>
+            </div>
             <div class="gallery">
                 <div class="gallery-item">
                     <img src="images/Camilla1.png" alt="Lady Camilla">
@@ -350,7 +396,6 @@
                 }
             }
 
-            // If the clicked icon was the one already playing, just stop it.
             if (currentIcon === iconElement) {
                 currentAudio = null;
                 currentIcon = null;
@@ -402,7 +447,6 @@
 
         // --- Combined Click Handler ---
         window.addEventListener('click', function(event) {
-            // Logic for closing tooltips
             if (!event.target.closest('.tooltip-icon')) {
                 const allTooltips = document.querySelectorAll('.tooltip-text.show');
                 allTooltips.forEach(tooltip => {
@@ -410,7 +454,6 @@
                 });
             }
 
-            // Logic for closing password modal when clicking the overlay
             if (event.target == passwordModal) {
                 closePasswordModal();
             }
