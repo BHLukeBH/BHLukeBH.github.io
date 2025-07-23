@@ -138,8 +138,9 @@
             flex-shrink: 0; /* Prevents icon from shrinking */
         }
         .audio-icon svg {
-            width: 20px;
-            height: 20px;
+            width: 18px; /* Adjusted for play button shape */
+            height: 18px;
+            margin-left: 3px; /* Nudges triangle to be centered */
         }
         .audio-icon:hover {
             transform: scale(1.1);
@@ -155,8 +156,8 @@
             height: 40px;
         }
         .paragraph-container .audio-icon svg {
-            width: 24px;
-            height: 24px;
+            width: 22px; /* Adjusted for play button shape */
+            height: 22px;
         }
         
         /* Styles for the password modal */
@@ -205,11 +206,11 @@
     <div class="container">
         <div class="title-container">
             <span class="audio-icon" onclick="playAudio('audio/sherlockintro.mp3', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M18.8,3.3C18.4,3.1,18,3,17.6,3c-1.9,0-3.4,1.5-3.4,3.4v5.8c0,0.9-0.7,1.6-1.6,1.6s-1.6-0.7-1.6-1.6V6c0-2.2-1.8-4-4-4S3,3.8,3,6v6.5c0,3,2.5,5.5,5.5,5.5c2.8,0,5.1-2.1,5.4-4.8l0.3-2.5c0.1-0.6,0.6-1,1.2-1h1.5c0.6,0,1-0.4,1-1V4.3C20,3.9,19.5,3.1,18.8,3.3z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M7 6v12l10-6z"></path></svg>
             </span>
             <h1>The Secret Beneath The Green</h1>
             <span class="audio-icon" onclick="playAudio('audio/Watson1.mp3', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M18.8,3.3C18.4,3.1,18,3,17.6,3c-1.9,0-3.4,1.5-3.4,3.4v5.8c0,0.9-0.7,1.6-1.6,1.6s-1.6-0.7-1.6-1.6V6c0-2.2-1.8-4-4-4S3,3.8,3,6v6.5c0,3,2.5,5.5,5.5,5.5c2.8,0,5.1-2.1,5.4-4.8l0.3-2.5c0.1-0.6,0.6-1,1.2-1h1.5c0.6,0,1-0.4,1-1V4.3C20,3.9,19.5,3.1,18.8,3.3z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M7 6v12l10-6z"></path></svg>
             </span>
         </div>
         
@@ -250,7 +251,7 @@
                 though, is none other than the world-famous detective, Sherlock Holmes.
             </p>
             <span class="audio-icon" onclick="playAudio('audio/Watson2.mp3', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M18.8,3.3C18.4,3.1,18,3,17.6,3c-1.9,0-3.4,1.5-3.4,3.4v5.8c0,0.9-0.7,1.6-1.6,1.6s-1.6-0.7-1.6-1.6V6c0-2.2-1.8-4-4-4S3,3.8,3,6v6.5c0,3,2.5,5.5,5.5,5.5c2.8,0,5.1-2.1,5.4-4.8l0.3-2.5c0.1-0.6,0.6-1,1.2-1h1.5c0.6,0,1-0.4,1-1V4.3C20,3.9,19.5,3.1,18.8,3.3z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M7 6v12l10-6z"></path></svg>
             </span>
         </div>
         
@@ -294,7 +295,7 @@
                 The game is afoot!
             </p>
             <span class="audio-icon" onclick="playAudio('audio/Watson3.mp3', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M18.8,3.3C18.4,3.1,18,3,17.6,3c-1.9,0-3.4,1.5-3.4,3.4v5.8c0,0.9-0.7,1.6-1.6,1.6s-1.6-0.7-1.6-1.6V6c0-2.2-1.8-4-4-4S3,3.8,3,6v6.5c0,3,2.5,5.5,5.5,5.5c2.8,0,5.1-2.1,5.4-4.8l0.3-2.5c0.1-0.6,0.6-1,1.2-1h1.5c0.6,0,1-0.4,1-1V4.3C20,3.9,19.5,3.1,18.8,3.3z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M7 6v12l10-6z"></path></svg>
             </span>
         </div>
         
@@ -306,7 +307,7 @@
             <div class="heading-container">
                 <h2>The Suspects</h2>
                 <span class="audio-icon" onclick="playAudio('audio/Watson4suspects.mp3', this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M18.8,3.3C18.4,3.1,18,3,17.6,3c-1.9,0-3.4,1.5-3.4,3.4v5.8c0,0.9-0.7,1.6-1.6,1.6s-1.6-0.7-1.6-1.6V6c0-2.2-1.8-4-4-4S3,3.8,3,6v6.5c0,3,2.5,5.5,5.5,5.5c2.8,0,5.1-2.1,5.4-4.8l0.3-2.5c0.1-0.6,0.6-1,1.2-1h1.5c0.6,0,1-0.4,1-1V4.3C20,3.9,19.5,3.1,18.8,3.3z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4ac6e"><path d="M7 6v12l10-6z"></path></svg>
                 </span>
             </div>
             <div class="gallery">
