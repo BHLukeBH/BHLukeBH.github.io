@@ -6,6 +6,7 @@
     <title>Sherlock Holmes - A Murder Mystery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importing both the English and Japanese handwritten fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Yuji+Syuku&display=swap" rel="stylesheet">
     <style>
         body {
@@ -28,25 +29,20 @@
             border-bottom: 2px solid #8b4513;
             padding-bottom: 10px;
             color: #d4ac6e;
+            text-align: center;
         }
-        .title-container, .paragraph-container, .heading-container {
+        .title-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-        }
-        .title-container h1, .heading-container h2 {
-             flex-grow: 1;
-             text-align: center;
-             border-bottom: none;
-             padding-bottom: 0;
-        }
-        .title-container, .heading-container {
             border-bottom: 2px solid #8b4513;
             padding-bottom: 10px;
         }
-        .paragraph-container p {
-            margin: 0;
+        .title-container h1 {
+             flex-grow: 1;
+             border-bottom: none;
+             padding-bottom: 0;
         }
         .section {
             margin-top: 40px;
@@ -131,7 +127,7 @@
             width: 40px;
             height: 40px;
             border: 1px solid #d4ac6e;
-            border-radius: 50%;
+            border-radius: 8px; /* Changed from 50% to create a rounded square */
             background-color: rgba(0,0,0,0.3);
             transition: all 0.2s;
             flex-shrink: 0;
@@ -141,6 +137,7 @@
         .audio-icon img {
             width: 100%;
             height: auto;
+            border-radius: 4px; /* Optional: slightly rounds the image corners too */
         }
         .audio-icon:hover {
             transform: scale(1.1);
@@ -156,7 +153,14 @@
             margin-top: 20px;
         }
         .centered-audio-icon .audio-icon {
-            display: inline-flex; /* Allows centering of the icon itself */
+            display: inline-flex;
+        }
+        .right-aligned-audio-icon {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .right-aligned-audio-icon .audio-icon {
+            display: inline-flex;
         }
         
         /* Styles for the password modal */
@@ -246,9 +250,7 @@
         </div>
 
         <div class="section">
-            <div class="heading-container">
-                <h2>The Suspects</h2>
-            </div>
+            <h2>The Suspects</h2>
             <div class="gallery">
                 <div class="gallery-item">
                     <img src="images/Camilla1.png" alt="Lady Camilla">
@@ -275,6 +277,11 @@
                     <p>Miles - Lucien's Butler</p>
                     <p class="sherlock-note">Faithful Butler, notable infirmities</p>
                 </div>
+            </div>
+            <div class="right-aligned-audio-icon">
+                <span class="audio-icon" onclick="playAudio('audio/Watson4suspects.mp3', this)">
+                    <img src="images/audiologicon.png" alt="Play Watson's audio log about the suspects">
+                </span>
             </div>
         </div>
 
@@ -310,6 +317,7 @@
         </div>
     </div>
 
+    <!-- Password Modal HTML -->
     <div id="password-modal" class="modal-overlay">
         <div class="modal-content">
             <h2>Enter Passkey</h2>
