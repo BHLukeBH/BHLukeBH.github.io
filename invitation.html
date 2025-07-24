@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Invitation</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .content-wrapper {
+            text-align: center;
+        }
+        #invitation-image {
+            max-width: 90vw;
+            max-height: 70vh;
+            border: 2px solid #8b4513;
+            box-shadow: 0 0 20px rgba(0,0,0,0.7);
+        }
+        .audio-icon {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border: 1px solid #d4ac6e;
+            border-radius: 8px;
+            background-color: #f0e6d2;
+            transition: all 0.2s;
+            margin-top: 20px;
+        }
+        .audio-icon img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .audio-icon:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 5px #d4ac6e);
+        }
+        .audio-icon.playing {
+            border-color: #ffdead;
+            filter: drop-shadow(0 0 8px #ffdead);
+        }
+        .enter-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #5c4033;
+            color: #f0e6d2;
+            border: 1px solid #d4ac6e;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+        }
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: 15% auto;
+            padding: 20px;
+            border: 2px solid #d4ac6e;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            color: #f0e6d2;
+        }
+        .modal-content input {
+            width: 80%;
+            padding: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .modal-button {
+            padding: 10px 20px;
+            border: 1px solid #d4ac6e;
+            background-color: #5c4033;
+            color: #f0e6d2;
+            cursor: pointer;
+        }
+        #password-error {
+            color: #ff4d4d;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-wrapper">
+        <img id="invitation-image" src="images/invite.jpg" alt="An invitation to dinner at the estates of Lord Lucien Blackwood.">
+        <br>
+        <span class="audio-icon" onclick="playAudio('audio/Sherlock1.mp3', this)">
+            <img src="images/audiologicon.png" alt="Play audio log">
+        </span>
+        <br>
+        <button class="enter-button" onclick="openPasswordModal()">The Investigation Begins...</button>
+    </div>
+
+    <!-- Password Modal HTML -->
+    <div id="password-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Enter Passkey</h2>
+            <p>You have been informed of the murder. Enter the passkey provided to begin the investigation.</p>
+            <input type="password" id="password-input" placeholder="Passkey...">
+            <p id="password-error">Incorrect passkey.</p>
+            <button onclick="checkPassword()" class="modal-button">Proceed</button>
+            <button onclick="closePasswordModal()" class="modal-button" style="background-color: #8b4513;">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        let currentAudio = null;
+        let currentIcon = null;
+
+        function playAudio(audioSrc, iconElement) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                if (currentIcon) {
+                    currentIcon.classList.remove('playing');
+                }
+            }
+            if (currentIcon === iconElement) {
+                currentAudio = null;
+                currentIcon = null;
+                return;
+            }
+            currentAudio = new Audio(audioSrc);
+            currentIcon = iconElement;
+            currentAudio.play();
+            iconElement.classList.add('playing');
+            currentAudio.onended = function() {
+                iconElement.classList.remove('playing');
+                currentAudio = null;
+                currentIcon = null;
+            };
+        }
+
+        const passwordModal = document.getElementById('password-modal');
+        const passwordInput = document.getElementById('password-input');
+        const passwordError = document.getElementById('password-error');
+        
+        function openPasswordModal() {
+            passwordInput.value = '';
+            passwordError.style.display = 'none';
+            passwordModal.style.display = 'block';
+        }
+
+        function closePasswordModal() {
+            passwordModal.style.display = 'none';
+        }
+
+        function checkPassword() {
+            // You can set the password for the investigation here
+            const correctPassword = 'murder'; // Example password
+            if (passwordInput.value.toLowerCase() === correctPassword) {
+                // This now correctly links to your main investigation page
+                window.location.href = 'index.html';
+            } else {
+                passwordError.style.display = 'block';
+            }
+        }
+
+        window.onclick = function(event) {
+            if (event.target == passwordModal) {
+                closePasswordModal();
+            }
+        }
+    </script>
+
+</body>
+</html>
