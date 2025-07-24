@@ -128,7 +128,7 @@
             height: 40px;
             border: 1px solid #d4ac6e;
             border-radius: 8px;
-            background-color: #f0e6d2; /* Changed to match icon background */
+            background-color: #f0e6d2;
             transition: all 0.2s;
             flex-shrink: 0;
             box-sizing: border-box;
@@ -136,7 +136,7 @@
         .audio-icon img {
             width: 100%;
             height: auto;
-            border-radius: 8px; /* Match the container's rounding */
+            border-radius: 8px;
         }
         .audio-icon:hover {
             transform: scale(1.1);
@@ -207,7 +207,7 @@
     <div class="container">
         <div class="title-container">
             <span class="audio-icon" onclick="playAudio('audio/sherlockintro.mp3', this)">
-                <img src="images/audiologicon.png" alt="Play audio log">
+                <img src="images/deerstalker.jpg" alt="Play Sherlock's audio log">
             </span>
             <h1>The Secret Beneath The Green</h1>
         </div>
@@ -395,7 +395,7 @@
 
         function checkPassword() {
             if (passwordInput.value.toLowerCase() === correctPassword) {
-                window.location.href = 'case-files.html';
+                window.location.href = 'index.html';
             } else {
                 passwordError.style.display = 'block';
             }
