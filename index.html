@@ -127,25 +127,23 @@
             width: 40px;
             height: 40px;
             border: 1px solid #d4ac6e;
-            border-radius: 8px; /* Changed from 50% to create a rounded square */
-            background-color: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            background-color: #f0e6d2; /* Changed to match icon background */
             transition: all 0.2s;
             flex-shrink: 0;
-            padding: 5px;
             box-sizing: border-box;
         }
         .audio-icon img {
             width: 100%;
             height: auto;
-            border-radius: 4px; /* Optional: slightly rounds the image corners too */
+            border-radius: 8px; /* Match the container's rounding */
         }
         .audio-icon:hover {
             transform: scale(1.1);
-            background-color: rgba(212, 172, 110, 0.3);
             filter: drop-shadow(0 0 5px #d4ac6e);
         }
         .audio-icon.playing {
-            background-color: rgba(212, 172, 110, 0.5);
+            border-color: #ffdead;
             filter: drop-shadow(0 0 8px #ffdead);
         }
         .centered-audio-icon {
