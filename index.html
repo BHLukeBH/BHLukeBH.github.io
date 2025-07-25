@@ -234,11 +234,10 @@
         }
 
         function checkPassword() {
-            // You can set the password for the investigation here
-            const correctPassword = 'murder'; // Example password
+            const correctPassword = 'murder';
             if (passwordInput.value.toLowerCase() === correctPassword) {
-                // This now correctly links to your main investigation page
-                window.location.href = 'index.html';
+                // **LINK UPDATED HERE**
+                window.location.href = 'investigation.html';
             } else {
                 passwordError.style.display = 'block';
             }
