@@ -370,13 +370,11 @@
             const tooltip = hintElement.nextElementSibling;
             const isCurrentlyShown = tooltip.classList.contains('show');
 
-            // Close all other open tooltips
             const allTooltips = document.querySelectorAll('.tooltip-text.show');
             allTooltips.forEach(tt => {
                 tt.classList.remove('show');
             });
 
-            // If the clicked tooltip was not already shown, show it now.
             if (!isCurrentlyShown) {
                 tooltip.classList.add('show');
             }
@@ -395,7 +393,8 @@
 
         function checkPassword() {
             if (passwordInput.value.toLowerCase() === correctPassword) {
-                window.location.href = 'index.html';
+                // **LINK UPDATED HERE**
+                window.location.href = 'case-files.html';
             } else {
                 passwordError.style.display = 'block';
             }
@@ -403,7 +402,6 @@
 
         // --- Combined Click Handler ---
         window.addEventListener('click', function(event) {
-            // Logic for closing tooltips
             if (!event.target.classList.contains('clickable-hint')) {
                 const allTooltips = document.querySelectorAll('.tooltip-text.show');
                 allTooltips.forEach(tooltip => {
@@ -411,7 +409,6 @@
                 });
             }
 
-            // Logic for closing password modal when clicking the overlay
             if (event.target == passwordModal) {
                 closePasswordModal();
             }
