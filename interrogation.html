@@ -170,7 +170,6 @@
         </div>
 
         <div class="section">
-            <!-- **LINK UPDATED HERE** -->
             <a href="investigation.html" class="nav-link">Return to Case Overview</a>
         </div>
     </div>
@@ -180,7 +179,7 @@
         const videoPlayer = document.getElementById('video-player');
 
         const interrogationData = {
-            no_match_video: 'SHERLOCK_TRY_AGAIN_VIDEO_ID', 
+            no_match_videos: ['faAJUygW70Q', 'vYKVGRcMgPg', 'TOCKmqqHkL8', 'UEBJHwwKXa4'], 
             camilla: {
                 'arguments': 'ecdiRo3fCmY',
                 'laudanum': 'EGNvM5SCth4',
@@ -228,8 +227,7 @@
             const userInput = inputElement.value.toLowerCase();
             const suspectClues = interrogationData[suspectName];
             
-            let videoId = interrogationData.no_match_video;
-            let matchFound = false;
+            let videoId = null;
 
             for (const keywords in suspectClues) {
                 const keywordArray = keywords.split(',');
@@ -237,11 +235,16 @@
 
                 if (allKeywordsMatch) {
                     videoId = suspectClues[keywords];
-                    matchFound = true;
                     break;
                 }
             }
             
+            if (!videoId) {
+                const noMatchVideos = interrogationData.no_match_videos;
+                const randomIndex = Math.floor(Math.random() * noMatchVideos.length);
+                videoId = noMatchVideos[randomIndex];
+            }
+
             showVideo(videoId);
             inputElement.value = '';
         }
@@ -265,3 +268,4 @@
 
 </body>
 </html>
+
