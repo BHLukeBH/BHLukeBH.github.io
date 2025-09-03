@@ -181,44 +181,44 @@
         const interrogationData = {
             no_match_videos: ['faAJUygW70Q', 'vYKVGRcMgPg', 'TOCKmqqHkL8', 'UEBJHwwKXa4'], 
             camilla: {
-                'arguments': 'ecdiRo3fCmY',
+                'whisky,fingerprint': 'Fm3L29c4MTA',
+                'argument': 'ecdiRo3fCmY',
                 'laudanum': 'EGNvM5SCth4',
                 'ledger': 'gkyAJE6w0zA',
                 'letter': 'E0Se59bL--E',
-                'paint': 'ppQQNPmgKYo',
-                'whisky,fingerprints': 'Fm3L29c4MTA'
+                'paint': 'ppQQNPmgKYo'
             },
             watson: {
-                'laudanum': 'oZ48-HNqmvE',
                 'laudanum,cut': '5PaKfBf_bTA',
+                'whisky,fingerprint': '5oVFbAD8f3g',
+                'laudanum': 'oZ48-HNqmvE',
                 'ledger': 'fs9VwQZDGkw',
                 'letter': 'FStYr_UZpOI',
-                'paint': 'udpZVjBOIHw',
-                'whisky,fingerprints': '5oVFbAD8f3g'
+                'paint': 'udpZVjBOIHw'
             },
             miles: {
+                'arthritis,laudanum': 'AdORxRh26HA',
+                'whisky,fingerprint': 'sY5UQ9lpzvY',
                 'arthritis': 'hioGHHKrFiA',
                 'ledger': 'Nw97s3Pg6xs',
                 'letter': '1iVOlSDks0M',
-                'arthritis,laudanum': 'AdORxRh26HA',
-                'paint': 'o9SZoSLdyMI',
-                'whisky,fingerprints': 'sY5UQ9lpzvY'
+                'paint': 'o9SZoSLdyMI'
             },
             henry: {
+                'lucien,letter': 'dOsJy-SG_z4',
+                'whisky,fingerprint': '4HiZKeVgKXo',
                 'arsenic': 'AUg1hR86Uvc',
                 'laudanum': '1SHOwR__Yco',
                 'ledger': 'JI7Cxg4YVt8',
                 'letter': 'K6FbTbZSIyo',
-                'lucien,letter': 'dOsJy-SG_z4',
-                'paint': 'HTY8oED1LXA',
-                'whisky,fingerprints': '4HiZKeVgKXo'
+                'paint': 'HTY8oED1LXA'
             },
             eleanor: {
+                'whisky,fingerprint': 'QKWJzf_cHZw',
                 'laudanum': '-QN4jdoEy10',
                 'ledger': '9XlsyyINHRs',
                 'letter': 'gIsazqWyt_k',
-                'paint': '4Fc7QEzSepI',
-                'whisky,fingerprints': 'QKWJzf_cHZw'
+                'paint': '4Fc7QEzSepI'
             }
         };
 
@@ -231,7 +231,14 @@
 
             for (const keywords in suspectClues) {
                 const keywordArray = keywords.split(',');
-                const allKeywordsMatch = keywordArray.every(keyword => userInput.includes(keyword));
+                const allKeywordsMatch = keywordArray.every(keyword => {
+                    const trimmedKeyword = keyword.trim();
+                    // Handle whisky/whiskey spelling variation
+                    if (trimmedKeyword === 'whisky') {
+                        return userInput.includes('whisky') || userInput.includes('whiskey');
+                    }
+                    return userInput.includes(trimmedKeyword);
+                });
 
                 if (allKeywordsMatch) {
                     videoId = suspectClues[keywords];
@@ -268,4 +275,3 @@
 
 </body>
 </html>
-
