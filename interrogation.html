@@ -134,37 +134,47 @@
                 <div class="gallery-item">
                     <img src="images/Camilla1.png" alt="Lady Camilla">
                     <p>Lady Camilla</p>
-                    <button onclick="showVideo('WX6TpqeKXnE')" class="statement-button">Initial Statement</button>
-                    <input type="text" id="camilla-input" class="interrogation-input" placeholder="Ask about a clue...">
-                    <button onclick="askQuestion('camilla')" class="ask-button">Ask</button>
+                    <button onclick="playInitialStatement('WX6TpqeKXnE', 'camilla')" class="statement-button">Initial Statement</button>
+                    <div id="camilla-interrogation" style="display: none;">
+                        <input type="text" id="camilla-input" class="interrogation-input" placeholder="Ask about a clue...">
+                        <button onclick="askQuestion('camilla')" class="ask-button">Ask</button>
+                    </div>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Eleanor1.png" alt="Eleanor">
                     <p>Eleanor</p>
-                    <button onclick="showVideo('W7S6qDEz578')" class="statement-button">Initial Statement</button>
-                    <input type="text" id="eleanor-input" class="interrogation-input" placeholder="Ask about a clue...">
-                    <button onclick="askQuestion('eleanor')" class="ask-button">Ask</button>
+                    <button onclick="playInitialStatement('W7S6qDEz578', 'eleanor')" class="statement-button">Initial Statement</button>
+                    <div id="eleanor-interrogation" style="display: none;">
+                        <input type="text" id="eleanor-input" class="interrogation-input" placeholder="Ask about a clue...">
+                        <button onclick="askQuestion('eleanor')" class="ask-button">Ask</button>
+                    </div>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Henry1.png" alt="Henry Caldwell">
                     <p>Henry Caldwell</p>
-                    <button onclick="showVideo('lDI4rKPFRS4')" class="statement-button">Initial Statement</button>
-                    <input type="text" id="henry-input" class="interrogation-input" placeholder="Ask about a clue...">
-                    <button onclick="askQuestion('henry')" class="ask-button">Ask</button>
+                    <button onclick="playInitialStatement('lDI4rKPFRS4', 'henry')" class="statement-button">Initial Statement</button>
+                    <div id="henry-interrogation" style="display: none;">
+                        <input type="text" id="henry-input" class="interrogation-input" placeholder="Ask about a clue...">
+                        <button onclick="askQuestion('henry')" class="ask-button">Ask</button>
+                    </div>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Watson1.png" alt="Dr. Watson">
                     <p>Dr. Watson</p>
-                    <button onclick="showVideo('PwDRE0kin04')" class="statement-button">Initial Statement</button>
-                     <input type="text" id="watson-input" class="interrogation-input" placeholder="Ask about a clue...">
-                    <button onclick="askQuestion('watson')" class="ask-button">Ask</button>
+                    <button onclick="playInitialStatement('PwDRE0kin04', 'watson')" class="statement-button">Initial Statement</button>
+                    <div id="watson-interrogation" style="display: none;">
+                         <input type="text" id="watson-input" class="interrogation-input" placeholder="Ask about a clue...">
+                        <button onclick="askQuestion('watson')" class="ask-button">Ask</button>
+                    </div>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Miles1.png" alt="Miles">
                     <p>Miles</p>
-                    <button onclick="showVideo('FrVEikgniU8')" class="statement-button">Initial Statement</button>
-                    <input type="text" id="miles-input" class="interrogation-input" placeholder="Ask about a clue...">
-                    <button onclick="askQuestion('miles')" class="ask-button">Ask</button>
+                    <button onclick="playInitialStatement('FrVEikgniU8', 'miles')" class="statement-button">Initial Statement</button>
+                    <div id="miles-interrogation" style="display: none;">
+                        <input type="text" id="miles-input" class="interrogation-input" placeholder="Ask about a clue...">
+                        <button onclick="askQuestion('miles')" class="ask-button">Ask</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -222,6 +232,14 @@
             }
         };
 
+        function playInitialStatement(videoId, suspectName) {
+            showVideo(videoId);
+            const interrogationControls = document.getElementById(`${suspectName}-interrogation`);
+            if (interrogationControls) {
+                interrogationControls.style.display = 'block';
+            }
+        }
+
         function askQuestion(suspectName) {
             const inputElement = document.getElementById(`${suspectName}-input`);
             const userInput = inputElement.value.toLowerCase();
@@ -275,3 +293,4 @@
 
 </body>
 </html>
+
