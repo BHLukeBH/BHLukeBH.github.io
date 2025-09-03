@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sherlock Holmes - A Murder Mystery</title>
+    <title>Detective Database</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Importing both the English and Japanese handwritten fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Yuji+Syuku&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             background-image: url('images/book.jpg');
@@ -26,23 +25,10 @@
             box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
         h1, h2 {
+            text-align: center;
             border-bottom: 2px solid #8b4513;
             padding-bottom: 10px;
             color: #d4ac6e;
-            text-align: center;
-        }
-        .title-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            border-bottom: 2px solid #8b4513;
-            padding-bottom: 10px;
-        }
-        .title-container h1 {
-             flex-grow: 1;
-             border-bottom: none;
-             padding-bottom: 0;
         }
         .section {
             margin-top: 40px;
@@ -74,131 +60,89 @@
             display: block;
             text-align: center;
             font-size: 1.5em;
-            margin-top: 40px;
+            margin-top: 20px;
             color: #ffdead;
             text-decoration: none;
-            cursor: pointer;
         }
         .nav-link:hover {
             text-decoration: underline;
         }
-
-        /* --- Styles for Japanese Hint Tooltips --- */
-        .tooltip-container {
-            position: relative;
-            display: inline;
-        }
-        .clickable-hint {
-            font-style: italic;
-            cursor: pointer;
-            text-decoration: underline dotted 1px;
-            text-underline-offset: 3px;
-        }
-        .clickable-hint:hover {
-            color: #ffdead;
-        }
-        .tooltip-text {
-            visibility: hidden;
-            width: 200px;
-            background-color: #1c1c1c;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 10px;
-            border: 1px solid #d4ac6e;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -100px;
-            font-family: 'Yuji Syuku', serif;
-            font-size: 1.2em;
-        }
-        .tooltip-text.show {
-            visibility: visible;
-        }
-        
-        /* --- Styles for Audio Icons --- */
-        .audio-icon {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border: 1px solid #d4ac6e;
-            border-radius: 8px;
-            background-color: #f0e6d2;
-            transition: all 0.2s;
-            flex-shrink: 0;
-            box-sizing: border-box;
-        }
-        .audio-icon img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-        .audio-icon:hover {
-            transform: scale(1.1);
-            filter: drop-shadow(0 0 5px #d4ac6e);
-        }
-        .audio-icon.playing {
-            border-color: #ffdead;
-            filter: drop-shadow(0 0 8px #ffdead);
-        }
-        .centered-audio-icon {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .centered-audio-icon .audio-icon {
-            display: inline-flex;
-        }
-        .right-aligned-audio-icon {
-            text-align: right;
-            margin-top: 20px;
-        }
-        .right-aligned-audio-icon .audio-icon {
-            display: inline-flex;
-        }
-        
-        /* Styles for the password modal */
-        .modal-overlay {
+        .password-modal {
             display: none;
             position: fixed;
-            z-index: 100;
+            z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
         }
         .modal-content {
-            background-color: #1a1a1a;
-            margin: 15% auto;
-            padding: 20px;
-            border: 2px solid #d4ac6e;
-            width: 80%;
+            background-color: #0c0c0c;
+            margin: auto;
+            padding: 30px;
+            border: 2px solid #8b4513;
+            width: 90%;
             max-width: 400px;
             text-align: center;
+            color: #f0e6d2;
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
         .modal-content input {
-            width: 80%;
+            width: calc(100% - 20px);
             padding: 10px;
             margin: 20px 0;
-            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
         }
-        .modal-button {
+        .modal-content button {
             padding: 10px 20px;
-            border: 1px solid #d4ac6e;
+            font-size: 1em;
             background-color: #5c4033;
             color: #f0e6d2;
+            border: 1px solid #d4ac6e;
             cursor: pointer;
         }
-        #password-error {
-            color: #ff4d4d;
+        .tooltip {
             display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 6px;
+            z-index: 1001;
+            font-family: 'Yuji Syuku', serif;
+            border: 1px solid #d4ac6e;
+            font-size: 1.1em;
+        }
+        .tooltip-trigger {
+            font-style: italic;
+            cursor: pointer;
+            text-decoration: underline dotted;
+        }
+        .audio-icon-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .audio-icon {
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            border: 2px solid #d4ac6e;
+            border-radius: 8px;
+            background-color: #f0e6d2;
+            transition: box-shadow 0.3s ease;
+        }
+        .audio-icon.playing, .audio-icon:hover {
+            box-shadow: 0 0 15px 5px #ffdead;
+        }
+        .title-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
         }
     </style>
 </head>
@@ -206,45 +150,22 @@
 
     <div class="container">
         <div class="title-container">
-            <span class="audio-icon" onclick="playAudio('audio/sherlockintro.mp3', this)">
-                <img src="images/deerstalker.jpg" alt="Play Sherlock's audio log">
-            </span>
+            <img src="images/deerstalker.jpg" alt="Sherlock's Audio Log" class="audio-icon" data-audio-src="audio/sherlockintro.mp3">
             <h1>The Secret Beneath The Green</h1>
         </div>
+
+        <p>
+            A pleasant evening at the <span class="tooltip-trigger">estates</span> of Lord Blackwood has turned to murder and mystery. Fortunately, among the guests are two <span class="tooltip-trigger">up-and-coming</span> detectives - that's you - as well as the world-famous Sherlock Holmes - that's me!
+        </p>
+        <p>
+            As <span class="tooltip-trigger">lead detectives</span>, I expect you to help me <span class="tooltip-trigger">unmask the killer</span>. First, I want you to explore the Blackwood Estate for clues. Then, use this evidence to <span class="tooltip-trigger">interrogate the suspects</span>.
+        </p>
+        <p>The game is afoot!</p>
+
+        <p class="sherlock-note" style="text-align: center;">I look forward to working with you - Sherlock</p>
         
-        <p style="margin-top: 20px;">
-            A pleasant evening at the 
-            <span class="tooltip-container">
-                <i class="clickable-hint" onclick="toggleTooltip(this)">estates</i><span class="tooltip-text">屋敷</span>
-            </span>
-            of Lord Blackwood has turned to murder and mystery. Fortunately, among the guests are two 
-            <span class="tooltip-container">
-                <i class="clickable-hint" onclick="toggleTooltip(this)">up-and-coming</i><span class="tooltip-text">将来有望な</span>
-            </span>
-            detectives - that's you - as well as the world-famous Sherlock Holmes - that's me! 
-        </p>
-        <p>
-            As lead detectives, I expect you to help me 
-            <span class="tooltip-container">
-                <i class="clickable-hint" onclick="toggleTooltip(this)">unmask the killer</i><span class="tooltip-text">犯人の正体を暴く</span>
-            </span>. 
-            First, I want you to explore the Blackwood Estate for clues. Then, use this evidence to 
-            <span class="tooltip-container">
-                <i class="clickable-hint" onclick="toggleTooltip(this)">interrogate the suspects</i><span class="tooltip-text">容疑者を尋問する</span>
-            </span>. 
-        </p>
-        <p>
-            The game is afoot!
-        </p>
-
-        <p class="sherlock-note" style="text-align: center; font-size: 1.5em; margin-top: 25px;">
-            I look forward to working with you - Sherlock
-        </p>
-
-        <div class="centered-audio-icon">
-            <span class="audio-icon" onclick="playAudio('audio/Watson3.mp3', this)">
-                <img src="images/audiologicon.png" alt="Play Watson's audio log">
-            </span>
+        <div class="audio-icon-container">
+            <img src="images/audiologicon.png" alt="Watson's Audio Log" class="audio-icon" data-audio-src="audio/Watson3.mp3">
         </div>
 
         <div class="section">
@@ -252,165 +173,139 @@
             <div class="gallery">
                 <div class="gallery-item">
                     <img src="images/Camilla1.png" alt="Lady Camilla">
-                    <p>Lady Camilla - Lucien’s cousin</p>
-                    <p class="sherlock-note">Blackwood’s cousin, resentful of Lucien’s wealth?</p>
+                    <p>Lady Camilla -<br>Lucien's cousin</p>
+                    <p class="sherlock-note">"Blackwood’s cousin, resentful of Lucien’s wealth?"</p>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Eleanor1.png" alt="Eleanor">
-                    <p>Eleanor - Lucien's Accountant</p>
-                    <p class="sherlock-note">Loyal servant of many years, fears losing her job?</p>
+                    <p>Eleanor -<br>Lucien's Accountant</p>
+                    <p class="sherlock-note">"Loyal servant of many years, fears losing her job?"</p>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Henry1.png" alt="Henry Caldwell">
-                    <p>Henry Caldwell - Renowned Historian</p>
-                    <p class="sherlock-note">Family of very good standing, fine collection of antique books</p>
+                    <p>Henry Caldwell -<br>Renowned Historian</p>
+                    <p class="sherlock-note">"Family of very good standing, fine collection of antique books"</p>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Watson1.png" alt="Dr. Watson">
-                    <p>Dr. Watson - Famed Physician</p>
-                    <p class="sherlock-note">First-rate doctor, second-rate detective</p>
+                    <p>Dr. Watson -<br>Famed Physician</p>
+                    <p class="sherlock-note">"First-rate doctor, second-rate detective"</p>
                 </div>
                 <div class="gallery-item">
                     <img src="images/Miles1.png" alt="Miles">
-                    <p>Miles - Lucien's Butler</p>
-                    <p class="sherlock-note">Faithful Butler, notable infirmities</p>
+                    <p>Miles -<br>Lucien's Butler</p>
+                    <p class="sherlock-note">"Faithful Butler, notable infirmities"</p>
                 </div>
             </div>
-            <div class="right-aligned-audio-icon">
-                <span class="audio-icon" onclick="playAudio('audio/Watson4suspects.mp3', this)">
-                    <img src="images/audiologicon.png" alt="Play Watson's audio log about the suspects">
-                </span>
+             <div style="text-align: right; margin-top: 20px;">
+                <img src="images/audiologicon.png" alt="Watson's Suspects Audio Log" class="audio-icon" style="width: 50px; height: 50px;" data-audio-src="audio/Watson4suspects.mp3">
             </div>
         </div>
 
         <div class="section">
-            <h2>Objects of Interest</h2>
-            <div class="gallery">
-                <div class="gallery-item">
-                    <img src="images/whisky.jpg" alt="A glass of whisky">
-                    <p class="sherlock-note">"A regular tipple, well-earned no doubt. But if left unattended..."</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/ledger.jpg" alt="A financial ledger">
-                    <p class="sherlock-note">"The Blackwood finances. What secrets are to be found in here?"</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/paint.jpg" alt="A tin of green paint">
-                    <p class="sherlock-note">"Paris Green? Best handled with care, if I'm not mistaken - and I never am."</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/vial.jpg" alt="A small vial of liquid">
-                    <p class="sherlock-note">"Laudanum? Known for its medicinal ... and recreational... uses, but fatal in high doses."</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/note.jpg" alt="A torn note">
-                    <p class="sherlock-note">"Passionate in both writing and the force with which it was torn apart. Curious..."</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
+            <a href="objects-of-interest.html" class="nav-link">Examine Objects of Interest</a>
             <a href="interrogation.html" class="nav-link">Enter the Interrogation Room</a>
-            <a onclick="openPasswordModal()" class="nav-link">[LOCKED] Access Case Files</a>
+            <a href="#" class="nav-link" id="caseFilesLink">[LOCKED] Access Case Files</a>
         </div>
     </div>
 
-    <!-- Password Modal HTML -->
-    <div id="password-modal" class="modal-overlay">
+    <div id="caseFilesModal" class="password-modal">
         <div class="modal-content">
             <h2>Enter Passkey</h2>
-            <p>Sherlock has secured the case files. Enter the passkey to proceed.</p>
-            <input type="password" id="password-input" placeholder="Passkey...">
-            <p id="password-error">Incorrect passkey. Keep searching.</p>
-            <button onclick="checkPassword()" class="modal-button">Unlock</button>
-            <button onclick="closePasswordModal()" class="modal-button" style="background-color: #8b4513;">Cancel</button>
+            <p>You must complete your initial investigation to access the case files.</p>
+            <input type="password" id="caseFilesPassword" placeholder="Enter passkey...">
+            <button id="submitPassword">Submit</button>
+            <p id="passwordError" style="color: red; display: none;">Incorrect passkey.</p>
         </div>
     </div>
 
+    <div id="tooltip" class="tooltip"></div>
+
+    <audio id="audio-player"></audio>
+
     <script>
-        // --- Global Audio Player ---
-        let currentAudio = null;
-        let currentIcon = null;
+        const caseFilesLink = document.getElementById('caseFilesLink');
+        const caseFilesModal = document.getElementById('caseFilesModal');
+        const submitPasswordBtn = document.getElementById('submitPassword');
+        const passwordInput = document.getElementById('caseFilesPassword');
+        const passwordError = document.getElementById('passwordError');
+        const tooltip = document.getElementById('tooltip');
+        const audioPlayer = document.getElementById('audio-player');
+        let currentAudioIcon = null;
 
-        function playAudio(audioSrc, iconElement) {
-            if (currentAudio) {
-                currentAudio.pause();
-                currentAudio.currentTime = 0;
-                if (currentIcon) {
-                    currentIcon.classList.remove('playing');
+        const translations = {
+            'estates': 'ルシアン・ブラックウッド卿の屋敷',
+            'up-and-coming': '将来有望な',
+            'lead detectives': '主任刑事たち',
+            'unmask the killer': '犯人の正体を暴く',
+            'interrogate the suspects': '容疑者を尋問する'
+        };
+
+        document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
+            trigger.addEventListener('click', function (event) {
+                event.stopPropagation();
+                const key = this.textContent.toLowerCase();
+                if (translations[key]) {
+                    tooltip.textContent = translations[key];
+                    tooltip.style.display = 'block';
+                    const rect = this.getBoundingClientRect();
+                    tooltip.style.left = `${rect.left + window.scrollX}px`;
+                    tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
                 }
-            }
-
-            if (currentIcon === iconElement) {
-                currentAudio = null;
-                currentIcon = null;
-                return;
-            }
-
-            currentAudio = new Audio(audioSrc);
-            currentIcon = iconElement;
-            
-            currentAudio.play();
-            iconElement.classList.add('playing');
-
-            currentAudio.onended = function() {
-                iconElement.classList.remove('playing');
-                currentAudio = null;
-                currentIcon = null;
-            };
-        }
-
-        const passwordModal = document.getElementById('password-modal');
-        const passwordInput = document.getElementById('password-input');
-        const passwordError = document.getElementById('password-error');
-        const correctPassword = 'elementary';
-
-        // --- Tooltip Script ---
-        function toggleTooltip(hintElement) {
-            const tooltip = hintElement.nextElementSibling;
-            const isCurrentlyShown = tooltip.classList.contains('show');
-
-            const allTooltips = document.querySelectorAll('.tooltip-text.show');
-            allTooltips.forEach(tt => {
-                tt.classList.remove('show');
             });
+        });
 
-            if (!isCurrentlyShown) {
-                tooltip.classList.add('show');
-            }
-        }
+        caseFilesLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            caseFilesModal.style.display = 'flex';
+        });
 
-        // --- Password Modal Script ---
-        function openPasswordModal() {
-            passwordInput.value = '';
-            passwordError.style.display = 'none';
-            passwordModal.style.display = 'block';
-        }
-
-        function closePasswordModal() {
-            passwordModal.style.display = 'none';
-        }
-
-        function checkPassword() {
-            if (passwordInput.value.toLowerCase() === correctPassword) {
-                // **LINK UPDATED HERE**
+        submitPasswordBtn.addEventListener('click', function () {
+            if (passwordInput.value.toLowerCase() === 'elementary') {
                 window.location.href = 'case-files.html';
             } else {
                 passwordError.style.display = 'block';
             }
-        }
-
-        // --- Combined Click Handler ---
-        window.addEventListener('click', function(event) {
-            if (!event.target.classList.contains('clickable-hint')) {
-                const allTooltips = document.querySelectorAll('.tooltip-text.show');
-                allTooltips.forEach(tooltip => {
-                    tooltip.classList.remove('show');
-                });
+        });
+        
+        document.addEventListener('click', function(event) {
+            // Close tooltip if clicking outside
+            if (!event.target.classList.contains('tooltip-trigger')) {
+                tooltip.style.display = 'none';
             }
 
-            if (event.target == passwordModal) {
-                closePasswordModal();
+            // Close modal if clicking outside the content area
+            if (event.target === caseFilesModal) {
+                caseFilesModal.style.display = 'none';
+                passwordError.style.display = 'none';
+                passwordInput.value = '';
+            }
+        });
+
+        document.querySelectorAll('.audio-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const audioSrc = this.dataset.audioSrc;
+                if (audioPlayer.src.includes(audioSrc) && !audioPlayer.paused) {
+                    audioPlayer.pause();
+                    this.classList.remove('playing');
+                    currentAudioIcon = null;
+                } else {
+                    if (currentAudioIcon) {
+                        currentAudioIcon.classList.remove('playing');
+                    }
+                    audioPlayer.src = audioSrc;
+                    audioPlayer.play();
+                    this.classList.add('playing');
+                    currentAudioIcon = this;
+                }
+            });
+        });
+
+        audioPlayer.addEventListener('ended', function() {
+            if (currentAudioIcon) {
+                currentAudioIcon.classList.remove('playing');
+                currentAudioIcon = null;
             }
         });
     </script>
