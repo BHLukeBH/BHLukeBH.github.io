@@ -21,7 +21,7 @@
             margin: 40px auto;
             background: rgba(0, 0, 0, 0.75);
             padding: 30px;
-            border: 2px solid #8b4s13;
+            border: 2px solid #8b4513;
             box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
         h1, h2 {
@@ -40,168 +40,153 @@
             color: #d4bf9a;
             margin-top: 5px;
             line-height: 1.2;
+            text-align: center; 
+            font-size: 1.5em;
         }
         .nav-link {
             display: block;
             text-align: center;
             font-size: 1.5em;
-            margin-top: 20px; /* Adjusted margin */
+            margin-top: 20px;
             color: #ffdead;
             text-decoration: none;
         }
         .nav-link:hover {
             text-decoration: underline;
         }
-        
-        /* Styles for the checklist */
+        .evidence-list {
+            margin-top: 20px;
+        }
         .evidence-item {
             display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-        .evidence-item input[type="checkbox"] {
-            margin-right: 15px;
-            margin-top: 6px;
-            flex-shrink: 0;
-        }
-        .evidence-item label {
-            cursor: pointer;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #5c4033;
         }
         .evidence-term {
             font-weight: bold;
             color: #d4ac6e;
+            font-size: 1.3em;
+        }
+        .ask-button {
+            padding: 8px 15px;
+            background-color: #5c4033;
+            color: #f0e6d2;
+            border: 1px solid #d4ac6e;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .ask-button:hover {
+            background-color: #d4ac6e;
+            color: #000;
+        }
+        /* Video Player Styles */
+        #video-player-container {
+            display: none;
+            margin-bottom: 30px;
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border: 2px solid #8b4513;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #close-video-button {
+            display: block;
+            width: 150px;
+            margin: 15px auto 0;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: 15% auto;
+            padding: 20px;
+            border: 2px solid #d4ac6e;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .modal-content h3 {
+             color: #d4ac6e;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .suspect-list button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background-color: #5c4033;
+            color: #f0e6d2;
+            border: 1px solid #d4ac6e;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
             font-size: 1.1em;
-            display: block;
         }
-        .evidence-desc {
-            display: block;
+        .suspect-list button:hover {
+             background-color: #d4ac6e;
+             color: #000;
         }
+        .suspect-list button.watched {
+            background-color: #4a4a4a;
+            color: #888;
+            cursor: not-allowed;
+            border-color: #555;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>Case Files</h1>
-        <p class="sherlock-note" style="text-align: center; font-size: 1.5em;">
+        <p class="sherlock-note">
             A summary of our findings - if you haven’t asked the suspects about these yet, do so now.
         </p>
 
+        <div id="video-player-container">
+            <div id="video-player"></div>
+            <button id="close-video-button" class="ask-button" onclick="closeVideo()">Close Video</button>
+        </div>
+
         <div class="section">
             <h2>Investigation Checklist</h2>
-            
             <div class="evidence-list">
-                <div class="evidence-item">
-                    <input type="checkbox" id="accounts-check">
-                    <label for="accounts-check">
-                        <span class="evidence-term">Accounts</span>
-                        <span class="evidence-desc">Camilla claims that Lucien was careless with his finances. Eleanor was concerned about large sums of money sent to an unknown account.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="arsenic-check">
-                    <label for="arsenic-check">
-                        <span class="evidence-term">Arsenic</span>
-                        <span class="evidence-desc">Present in the green paint found hidden in the library.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="arthritis-check">
-                    <label for="arthritis-check">
-                        <span class="evidence-term">Arthritis</span>
-                        <span class="evidence-desc">Miles the Butler has recently been suffering from severe arthritis, harming his ability to work.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="argument-check">
-                    <label for="argument-check">
-                        <span class="evidence-term">Argument</span>
-                        <span class="evidence-desc">Camilla claims she and Lucien argued about money.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="blood-check">
-                    <label for="blood-check">
-                        <span class="evidence-term">Blood</span>
-                        <span class="evidence-desc">Miles claims he cut his hand on a broken glass.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="cut-check">
-                    <label for="cut-check">
-                        <span class="evidence-term">Cut</span>
-                        <span class="evidence-desc">Miles claims he cut his hand on a broken glass.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="fingerprints-check">
-                    <label for="fingerprints-check">
-                        <span class="evidence-term">Fingerprints</span>
-                        <span class="evidence-desc">The whisky glass only has Lucien's fingerprints on it. The killer was probably wearing gloves.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="fortune-check">
-                    <label for="fortune-check">
-                        <span class="evidence-term">Fortune</span>
-                        <span class="evidence-desc">No one noted anything out of the ordinary.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="glass-check">
-                    <label for="glass-check">
-                        <span class="evidence-term">Glass</span>
-                        <span class="evidence-desc">Only Lucien's fingerprints on it.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="gloves-check">
-                    <label for="gloves-check">
-                        <span class="evidence-term">Gloves</span>
-                        <span class="evidence-desc">Miles wore gloves for handling the paint. Watson wears gloves when handling dangerous substances. I've noticed Camilla also wears gloves.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="laudanum-check">
-                    <label for="laudanum-check">
-                        <span class="evidence-term">Laudanum</span>
-                        <span class="evidence-desc">Watson noted it was missing from his bag. Who can say when or why it was taken?</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="ledger-check">
-                    <label for="ledger-check">
-                        <span class="evidence-term">Ledger</span>
-                        <span class="evidence-desc">Eleanor claims significant sums of money were going to an unknown account.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="letter-check">
-                    <label for="letter-check">
-                        <span class="evidence-term">Letter</span>
-                        <span class="evidence-desc">Henry claims he tore it up in an argument with Lucien.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="paint-check">
-                    <label for="paint-check">
-                        <span class="evidence-term">Paint</span>
-                        <span class="evidence-desc">Paris green, an arsenic-based paint.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="poison-check">
-                    <label for="poison-check">
-                        <span class="evidence-term">Poison</span>
-                        <span class="evidence-desc">Two possible sources of poison, though I think it's obvious which was used.</span>
-                    </label>
-                </div>
-                <div class="evidence-item">
-                    <input type="checkbox" id="whisky-check">
-                    <label for="whisky-check">
-                        <span class="evidence-term">Whisky</span>
-                        <span class="evidence-desc">Lucien's regular evening drink. Miles claimed he left it unattended due to his cut.</span>
-                    </label>
-                </div>
+                <!-- Items will be generated by JavaScript -->
             </div>
         </div>
 
@@ -210,8 +195,159 @@
             <a href="investigation.html" class="nav-link">Return to Case Overview</a>
             <a href="interrogation.html" class="nav-link">Return to Interrogation Room</a>
         </div>
-
     </div>
+
+    <!-- Suspect Selection Modal -->
+    <div id="suspectModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 id="modal-title">Ask a suspect about...</h3>
+            <div id="suspect-list-container" class="suspect-list">
+                <!-- Suspect buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const videoContainer = document.getElementById('video-player-container');
+        const videoPlayer = document.getElementById('video-player');
+        const modal = document.getElementById('suspectModal');
+        const modalTitle = document.getElementById('modal-title');
+        const suspectListContainer = document.getElementById('suspect-list-container');
+        
+        let currentEvidence = null;
+
+        const notRelevantVideos = {
+            camilla: 'ZVK9aDHwDwA',
+            eleanor: 'yc0igYRDp5s',
+            henry: 'OTdaJhb2EKg',
+            miles: 'NLa4bll1TJY',
+            watson: 'zoKGPDcY4w4'
+        };
+
+        const evidenceData = {
+            'Arsenic': { henry: 'RePUCbkajN0' },
+            'Arthritis': { miles: '2n-C1Sv-0T8' },
+            'Argument': { camilla: 'o87gFEMtAWQ' },
+            'Blood': { miles: 'Y2h9wBwLaHk' },
+            'Cut': { watson: 'CakgQCBrpAU' }, // Part of a multi-keyword in interrogation, needs context
+            'Fingerprints': { camilla: '1jx4gpR7O4E', eleanor: 'QUKtZdAO6SM', henry: 'BbogZSipBFc', miles: '4fVFFYis9ic', watson: 'mZYgPoZFbVU' },
+            'Glass': { miles: 'Y2h9wBwLaHk' },
+            'Gloves': {}, // No specific videos linked
+            'Laudanum': { camilla: 'p6n1hUtSakQ', eleanor: '0GFlwhGDZIM', henry: 'c3J0vRRFRe0', miles: 'VrWxOO5GjC4', watson: 'j2uHnkL0kCc' },
+            'Ledger': { camilla: 'bwnEw5BjmNI', eleanor: 'L2kX9uWMDJ0', henry: 'JI7Cxg4YVt8', miles: '_b-kc8gIZ7k', watson: 'PAEvh7bp9Q4' },
+            'Letter': { camilla: '-aNfot2Z_kw', eleanor: 'dm-F4bGNZCA', henry: 'w3n8p_gBUuc', miles: 'vW1BWQGDuhA', watson: '96qnm9YVqPQ' },
+            'Paint': { camilla: 'i288YoJceoI', eleanor: 'KWTjhFJU1vs', henry: '-Dq5cel0eMI', miles: 'OwcPJS2T5-Y', watson: 'Xljr-XCk_4o' },
+            'Poison': {}, // No specific videos linked
+            'Whisky': { camilla: '1jx4gpR7O4E', eleanor: 'QUKtZdAO6SM', henry: 'BbogZSipBFc', miles: '4fVFFYis9ic', watson: 'mZYgPoZFbVU' }
+        };
+
+        const suspects = {
+            camilla: "Lady Camilla",
+            eleanor: "Eleanor",
+            henry: "Henry Caldwell",
+            watson: "Dr. Watson",
+            miles: "Miles"
+        };
+        
+        // This object will track which videos have been watched for each piece of evidence
+        const watchedStatus = {};
+        Object.keys(evidenceData).forEach(evidence => {
+            watchedStatus[evidence] = [];
+        });
+
+        function openModal(evidence) {
+            currentEvidence = evidence;
+            modalTitle.textContent = `Ask a suspect about the ${evidence}...`;
+            
+            suspectListContainer.innerHTML = ''; // Clear previous buttons
+            
+            Object.keys(suspects).forEach(suspectKey => {
+                const button = document.createElement('button');
+                button.textContent = suspects[suspectKey];
+                button.onclick = () => querySuspect(suspectKey);
+
+                // Check if this suspect has been watched for this evidence
+                if (watchedStatus[currentEvidence] && watchedStatus[currentEvidence].includes(suspectKey)) {
+                    button.classList.add('watched');
+                }
+                
+                suspectListContainer.appendChild(button);
+            });
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            currentEvidence = null;
+        }
+
+        function querySuspect(suspectKey) {
+            const evidenceInfo = evidenceData[currentEvidence];
+            let videoId = notRelevantVideos[suspectKey]; // Default to not relevant
+
+            if (evidenceInfo && evidenceInfo[suspectKey]) {
+                videoId = evidenceInfo[suspectKey];
+            }
+            
+            showVideo(videoId);
+            
+            // Mark as watched
+            if (watchedStatus[currentEvidence] && !watchedStatus[currentEvidence].includes(suspectKey)) {
+                watchedStatus[currentEvidence].push(suspectKey);
+            }
+
+            closeModal();
+        }
+
+        function showVideo(videoId) {
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            videoPlayer.innerHTML = `
+                <div class="video-wrapper">
+                    <iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            `;
+            videoContainer.style.display = 'block';
+            videoContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function closeVideo() {
+            videoPlayer.innerHTML = '';
+            videoContainer.style.display = 'none';
+        }
+
+        // Close modal if user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        // Dynamically create the evidence list when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const evidenceListContainer = document.querySelector('.evidence-list');
+            Object.keys(evidenceData).forEach(evidence => {
+                const item = document.createElement('div');
+                item.className = 'evidence-item';
+                
+                const term = document.createElement('span');
+                term.className = 'evidence-term';
+                term.textContent = evidence;
+                
+                const button = document.createElement('button');
+                button.className = 'ask-button';
+                button.textContent = 'Ask a suspect';
+                button.onclick = () => openModal(evidence);
+                
+                item.appendChild(term);
+                item.appendChild(button);
+                evidenceListContainer.appendChild(item);
+            });
+        });
+
+    </script>
 
 </body>
 </html>
