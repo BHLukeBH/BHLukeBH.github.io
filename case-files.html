@@ -231,15 +231,15 @@
             'Arthritis': { miles: '2n-C1Sv-0T8' },
             'Argument': { camilla: 'o87gFEMtAWQ' },
             'Blood': { miles: 'Y2h9wBwLaHk' },
-            'Cut': { watson: 'CakgQCBrpAU' }, // Part of a multi-keyword in interrogation, needs context
+            'Cut': { watson: 'CakgQCBrpAU' },
             'Fingerprints': { camilla: '1jx4gpR7O4E', eleanor: 'QUKtZdAO6SM', henry: 'BbogZSipBFc', miles: '4fVFFYis9ic', watson: 'mZYgPoZFbVU' },
             'Glass': { miles: 'Y2h9wBwLaHk' },
-            'Gloves': {}, // No specific videos linked
+            'Gloves': {},
             'Laudanum': { camilla: 'p6n1hUtSakQ', eleanor: '0GFlwhGDZIM', henry: 'c3J0vRRFRe0', miles: 'VrWxOO5GjC4', watson: 'j2uHnkL0kCc' },
             'Ledger': { camilla: 'bwnEw5BjmNI', eleanor: 'L2kX9uWMDJ0', henry: 'JI7Cxg4YVt8', miles: '_b-kc8gIZ7k', watson: 'PAEvh7bp9Q4' },
             'Letter': { camilla: '-aNfot2Z_kw', eleanor: 'dm-F4bGNZCA', henry: 'w3n8p_gBUuc', miles: 'vW1BWQGDuhA', watson: '96qnm9YVqPQ' },
             'Paint': { camilla: 'i288YoJceoI', eleanor: 'KWTjhFJU1vs', henry: '-Dq5cel0eMI', miles: 'OwcPJS2T5-Y', watson: 'Xljr-XCk_4o' },
-            'Poison': {}, // No specific videos linked
+            'Poison': { henry: 'RePUCbkajN0' },
             'Whisky': { camilla: '1jx4gpR7O4E', eleanor: 'QUKtZdAO6SM', henry: 'BbogZSipBFc', miles: '4fVFFYis9ic', watson: 'mZYgPoZFbVU' }
         };
 
@@ -251,7 +251,6 @@
             miles: "Miles"
         };
         
-        // This object will track which videos have been watched for each piece of evidence
         const watchedStatus = {};
         Object.keys(evidenceData).forEach(evidence => {
             watchedStatus[evidence] = [];
@@ -261,14 +260,13 @@
             currentEvidence = evidence;
             modalTitle.textContent = `Ask a suspect about the ${evidence}...`;
             
-            suspectListContainer.innerHTML = ''; // Clear previous buttons
+            suspectListContainer.innerHTML = '';
             
             Object.keys(suspects).forEach(suspectKey => {
                 const button = document.createElement('button');
                 button.textContent = suspects[suspectKey];
                 button.onclick = () => querySuspect(suspectKey);
 
-                // Check if this suspect has been watched for this evidence
                 if (watchedStatus[currentEvidence] && watchedStatus[currentEvidence].includes(suspectKey)) {
                     button.classList.add('watched');
                 }
@@ -286,7 +284,7 @@
 
         function querySuspect(suspectKey) {
             const evidenceInfo = evidenceData[currentEvidence];
-            let videoId = notRelevantVideos[suspectKey]; // Default to not relevant
+            let videoId = notRelevantVideos[suspectKey];
 
             if (evidenceInfo && evidenceInfo[suspectKey]) {
                 videoId = evidenceInfo[suspectKey];
@@ -294,7 +292,6 @@
             
             showVideo(videoId);
             
-            // Mark as watched
             if (watchedStatus[currentEvidence] && !watchedStatus[currentEvidence].includes(suspectKey)) {
                 watchedStatus[currentEvidence].push(suspectKey);
             }
@@ -318,14 +315,12 @@
             videoContainer.style.display = 'none';
         }
 
-        // Close modal if user clicks outside of it
         window.onclick = function(event) {
             if (event.target == modal) {
                 closeModal();
             }
         }
         
-        // Dynamically create the evidence list when the page loads
         document.addEventListener('DOMContentLoaded', () => {
             const evidenceListContainer = document.querySelector('.evidence-list');
             Object.keys(evidenceData).forEach(evidence => {
