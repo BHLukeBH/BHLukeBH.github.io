@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interrogating Miles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('images/book.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: 'Courier New', Courier, monospace;
+            color: #f0e6d2;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 30px;
+            border: 2px solid #8b4513;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+        h1, h2 {
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 10px;
+            color: #d4ac6e;
+        }
+        .section {
+            margin-top: 40px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* This will center the single item */
+            gap: 30px;
+            align-items: flex-start;
+        }
+        .gallery-item {
+            text-align: center;
+            width: 100%;
+            max-width: 300px; /* Increased max-width for the single item */
+        }
+        .gallery-item img {
+            width: 100%;
+            max-width: 300px; /* Set a max-width for the image as well */
+            height: auto;
+            border: 2px solid #5c4033;
+        }
+        .statement-button, .ask-button {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-top: 10px;
+            background-color: #5c4033;
+            color: #f0e6d2;
+            text-decoration: none;
+            border: 1px solid #d4ac6e;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .statement-button:hover, .ask-button:hover {
+            background-color: #d4ac6e;
+            color: #000;
+        }
+        .interrogation-input {
+            width: 100%;
+            margin-top: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+            background-color: #f0e6d2;
+            border: 1px solid #5c4033;
+            color: #000;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .nav-link {
+            display: block;
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 40px;
+            color: #ffdead;
+            text-decoration: none;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+        #video-player-container {
+            display: none;
+            margin-bottom: 30px;
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border: 2px solid #8b4513;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #close-video-button {
+            display: block;
+            width: 150px;
+            margin: 15px auto 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Interrogating Miles</h1>
+
+        <div id="video-player-container">
+            <div id="video-player"></div>
+            <button id="close-video-button" class="statement-button" onclick="closeVideo()">Close Video</button>
+        </div>
+
+        <div class="section">
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="images/Miles1.png" alt="Miles">
+                    <p>Miles</p>
+                    <button onclick="playInitialStatement('10SCwiBYzVc', 'miles')" class="statement-button">Initial Statement</button>
+                    <div id="miles-interrogation" style="display: none;">
+                        <input type="text" id="miles-input" class="interrogation-input" placeholder="Ask about a clue...">
+                        <button onclick="askQuestion('miles')" class="ask-button">Ask</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <a href="investigation.html" class="nav-link">Return to Case Overview</a>
+        </div>
+    </div>
+
+    <script>
+        const videoContainer = document.getElementById('video-player-container');
+        const videoPlayer = document.getElementById('video-player');
+
+        // The entire interrogation database is required for the script to function
+        const interrogationData = {
+            no_match_videos: ['faAJUygW70Q', 'vYKVGRcMgPg', 'TOCKmqqHkL8', 'UEBJHwwKXa4'], 
+            camilla: {
+                'whisky,fingerprint': '1jx4gpR7O4E',
+                'argument': 'o87gFEMtAWQ',
+                'laudanum': 'p6n1hUtSakQ',
+                'ledger': '6WD5zmLy4D8',
+                'letter': '-aNfot2Z_kw',
+                'paint': 'i288YoJceoI'
+            },
+            watson: {
+                'laudanum,cut': 'CakgQCBrpAU',
+                'whisky,fingerprint': 'mZYgPoZFbVU',
+                'laudanum': 'j2uHnkL0kCc',
+                'ledger': 'PAEvh7bp9Q4',
+                'letter': '96qnm9YVqPQ',
+                'paint': 'Xljr-XCk_4o'
+            },
+            miles: {
+                'arthritis,laudanum': 'HsobAp9Je5k',
+                'whisky,fingerprint': '4fVFFYis9ic',
+                'arthritis': '2n-C1Sv-0T8',
+                'blood': 'Y2h9wBwLaHk',
+                'glass': 'Y2h9wBwLaHk',
+                'laudanum': 'VrWxOO5GjC4',
+                'ledger': 'v5DGg2SrfiQ',
+                'letter': 'vW1BWQGDuhA',
+                'paint': 'OwcPJS2T5-Y'
+            },
+            henry: {
+                'lucien,letter': 'cOrOwKow75Q',
+                'whisky,fingerprint': 'BbogZSipBFc',
+                'arsenic': 'RePUCbkajN0',
+                'laudanum': 'c3J0vRRFRe0',
+                'ledger': 'JI7Cxg4YVt8',
+                'letter': 'w3n8p_gBUuc',
+                'paint': '-Dq5cel0eMI'
+            },
+            eleanor: {
+                'whisky,fingerprint': 'QUKtZdAO6SM',
+                'laudanum': '0GFlwhGDZIM',
+                'ledger': '95zzYZvlm2U',
+                'letter': 'dm-F4bGNZCA',
+                'paint': 'KWTjhFJU1vs'
+            }
+        };
+
+        function playInitialStatement(videoId, suspectName) {
+            showVideo(videoId);
+            const interrogationControls = document.getElementById(`${suspectName}-interrogation`);
+            if (interrogationControls) {
+                interrogationControls.style.display = 'block';
+            }
+        }
+
+        function askQuestion(suspectName) {
+            // Since this page is ONLY for Miles, we can hardcode the suspectName
+            const actualSuspectName = 'miles';
+            const inputElement = document.getElementById(`${actualSuspectName}-input`);
+            const userInput = inputElement.value.toLowerCase();
+            const suspectClues = interrogationData[actualSuspectName];
+            
+            let videoId = null;
+
+            for (const keywords in suspectClues) {
+                const keywordArray = keywords.split(',');
+                const allKeywordsMatch = keywordArray.every(keyword => {
+                    const trimmedKeyword = keyword.trim();
+                    if (trimmedKeyword === 'whisky') {
+                        return userInput.includes('whisky') || userInput.includes('whiskey');
+                    }
+                    return userInput.includes(trimmedKeyword);
+                });
+
+                if (allKeywordsMatch) {
+                    videoId = suspectClues[keywords];
+                    break;
+                }
+            }
+            
+            if (!videoId) {
+                const noMatchVideos = interrogationData.no_match_videos;
+                const randomIndex = Math.floor(Math.random() * noMatchVideos.length);
+                videoId = noMatchVideos[randomIndex];
+            }
+
+            showVideo(videoId);
+            inputElement.value = '';
+        }
+
+        function showVideo(videoId) {
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            videoPlayer.innerHTML = `
+                <div class="video-wrapper">
+                    <iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            `;
+            videoContainer.style.display = 'block';
+            videoContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function closeVideo() {
+            videoPlayer.innerHTML = '';
+            videoContainer.style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
