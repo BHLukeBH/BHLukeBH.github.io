@@ -160,7 +160,7 @@
         const videoPlayer = document.getElementById('video-player');
 
         // GOOGLE FORM CONFIGURATION
-        // Updated with your specific form details
+        // Correctly populated with your form data
         const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdmYx6p9Mqf3rvaNbrLZG11Ykq-On5DT-Fqv65ZJGPSFXPdKA/formResponse';
         const GOOGLE_ENTRY_ID = 'entry.1314953833';
 
@@ -229,7 +229,7 @@
             const inputElement = document.getElementById(`${actualSuspectName}-input`);
             const userInput = inputElement.value.toLowerCase();
             
-            // --- NEW: Send Data to Google Form ---
+            // --- Send Data to Google Form ---
             if (userInput.trim() !== "") {
                 sendToGoogleForm(userInput);
             }
