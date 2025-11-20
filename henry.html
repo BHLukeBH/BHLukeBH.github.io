@@ -159,6 +159,11 @@
         const videoContainer = document.getElementById('video-player-container');
         const videoPlayer = document.getElementById('video-player');
 
+        // GOOGLE FORM CONFIGURATION
+        // Updated with your specific form details
+        const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdmYx6p9Mqf3rvaNbrLZG11Ykq-On5DT-Fqv65ZJGPSFXPdKA/formResponse';
+        const GOOGLE_ENTRY_ID = 'entry.1314953833';
+
         // The entire interrogation database is required for the script to function
         const interrogationData = {
             no_match_videos: ['faAJUygW70Q', 'vYKVGRcMgPg', 'TOCKmqqHkL8', 'UEBJHwwKXa4'], 
@@ -223,6 +228,13 @@
             const actualSuspectName = 'henry';
             const inputElement = document.getElementById(`${actualSuspectName}-input`);
             const userInput = inputElement.value.toLowerCase();
+            
+            // --- NEW: Send Data to Google Form ---
+            if (userInput.trim() !== "") {
+                sendToGoogleForm(userInput);
+            }
+            // -------------------------------------
+
             const suspectClues = interrogationData[actualSuspectName];
             
             let videoId = null;
@@ -251,6 +263,22 @@
 
             showVideo(videoId);
             inputElement.value = '';
+        }
+
+        function sendToGoogleForm(questionText) {
+            // This sends the data to Google Forms invisibly
+            const formData = new FormData();
+            formData.append(GOOGLE_ENTRY_ID, questionText);
+            
+            fetch(GOOGLE_FORM_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            }).then(() => {
+                console.log("Question logged");
+            }).catch(err => {
+                console.error("Error logging question", err);
+            });
         }
 
         function showVideo(videoId) {
