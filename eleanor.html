@@ -155,6 +155,16 @@
         </div>
     </div>
 
+    <!-- Hidden Form for Google Submission -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    <form id="google-form" 
+          action="https://docs.google.com/forms/d/e/1FAIpQLSdmYx6p9Mqf3rvaNbrLZG11Ykq-On5DT-Fqv65ZJGPSFXPdKA/formResponse" 
+          method="post" 
+          target="hidden_iframe" 
+          style="display:none;">
+        <input type="text" name="entry.1314953833" id="form-question-input">
+    </form>
+
     <script>
         const videoContainer = document.getElementById('video-player-container');
         const videoPlayer = document.getElementById('video-player');
@@ -163,7 +173,7 @@
         const interrogationData = {
             no_match_videos: ['faAJUygW70Q', 'vYKVGRcMgPg', 'TOCKmqqHkL8', 'UEBJHwwKXa4'], 
             camilla: {
-                'whisky,fingerprint': '1jx4gpR7O4E',
+                'whisky': '1jx4gpR7O4E',
                 'argument': 'o87gFEMtAWQ',
                 'laudanum': 'p6n1hUtSakQ',
                 'ledger': '6WD5zmLy4D8',
@@ -172,7 +182,7 @@
             },
             watson: {
                 'laudanum,cut': 'CakgQCBrpAU',
-                'whisky,fingerprint': 'mZYgPoZFbVU',
+                'whisky': 'mZYgPoZFbVU',
                 'laudanum': 'j2uHnkL0kCc',
                 'ledger': 'PAEvh7bp9Q4',
                 'letter': '96qnm9YVqPQ',
@@ -180,7 +190,7 @@
             },
             miles: {
                 'arthritis,laudanum': 'HsobAp9Je5k',
-                'whisky,fingerprint': '4fVFFYis9ic',
+                'whisky': '4fVFFYis9ic',
                 'arthritis': '2n-C1Sv-0T8',
                 'blood': 'Y2h9wBwLaHk',
                 'glass': 'Y2h9wBwLaHk',
@@ -191,15 +201,15 @@
             },
             henry: {
                 'lucien,letter': 'cOrOwKow75Q',
-                'whisky,fingerprint': 'BbogZSipBFc',
+                'whisky': 'BbogZSipBFc',
                 'arsenic': 'RePUCbkajN0',
-                'laudanum': 'c3J0vRRFRe0',
-                'ledger': 'JI7Cxg4YVt8',
+                'laudanum': 'vtzd2WKb0D0',
+                'ledger': 'PbXHCuyGw1o',
                 'letter': 'w3n8p_gBUuc',
                 'paint': '-Dq5cel0eMI'
             },
             eleanor: {
-                'whisky,fingerprint': 'QUKtZdAO6SM',
+                'whisky': 'QUKtZdAO6SM',
                 'laudanum': '0GFlwhGDZIM',
                 'ledger': '95zzYZvlm2U',
                 'accounts': '95zzYZvlm2U',
@@ -223,6 +233,15 @@
             const actualSuspectName = 'eleanor';
             const inputElement = document.getElementById(`${actualSuspectName}-input`);
             const userInput = inputElement.value.toLowerCase();
+            
+            // --- Send Data to Google Form (Using Henry's Form) ---
+            if (userInput.trim() !== "") {
+                document.getElementById('form-question-input').value = "ELEANOR: " + userInput; // Prepended suspect name
+                document.getElementById('google-form').submit();
+                console.log("Question submitted to form: " + userInput);
+            }
+            // ---------------------------------------------
+
             const suspectClues = interrogationData[actualSuspectName];
             
             let videoId = null;
