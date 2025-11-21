@@ -29,14 +29,14 @@
             border-bottom: 2px solid #8b4513;
             padding-bottom: 10px;
             color: #d4ac6e;
-            margin-bottom: 5px; /* Reduced margin for subtitle */
+            margin-bottom: 5px;
         }
         .subtitle {
             text-align: center;
-            font-size: 0.9em; /* Smaller text */
+            font-size: 0.9em;
             margin-top: 0;
             margin-bottom: 30px;
-            color: #ffdead; /* Slightly different color */
+            color: #ffdead;
         }
         .section {
             margin-top: 40px;
@@ -44,18 +44,18 @@
         .gallery {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center; /* This will center the single item */
+            justify-content: center;
             gap: 30px;
             align-items: flex-start;
         }
         .gallery-item {
             text-align: center;
             width: 100%;
-            max-width: 300px; /* Increased max-width for the single item */
+            max-width: 300px;
         }
         .gallery-item img {
             width: 100%;
-            max-width: 300px; /* Set a max-width for the image as well */
+            max-width: 300px;
             height: auto;
             border: 2px solid #5c4033;
         }
@@ -155,6 +155,16 @@
         </div>
     </div>
 
+    <!-- Hidden Form for Google Submission -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    <form id="google-form" 
+          action="https://docs.google.com/forms/d/e/1FAIpQLSdmYx6p9Mqf3rvaNbrLZG11Ykq-On5DT-Fqv65ZJGPSFXPdKA/formResponse" 
+          method="post" 
+          target="hidden_iframe" 
+          style="display:none;">
+        <input type="text" name="entry.1314953833" id="form-question-input">
+    </form>
+
     <script>
         const videoContainer = document.getElementById('video-player-container');
         const videoPlayer = document.getElementById('video-player');
@@ -163,7 +173,7 @@
         const interrogationData = {
             no_match_videos: ['faAJUygW70Q', 'vYKVGRcMgPg', 'TOCKmqqHkL8', 'UEBJHwwKXa4'], 
             camilla: {
-                'whisky,fingerprint': '1jx4gpR7O4E',
+                'whisky': '1jx4gpR7O4E',
                 'argument': 'o87gFEMtAWQ',
                 'laudanum': 'p6n1hUtSakQ',
                 'ledger': '6WD5zmLy4D8',
@@ -172,7 +182,7 @@
             },
             watson: {
                 'laudanum,cut': 'CakgQCBrpAU',
-                'whisky,fingerprint': 'mZYgPoZFbVU',
+                'whisky': 'mZYgPoZFbVU',
                 'laudanum': 'j2uHnkL0kCc',
                 'ledger': 'PAEvh7bp9Q4',
                 'accounts': 'PAEvh7bp9Q4',
@@ -183,7 +193,7 @@
             },
             miles: {
                 'arthritis,laudanum': 'HsobAp9Je5k',
-                'whisky,fingerprint': '4fVFFYis9ic',
+                'whisky': '4fVFFYis9ic',
                 'arthritis': '2n-C1Sv-0T8',
                 'blood': 'Y2h9wBwLaHk',
                 'glass': 'Y2h9wBwLaHk',
@@ -194,15 +204,15 @@
             },
             henry: {
                 'lucien,letter': 'cOrOwKow75Q',
-                'whisky,fingerprint': 'BbogZSipBFc',
+                'whisky': 'BbogZSipBFc',
                 'arsenic': 'RePUCbkajN0',
-                'laudanum': 'c3J0vRRFRe0',
-                'ledger': 'JI7Cxg4YVt8',
+                'laudanum': 'vtzd2WKb0D0',
+                'ledger': 'PbXHCuyGw1o',
                 'letter': 'w3n8p_gBUuc',
                 'paint': '-Dq5cel0eMI'
             },
             eleanor: {
-                'whisky,fingerprint': 'QUKtZdAO6SM',
+                'whisky': 'QUKtZdAO6SM',
                 'laudanum': '0GFlwhGDZIM',
                 'ledger': '95zzYZvlm2U',
                 'letter': 'dm-F4bGNZCA',
@@ -223,6 +233,17 @@
             const actualSuspectName = 'watson';
             const inputElement = document.getElementById(`${actualSuspectName}-input`);
             const userInput = inputElement.value.toLowerCase();
+            
+            // --- Send Data to Google Form (Using Hidden iFrame) ---
+            if (userInput.trim() !== "") {
+                // Set the value of the hidden form input
+                document.getElementById('form-question-input').value = "WATSON: " + userInput; // Prepended suspect name
+                // Submit the hidden form
+                document.getElementById('google-form').submit();
+                console.log("Question submitted to form: " + userInput);
+            }
+            // ---------------------------------------------
+
             const suspectClues = interrogationData[actualSuspectName];
             
             let videoId = null;
@@ -231,6 +252,7 @@
                 const keywordArray = keywords.split(',');
                 const allKeywordsMatch = keywordArray.every(keyword => {
                     const trimmedKeyword = keyword.trim();
+                    // Handle whisky/whiskey spelling variation
                     if (trimmedKeyword === 'whisky') {
                         return userInput.includes('whisky') || userInput.includes('whiskey');
                     }
