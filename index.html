@@ -142,9 +142,7 @@
         <div class="invitation-section">
             <img id="invitation-image" src="images/invite.png" alt="An invitation to dinner at the estates of Lord Lucien Blackwood.">
             <br>
-            <span class="audio-icon" onclick="playAudio('audio/sherlock1.mp3', this)">
-                <img src="images/deerstalker.jpg" alt="Play Sherlock's audio log">
-            </span>
+            <!-- Removed the Sherlock audio icon from here -->
         </div>
 
         <h2>The Guests</h2>
@@ -176,7 +174,7 @@
             </span>
         </div>
 
-        <button class="enter-button" onclick="openPasswordModal()">Locked: Please Enter Password</button>
+        <button class="enter-button" onclick="openPasswordModal()">The Investigation Begins...</button>
     </div>
 
     <!-- Password Modal HTML -->
@@ -234,9 +232,10 @@
         }
 
         function checkPassword() {
-            const correctPassword = 'murder';
+            // You can set the password for the investigation here
+            const correctPassword = 'murder'; // Example password
             if (passwordInput.value.toLowerCase() === correctPassword) {
-                // **LINK UPDATED HERE**
+                // This now correctly links to your main investigation page
                 window.location.href = 'investigation.html';
             } else {
                 passwordError.style.display = 'block';
