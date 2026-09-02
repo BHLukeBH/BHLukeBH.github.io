@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Soldier's Final Retreat - Suspect Questioning Room</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        victorian: {
+                            900: '#0d0907',
+                            800: '#1a130f',
+                            700: '#2c211a',
+                            600: '#423328',
+                            brass: '#c59b27',
+                            brasslight: '#e5b842',
+                            paper: '#f3ebd9',
+                            paperdark: '#ded2b8',
+                            crimson: '#6b1d1d',
+                            crimsonlight: '#942929'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        inter: ['Inter', 'sans-serif'],
+                        typewriter: ['Special Elite', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0d0907;
+            color: #f3ebd9;
+            font-family: 'Inter', sans-serif;
+            background-image: radial-gradient(circle at 50% 30%, #1a130f 0%, #0d0907 100%);
+        }
+
+        .cinzel { font-family: 'Cinzel', serif; }
+        .typewriter { font-family: 'Special Elite', monospace; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a130f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #423328;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c59b27;
+        }
+
+        /* Video CRT/Vintage filter overlay */
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #423328;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 10px 25px rgba(0,0,0,0.6);
+        }
+        .video-container::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 10;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+
+        .active-suspect {
+            border-color: #c59b27 !important;
+            background-color: rgba(197, 155, 39, 0.15) !important;
+            box-shadow: 0 0 15px rgba(197, 155, 39, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-victorian-brass selection:text-victorian-900">
+
+    <header class="border-b border-victorian-600/60 bg-victorian-900/90 backdrop-blur sticky top-0 z-30 px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-victorian-700 border border-victorian-brass flex items-center justify-center text-victorian-brass shadow-md">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold cinzel text-victorian-paper tracking-wide">A Soldier's Final Retreat</h1>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button onclick="toggleCaseNotes()" class="px-3 py-1.5 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-600 text-victorian-paper text-sm flex items-center gap-2 transition duration-200">
+                    <i class="fa-solid fa-book-bookmark text-victorian-brass"></i>
+                    <span>Discovered Clues (<span id="unlockedCount">0</span>/20)</span>
+                </button>
+
+                <button onclick="openConfigModal()" class="px-3 py-1.5 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-600 text-victorian-brass text-sm flex items-center gap-2 transition duration-200" title="Edit Video URLs">
+                    <i class="fa-solid fa-gear"></i>
+                    <span class="hidden sm:inline">Configure Links</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto w-full p-4 md:p-6 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Suspect Selection Column -->
+        <section class="lg:col-span-4 flex flex-col gap-4">
+            <div class="bg-victorian-800/80 rounded-xl p-4 border border-victorian-600/50 backdrop-blur">
+                <div class="flex justify-between items-center mb-3 pb-2 border-b border-victorian-700">
+                    <h2 class="cinzel text-lg font-bold text-victorian-brass flex items-center gap-2">
+                        <i class="fa-solid fa-users-viewfinder"></i> Suspect List
+                    </h2>
+                    <span class="text-xs text-victorian-paperdark italic">Select to Question</span>
+                </div>
+
+                <p class="text-xs text-victorian-paperdark mb-4">
+                    Choose an individual to bring into questioning. Cross-examine them using key subjects, physical evidence, or names.
+                </p>
+
+                <!-- Suspect List Container -->
+                <div id="suspectList" class="flex flex-col gap-2.5">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Interrogation Guide Helper -->
+            <div class="bg-victorian-800/60 rounded-xl p-4 border border-victorian-600/40">
+                <h3 class="text-sm font-semibold text-victorian-paper mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb text-victorian-brass"></i> Interrogation Tips
+                </h3>
+                <ul class="text-xs text-victorian-paperdark space-y-1.5 list-disc list-inside">
+                    <li>Type inquiries like <span class="text-victorian-brass font-mono">"Tell me about the gun"</span> or <span class="text-victorian-brass font-mono">"What do you know of Paris?"</span>.</li>
+                    <li>Single key terms or full phrases trigger responses.</li>
+                    <li>If a topic is irrelevant, suspects will offer a standard denial.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="lg:col-span-8 flex flex-col gap-4">
+            
+            <!-- Active Suspect Header Banner (No subtitles/roles) -->
+            <div class="bg-victorian-800/90 border border-victorian-600/60 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4 w-full sm:w-auto">
+                    <img id="activeSuspectAvatar" src="" alt="Suspect Portrait" class="w-16 h-16 rounded-full border-2 border-victorian-brass object-cover shadow-lg">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h2 id="activeSuspectName" class="text-xl font-bold cinzel text-victorian-paper">Suspect Name</h2>
+                            <span class="text-xs px-2 py-0.5 rounded bg-victorian-700 text-victorian-brass border border-victorian-600">Suspect</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-end border-t sm:border-t-0 border-victorian-700 pt-2 sm:pt-0">
+                    <div class="text-right text-xs">
+                        <span class="text-victorian-paperdark block">Status</span>
+                        <span class="text-emerald-400 font-medium flex items-center gap-1 justify-end">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Present
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Player Stage -->
+            <div class="bg-victorian-900 border border-victorian-700 rounded-xl p-3 shadow-2xl flex flex-col">
+                <div class="video-container rounded-lg bg-black aspect-video flex items-center justify-center relative">
+                    
+                    <!-- HTML5 Video Player -->
+                    <video id="videoPlayer" class="w-full h-full object-contain hidden" controls autoplay>
+                        <source id="videoSource" src="" type="video/mp4">
+                        Your browser does not support HTML5 video.
+                    </video>
+
+                    <!-- Video Placeholder State -->
+                    <div id="videoPlaceholder" class="flex flex-col items-center justify-center text-center p-6 bg-victorian-800/90 w-full h-full">
+                        <div class="w-20 h-20 rounded-full border-2 border-victorian-brass/50 flex items-center justify-center mb-4 bg-victorian-900/60 shadow-inner">
+                            <i id="placeholderIcon" class="fa-solid fa-film text-3xl text-victorian-brass"></i>
+                        </div>
+                        <h3 id="placeholderTitle" class="cinzel text-lg text-victorian-paper font-semibold">Ready for Questioning</h3>
+                        <p id="placeholderSubtitle" class="text-xs text-victorian-paperdark max-w-md mt-2">
+                            Enter a question or topic below to interrogate <span id="placeholderSuspectName" class="text-victorian-brass font-semibold">this suspect</span>.
+                        </p>
+                    </div>
+
+                    <!-- Video Badge Overlay -->
+                    <div class="absolute top-3 left-3 z-20 bg-victorian-900/80 backdrop-blur px-2.5 py-1 rounded border border-victorian-600/50 text-[11px] text-victorian-paper font-mono flex items-center gap-2">
+                        <i class="fa-solid fa-circle text-red-500 text-[8px] animate-pulse"></i>
+                        <span id="videoBadgeState">STANDBY</span>
+                    </div>
+                </div>
+
+                <!-- Video Control Bar / Topic Indicator -->
+                <div class="mt-3 flex flex-wrap justify-between items-center gap-2 px-1">
+                    <div class="text-xs text-victorian-paperdark flex items-center gap-2">
+                        <i class="fa-solid fa-comment-dots text-victorian-brass"></i>
+                        <span>Current Topic:</span>
+                        <span id="currentTopicDisplay" class="text-victorian-paper font-mono bg-victorian-800 px-2 py-0.5 rounded border border-victorian-700">None</span>
+                    </div>
+
+                    <button onclick="replayCurrentVideo()" class="text-xs text-victorian-brass hover:text-victorian-brasslight flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-rotate-right"></i> Replay Recording
+                    </button>
+                </div>
+            </div>
+
+            <!-- Interrogation Input Box & Discovered Topics -->
+            <div class="bg-victorian-800/90 border border-victorian-600/60 rounded-xl p-4 shadow-lg">
+                <form id="questionForm" onsubmit="handleQuestionSubmit(event)" class="flex flex-col sm:flex-row gap-2">
+                    <div class="relative flex-1">
+                        <input type="text" id="questionInput" 
+                            placeholder="Ask about a clue, person, date, or event (e.g. Paris, Gun, Maiwand)..." 
+                            class="w-full bg-victorian-900/90 border border-victorian-600/80 rounded-lg px-4 py-3 text-sm text-victorian-paper placeholder-victorian-paperdark/60 focus:outline-none focus:border-victorian-brass transition pr-10">
+                        <button type="button" onclick="clearInput()" class="absolute right-3 top-1/2 -translate-y-1/2 text-victorian-paperdark hover:text-victorian-paper text-sm">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <button type="submit" class="px-6 py-3 bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow-md shrink-0">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Interrogate</span>
+                    </button>
+                </form>
+
+                <!-- Discovered Topics (Starts empty, unlocks as questions are asked) -->
+                <div class="mt-3 pt-3 border-t border-victorian-700/60 flex flex-wrap items-center gap-1.5">
+                    <span class="text-xs text-victorian-paperdark/80 mr-1"><i class="fa-solid fa-tags text-[10px] text-victorian-brass"></i> Discovered Topics:</span>
+                    <div id="quickTopicTags" class="flex flex-wrap gap-1.5">
+                        <!-- Populated dynamically as topics are discovered -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statement Transcript Area -->
+            <div class="bg-victorian-800/80 border border-victorian-600/50 rounded-xl p-4 flex-1">
+                <h3 class="text-sm font-bold cinzel text-victorian-brass mb-2 flex items-center justify-between">
+                    <span class="flex items-center gap-2">
+                        <i class="fa-solid fa-file-lines"></i> Official Statement Transcript
+                    </span>
+                    <span id="transcriptStatusBadge" class="text-[11px] font-sans font-normal text-victorian-paperdark bg-victorian-900 px-2 py-0.5 rounded border border-victorian-700">Awaiting Query</span>
+                </h3>
+                
+                <div class="bg-victorian-900/90 rounded-lg p-4 border border-victorian-700/80 min-h-[100px] text-sm leading-relaxed font-mono text-victorian-paper relative">
+                    <p id="transcriptText" class="typewriter text-victorian-paper/90">
+                        Select a suspect and submit an inquiry to record their official statement...
+                    </p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <div id="caseNotesModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-victorian-800 border border-victorian-brass rounded-xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 bg-victorian-900 border-b border-victorian-700 flex justify-between items-center">
+                <h3 class="cinzel text-lg font-bold text-victorian-brass flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> Discovered Suspect Statements
+                </h3>
+                <button onclick="toggleCaseNotes()" class="text-victorian-paperdark hover:text-victorian-paper text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-4 overflow-y-auto flex-1 space-y-4" id="caseNotesList">
+                <!-- Log entries inserted dynamically -->
+            </div>
+
+            <div class="p-3 bg-victorian-900 border-t border-victorian-700 flex justify-between items-center text-xs text-victorian-paperdark">
+                <span>Total Clues Discovered: <strong id="modalUnlockedCount" class="text-victorian-brass">0</strong></span>
+                <button onclick="toggleCaseNotes()" class="px-4 py-1.5 bg-victorian-700 hover:bg-victorian-600 text-victorian-paper rounded">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="configModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-victorian-800 border border-victorian-brass rounded-xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 bg-victorian-900 border-b border-victorian-700 flex justify-between items-center">
+                <div>
+                    <h3 class="cinzel text-lg font-bold text-victorian-brass flex items-center gap-2">
+                        <i class="fa-solid fa-link"></i> Video URL Configurator
+                    </h3>
+                    <p class="text-xs text-victorian-paperdark">Update response video paths/URLs for each suspect and statement keyword.</p>
+                </div>
+                <button onclick="closeConfigModal()" class="text-victorian-paperdark hover:text-victorian-paper text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-4 overflow-y-auto flex-1 space-y-6" id="configListContainer">
+                <!-- Editable fields generated by JS -->
+            </div>
+
+            <div class="p-4 bg-victorian-900 border-t border-victorian-700 flex justify-between items-center">
+                <button onclick="resetDefaultUrls()" class="text-xs text-red-400 hover:underline">
+                    Reset to Default Placeholders
+                </button>
+                <div class="flex gap-2">
+                    <button onclick="closeConfigModal()" class="px-4 py-2 bg-victorian-700 hover:bg-victorian-600 text-victorian-paper text-sm rounded">Cancel</button>
+                    <button onclick="saveVideoUrls()" class="px-4 py-2 bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-sm rounded">
+                        Save Configurations
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-victorian-700/60 bg-victorian-900/90 py-3 px-4 text-center text-xs text-victorian-paperdark mt-6">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p>Event 2: A Soldier's Final Retreat — Interrogation Records</p>
+            <p class="text-victorian-paperdark/60">Inspect all evidence thoroughly to uncover the truth.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initial master suspect dataset containing all keywords from Event 2 specs
+        const initialSuspectsData = {
+            persimma: {
+                id: 'persimma',
+                name: 'Lady Persimma Sterling',
+                avatar: 'https://placehold.co/150x150/2c211a/c59b27?text=Persimma',
+                genericVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                genericTranscript: "I have no knowledge of what you are referring to, Inspector.",
+                statements: [
+                    {
+                        id: 'p1',
+                        title: 'Paris / Ticket / Grand Tour',
+                        keywords: ['paris', 'ticket', 'grand tour'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                        transcript: "Paris? Yes, travel arrangements were discussed for a Grand Tour, but those plans are strictly private."
+                    },
+                    {
+                        id: 'p2',
+                        title: 'Sign up paper / Torn paper',
+                        keywords: ['sign up paper', 'torn paper', 'sign up', 'paper'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+                        transcript: "That torn piece of paper... I assure you it was discarded by accident. It has no bearing on this affair."
+                    },
+                    {
+                        id: 'p3',
+                        title: 'Gun / Revolver',
+                        keywords: ['gun', 'revolver'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                        transcript: "I am unacquainted with firearms. Any weapon found in the manor certainly does not belong to me."
+                    },
+                    {
+                        id: 'p4',
+                        title: 'Deer head',
+                        keywords: ['deer head', 'deer'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+                        transcript: "The mounted deer head in the trophy room has hung there for years. Why you ask about it now is beyond me."
+                    }
+                ]
+            },
+            archibald: {
+                id: 'archibald',
+                name: 'Archibald Sterling',
+                avatar: 'https://placehold.co/150x150/2c211a/c59b27?text=Archibald',
+                genericVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                genericTranscript: "I haven't the faintest idea what you're talking about.",
+                statements: [
+                    {
+                        id: 'a1',
+                        title: 'Deer head',
+                        keywords: ['deer head', 'deer'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+                        transcript: "Father took that stag decades ago. I noticed someone had moved or tampered with the plaque recently."
+                    },
+                    {
+                        id: 'a2',
+                        title: 'Jezail / Riffle',
+                        keywords: ['jezail', 'riffle', 'rifle'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+                        transcript: "The Jezail rifle was a war trophy brought back from the Afghan campaign. It was kept secured until recently."
+                    },
+                    {
+                        id: 'a3',
+                        title: 'Debt letter / Money',
+                        keywords: ['debt letter', 'money', 'debt'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+                        transcript: "Financial matters are pressing, I won't deny it, but those letters are private family correspondence."
+                    },
+                    {
+                        id: 'a4',
+                        title: 'Statue / The Thinker',
+                        keywords: ['statue', 'the thinker', 'thinker'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+                        transcript: "The miniature statue of 'The Thinker' sat on the library desk. I noticed it was relocated shortly before the incident."
+                    },
+                    {
+                        id: 'a5',
+                        title: 'Paris / Ticket / Grand Tour',
+                        keywords: ['paris', 'ticket', 'grand tour'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutback2012.mp4',
+                        transcript: "A ticket to Paris was indeed purchased. Whether it was for flight or leisure is not for me to declare."
+                    },
+                    {
+                        id: 'a6',
+                        title: 'Sign up paper / Torn paper',
+                        keywords: ['sign up paper', 'torn paper', 'sign up', 'paper'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+                        transcript: "I saw the torn paper on the desk. Someone tried to destroy signatures on an official agreement."
+                    }
+                ]
+            },
+            silas: {
+                id: 'silas',
+                name: 'Silas Thorne',
+                avatar: 'https://placehold.co/150x150/2c211a/c59b27?text=Silas',
+                genericVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                genericTranscript: "I know nothing of that matter, Inspector.",
+                statements: [
+                    {
+                        id: 's1',
+                        title: 'Retreat / 26th July / 27th July',
+                        keywords: ['retreat', '26th july', '27th july', 'july 26', 'july 27', '26 july', '27 july'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
+                        transcript: "The military retreat on the 26th and 27th of July was a chaotic catastrophe. Few came out unchanged."
+                    },
+                    {
+                        id: 's2',
+                        title: 'Hunting party / Photo / Brother',
+                        keywords: ['hunting party', 'photo', 'brother'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4',
+                        transcript: "That photograph of the hunting party includes my late brother. Certain gentlemen here were present that day."
+                    },
+                    {
+                        id: 's3',
+                        title: 'Gun / Revolver',
+                        keywords: ['gun', 'revolver'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                        transcript: "A standard service revolver. Any soldier who served in the East knows how to handle one."
+                    },
+                    {
+                        id: 's4',
+                        title: 'Jezail / Riffle',
+                        keywords: ['jezail', 'riffle', 'rifle'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+                        transcript: "An Afghan Jezail rifle is unmistakable. Its long barrel leaves a specific mark at close range."
+                    }
+                ]
+            },
+            maple: {
+                id: 'maple',
+                name: 'Maple Strand',
+                avatar: 'https://placehold.co/150x150/2c211a/c59b27?text=Maple',
+                genericVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                genericTranscript: "That doesn't mean anything to me.",
+                statements: [
+                    {
+                        id: 'm1',
+                        title: 'Memoirs / Maiwand / War documents',
+                        keywords: ['memoirs', 'maiwand', 'war documents', 'memoir', 'documents'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+                        transcript: "The war documents and personal memoirs detail what truly transpired at the Battle of Maiwand."
+                    },
+                    {
+                        id: 'm2',
+                        title: 'Statue / The Thinker',
+                        keywords: ['statue', 'the thinker', 'thinker'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+                        transcript: "I saw someone lingering around 'The Thinker' statue late last evening. They seemed to be inspecting its pedestal."
+                    },
+                    {
+                        id: 'm3',
+                        title: 'Debt letter / Money',
+                        keywords: ['debt letter', 'money', 'debt'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+                        transcript: "Money troubles run deep in this house. Debt letters have been arriving daily by special messenger."
+                    }
+                ]
+            },
+            evelyn: {
+                id: 'evelyn',
+                name: 'Evelyn Ashgrove',
+                avatar: 'https://placehold.co/150x150/2c211a/c59b27?text=Evelyn',
+                genericVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                genericTranscript: "I have no information regarding that subject.",
+                statements: [
+                    {
+                        id: 'e1',
+                        title: 'Memoirs / Maiwand / War documents',
+                        keywords: ['memoirs', 'maiwand', 'war documents', 'memoir', 'documents'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+                        transcript: "Those memoirs contain accounts that could ruin prominent reputations if ever published."
+                    },
+                    {
+                        id: 'e2',
+                        title: 'Hunting party / Photo / Brother',
+                        keywords: ['hunting party', 'photo', 'brother'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+                        transcript: "The hunting party photograph was kept hidden for a reason. It connects several people to that fateful expedition."
+                    },
+                    {
+                        id: 'e3',
+                        title: 'Retreat / 26th July / 27th July',
+                        keywords: ['retreat', '26th july', '27th july', 'july 26', 'july 27', '26 july', '27 july'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutback2012.mp4',
+                        transcript: "On the night of July 26th into the 27th, during the retreat, crucial military orders went missing."
+                    },
+                    {
+                        id: 'e4',
+                        title: 'Paris / Ticket / Grand Tour',
+                        keywords: ['paris', 'ticket', 'grand tour'],
+                        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+                        transcript: "A sudden trip to Paris... one does not purchase a ticket for the Grand Tour overnight without urgency."
+                    }
+                ]
+            }
+        };
+
+        // State Management
+        let suspectsData = JSON.parse(localStorage.getItem('event2_suspects_data')) || JSON.parse(JSON.stringify(initialSuspectsData));
+        let activeSuspectId = 'persimma';
+        let discoveredClues = JSON.parse(localStorage.getItem('event2_discovered_clues')) || [];
+        let discoveredTopics = JSON.parse(localStorage.getItem('event2_discovered_topics')) || [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSuspectList();
+            selectSuspect(activeSuspectId);
+            updateDiscoveredCount();
+            renderDiscoveredTopics();
+        });
+
+        /**
+         * Renders the suspect cards in the left panel.
+         */
+        function renderSuspectList() {
+            const listContainer = document.getElementById('suspectList');
+            if (!listContainer) return;
+            listContainer.innerHTML = '';
+
+            Object.values(suspectsData).forEach(suspect => {
+                const isSelected = suspect.id === activeSuspectId;
+                const card = document.createElement('div');
+                card.className = `p-3 rounded-lg border transition cursor-pointer flex items-center justify-between gap-3 ${
+                    isSelected ? 'active-suspect border-victorian-brass' : 'bg-victorian-900/60 border-victorian-700/60 hover:bg-victorian-700/50 hover:border-victorian-600'
+                }`;
+                card.onclick = () => selectSuspect(suspect.id);
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${suspect.avatar}" alt="${suspect.name}" class="w-12 h-12 rounded-full border border-victorian-brass/60 object-cover shrink-0">
+                        <div>
+                            <h4 class="font-bold text-sm text-victorian-paper cinzel">${suspect.name}</h4>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-victorian-800 text-victorian-brass border border-victorian-700">${suspect.statements.length} Topics</span>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+
+        /**
+         * Selects a suspect and updates UI context.
+         */
+        function selectSuspect(suspectId) {
+            activeSuspectId = suspectId;
+            const suspect = suspectsData[suspectId];
+            if (!suspect) return;
+
+            // Update UI header & avatar
+            const nameEl = document.getElementById('activeSuspectName');
+            const avatarEl = document.getElementById('activeSuspectAvatar');
+            const placeholderSuspectName = document.getElementById('placeholderSuspectName');
+
+            if (nameEl) nameEl.innerText = suspect.name;
+            if (avatarEl) avatarEl.src = suspect.avatar;
+            if (placeholderSuspectName) placeholderSuspectName.innerText = suspect.name;
+
+            // Reset video / placeholder UI
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoPlaceholder = document.getElementById('videoPlaceholder');
+            if (videoPlayer) {
+                videoPlayer.pause();
+                videoPlayer.classList.add('hidden');
+            }
+            if (videoPlaceholder) {
+                videoPlaceholder.classList.remove('hidden');
+            }
+
+            document.getElementById('videoBadgeState').innerText = 'STANDBY';
+            document.getElementById('currentTopicDisplay').innerText = 'None';
+            document.getElementById('transcriptStatusBadge').innerText = 'Awaiting Query';
+            document.getElementById('transcriptText').innerText = `Select a topic or type a question to interrogate ${suspect.name}...`;
+
+            renderDiscoveredTopics();
+            renderSuspectList();
+        }
+
+        /**
+         * Renders quick topic buttons discovered by the student.
+         */
+        function renderDiscoveredTopics() {
+            const container = document.getElementById('quickTopicTags');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (discoveredTopics.length === 0) {
+                container.innerHTML = `<span class="text-xs text-victorian-paperdark/50 italic">None yet — ask questions to reveal topics.</span>`;
+                return;
+            }
+
+            discoveredTopics.forEach(topic => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'text-[11px] px-2 py-0.5 rounded bg-victorian-700/70 hover:bg-victorian-brass hover:text-victorian-900 text-victorian-paper border border-victorian-600 transition';
+                btn.innerText = topic;
+                btn.onclick = () => {
+                    document.getElementById('questionInput').value = topic;
+                    handleQuestionSubmit();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        /**
+         * Interrogation Engine: Matches user queries against keyword sets
+         */
+        function handleQuestionSubmit(e) {
+            if (e) e.preventDefault();
+
+            const inputEl = document.getElementById('questionInput');
+            const query = inputEl.value.trim().toLowerCase();
+
+            if (!query) return;
+
+            const suspect = suspectsData[activeSuspectId];
+            if (!suspect) return;
+
+            const cleanQuery = query.replace(/[^\w\s]/gi, '');
+            let matchedStatement = null;
+
+            // Search suspect's statement keyword array
+            for (let stmt of suspect.statements) {
+                const hasMatch = stmt.keywords.some(kw => {
+                    const cleanKw = kw.toLowerCase();
+                    return cleanQuery.includes(cleanKw) || query.includes(cleanKw);
+                });
+
+                if (hasMatch) {
+                    matchedStatement = stmt;
+                    break;
+                }
+            }
+
+            if (matchedStatement) {
+                // Add matched topic to discovered topics if not present
+                if (!discoveredTopics.includes(matchedStatement.title)) {
+                    discoveredTopics.push(matchedStatement.title);
+                    localStorage.setItem('event2_discovered_topics', JSON.stringify(discoveredTopics));
+                    renderDiscoveredTopics();
+                }
+
+                playStatementResponse(suspect, matchedStatement.title, matchedStatement.videoUrl, matchedStatement.transcript, matchedStatement.id);
+            } else {
+                // Generic response
+                playStatementResponse(suspect, 'Unrecognized Subject', suspect.genericVideo, suspect.genericTranscript, null);
+            }
+        }
+
+        /**
+         * Plays statement video and renders text transcript
+         */
+        function playStatementResponse(suspect, topicTitle, videoUrl, transcript, statementId) {
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoSource = document.getElementById('videoSource');
+            const videoPlaceholder = document.getElementById('videoPlaceholder');
+            const transcriptText = document.getElementById('transcriptText');
+            const badgeState = document.getElementById('videoBadgeState');
+            const topicDisplay = document.getElementById('currentTopicDisplay');
+            const statusBadge = document.getElementById('transcriptStatusBadge');
+
+            videoSource.src = videoUrl;
+            videoPlayer.load();
+
+            videoPlaceholder.classList.add('hidden');
+            videoPlayer.classList.remove('hidden');
+
+            badgeState.innerText = 'PLAYING STATEMENT';
+            topicDisplay.innerText = topicTitle;
+            statusBadge.innerText = 'Recorded Statement';
+
+            transcriptText.innerText = `"${transcript}"`;
+
+            videoPlayer.play().catch(err => console.warn("Autoplay interrupted:", err));
+
+            if (statementId) {
+                const clueKey = `${suspect.id}_${statementId}`;
+                if (!discoveredClues.includes(clueKey)) {
+                    discoveredClues.push(clueKey);
+                    localStorage.setItem('event2_discovered_clues', JSON.stringify(discoveredClues));
+                    updateDiscoveredCount();
+                }
+            }
+        }
+
+        function clearInput() {
+            document.getElementById('questionInput').value = '';
+        }
+
+        function replayCurrentVideo() {
+            const videoPlayer = document.getElementById('videoPlayer');
+            if (videoPlayer.src || videoPlayer.querySelector('source').src) {
+                videoPlayer.currentTime = 0;
+                videoPlayer.play().catch(err => console.log(err));
+            }
+        }
+
+        function updateDiscoveredCount() {
+            document.getElementById('unlockedCount').innerText = discoveredClues.length;
+            document.getElementById('modalUnlockedCount').innerText = discoveredClues.length;
+        }
+
+        function toggleCaseNotes() {
+            const modal = document.getElementById('caseNotesModal');
+            const list = document.getElementById('caseNotesList');
+
+            if (modal.classList.contains('hidden')) {
+                list.innerHTML = '';
+
+                if (discoveredClues.length === 0) {
+                    list.innerHTML = `
+                        <div class="text-center py-8 text-victorian-paperdark">
+                            <i class="fa-solid fa-folder-open text-3xl mb-2 text-victorian-600"></i>
+                            <p class="text-sm">No statements recorded yet. Interrogate suspects to uncover clues!</p>
+                        </div>
+                    `;
+                } else {
+                    discoveredClues.forEach(clueKey => {
+                        const [sId, stmtId] = clueKey.split('_');
+                        const s = suspectsData[sId];
+                        if (s) {
+                            const stmt = s.statements.find(item => item.id === stmtId);
+                            if (stmt) {
+                                const itemEl = document.createElement('div');
+                                itemEl.className = 'p-3 bg-victorian-900 border border-victorian-700 rounded-lg text-xs';
+                                itemEl.innerHTML = `
+                                    <div class="flex justify-between items-center text-victorian-brass font-bold mb-1">
+                                        <span class="cinzel">${s.name}</span>
+                                        <span class="text-[10px] bg-victorian-800 text-victorian-paperdark px-2 py-0.5 rounded border border-victorian-700">${stmt.title}</span>
+                                    </div>
+                                    <p class="text-victorian-paper typewriter italic">"${stmt.transcript}"</p>
+                                `;
+                                list.appendChild(itemEl);
+                            }
+                        }
+                    });
+                }
+
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function openConfigModal() {
+            const modal = document.getElementById('configModal');
+            const container = document.getElementById('configListContainer');
+            container.innerHTML = '';
+
+            Object.values(suspectsData).forEach(s => {
+                const suspectBox = document.createElement('div');
+                suspectBox.className = 'bg-victorian-900 p-4 rounded-lg border border-victorian-700 space-y-3';
+
+                let statementsHtml = '';
+                s.statements.forEach(stmt => {
+                    statementsHtml += `
+                        <div class="mt-2 text-xs">
+                            <label class="block text-victorian-brass font-medium mb-1">
+                                Topic: <span class="text-victorian-paper">${stmt.title}</span> 
+                                <span class="text-victorian-paperdark text-[10px]">(Keywords: ${stmt.keywords.join(', ')})</span>
+                            </label>
+                            <input type="text" id="url_${s.id}_${stmt.id}" value="${stmt.videoUrl}" 
+                                class="w-full bg-victorian-800 border border-victorian-600 rounded p-2 text-victorian-paper focus:border-victorian-brass focus:outline-none">
+                        </div>
+                    `;
+                });
+
+                suspectBox.innerHTML = `
+                    <h4 class="font-bold text-sm text-victorian-paper cinzel border-b border-victorian-800 pb-2">${s.name}</h4>
+                    <div class="text-xs mb-2">
+                        <label class="block text-victorian-paperdark mb-1">Generic Fallback Video URL:</label>
+                        <input type="text" id="url_generic_${s.id}" value="${s.genericVideo}" 
+                            class="w-full bg-victorian-800 border border-victorian-600 rounded p-2 text-victorian-paper focus:border-victorian-brass focus:outline-none">
+                    </div>
+                    ${statementsHtml}
+                `;
+
+                container.appendChild(suspectBox);
+            });
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeConfigModal() {
+            document.getElementById('configModal').classList.add('hidden');
+        }
+
+        function saveVideoUrls() {
+            Object.values(suspectsData).forEach(s => {
+                const genericInput = document.getElementById(`url_generic_${s.id}`);
+                if (genericInput) s.genericVideo = genericInput.value;
+
+                s.statements.forEach(stmt => {
+                    const input = document.getElementById(`url_${s.id}_${stmt.id}`);
+                    if (input) stmt.videoUrl = input.value;
+                });
+            });
+
+            localStorage.setItem('event2_suspects_data', JSON.stringify(suspectsData));
+            closeConfigModal();
+            selectSuspect(activeSuspectId);
+        }
+
+        function resetDefaultUrls() {
+            suspectsData = JSON.parse(JSON.stringify(initialSuspectsData));
+            localStorage.removeItem('event2_suspects_data');
+            localStorage.removeItem('event2_discovered_topics');
+            localStorage.removeItem('event2_discovered_clues');
+            discoveredTopics = [];
+            discoveredClues = [];
+            closeConfigModal();
+            selectSuspect(activeSuspectId);
+            updateDiscoveredCount();
+            renderDiscoveredTopics();
+        }
+    </script>
+</body>
+</html>
