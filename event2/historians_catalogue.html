@@ -359,13 +359,16 @@
 
     <script>
         // Master Catalog Dataset with exact user descriptions and placeholder assets
+        const DEFAULT_MODEL_URL = 'https://teachablemachine.withgoogle.com/models/k78k70ASC/';
+
         const catalogueItems = [
             {
                 id: 'jezail_plaque',
                 title: 'Jezail Plaque',
                 modelLabel: 'Jezail Plaque',
+                aliases: ['jezail', 'jezail plaque', 'rifle', 'riffle'],
                 image: 'https://placehold.co/600x400/2c211a/c59b27?text=Jezail+Plaque',
-                audio: 'audio/jezail_plaque.mp3', // Dummy relative MP3 path
+                audio: 'audio/jezail_plaque.mp3', // Relative MP3 path
                 paragraphs: [
                     "The jezail. A long-barrelled weapon common in Central Asia and British India and parts of the Middle East.",
                     "The main weapon used by the various ethnic tribesmen of Afghanistan (who, in 1809, deposed Shah Shuja, ruler of Afghanistan 1803-1809 and 1839-1842). They also fought in the First and Second Anglo-Afghan Wars.",
@@ -376,7 +379,8 @@
             {
                 id: 'deers_head',
                 title: 'Deer’s Head',
-                modelLabel: 'Deers Head',
+                modelLabel: 'Deer Head',
+                aliases: ['deer head', 'deer', 'deers head', 'deer’s head'],
                 image: 'https://placehold.co/600x400/2c211a/c59b27?text=Deer%27s+Head',
                 audio: 'audio/deers_head.mp3',
                 paragraphs: [
@@ -388,6 +392,7 @@
                 id: 'grand_tour_brochure',
                 title: 'Grand Tour Brochure',
                 modelLabel: 'Grand Tour Brochure',
+                aliases: ['grand tour brochure', 'grand tour', 'brochure'],
                 image: 'https://placehold.co/600x400/2c211a/c59b27?text=Grand+Tour+Brochure',
                 audio: 'audio/grand_tour_brochure.mp3',
                 paragraphs: [
@@ -398,7 +403,8 @@
             {
                 id: 'revolver',
                 title: 'Revolver',
-                modelLabel: 'Revolver',
+                modelLabel: 'Gun',
+                aliases: ['gun', 'revolver', 'smith & wesson', 'pistol'],
                 image: 'https://placehold.co/600x400/2c211a/c59b27?text=Revolver',
                 audio: 'audio/revolver.mp3',
                 paragraphs: [
@@ -413,6 +419,7 @@
                 id: 'pot_pourri',
                 title: 'Pot Pourri',
                 modelLabel: 'Pot Pourri',
+                aliases: ['pot pourri', 'potpourri'],
                 image: 'https://placehold.co/600x400/2c211a/c59b27?text=Pot+Pourri',
                 audio: 'audio/pot_pourri.mp3',
                 paragraphs: [
@@ -425,6 +432,7 @@
                 id: 'magna_carta',
                 title: 'Magna Carta',
                 modelLabel: 'Magna Carta',
+                aliases: ['magna carta', 'charter'],
                 image: 'https://placehold.co/600x400/2c211a/c59b27?text=Magna+Carta',
                 audio: 'audio/magna_carta.mp3',
                 paragraphs: [
@@ -434,8 +442,8 @@
             }
         ];
 
+        let modelUrl = localStorage.getItem('event2_teachable_model_url') || DEFAULT_MODEL_URL;
         let unlockedItemIds = JSON.parse(localStorage.getItem('event2_unlocked_catalogue_items')) || [];
-        let modelUrl = localStorage.getItem('event2_teachable_model_url') || '';
         
         // Teachable Machine Variables
         let model, webcam, maxPredictions;
@@ -650,12 +658,22 @@
             }
 
             // Threshold for unlock trigger (> 82% confidence)
-            if (highestProb >= 0.82 && topMatch && topMatch.toLowerCase() !== 'background') {
-                const matchedItem = catalogueItems.find(i => 
-                    i.title.toLowerCase() === topMatch.toLowerCase() || 
-                    i.modelLabel.toLowerCase() === topMatch.toLowerCase() ||
-                    i.id.toLowerCase() === topMatch.toLowerCase()
-                );
+            if (highestProb >= 0.80 && topMatch && topMatch.toLowerCase() !== 'background') {
+                const cleanMatch = topMatch.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                const matchedItem = catalogueItems.find(i => {
+                    const cleanTitle = i.title.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const cleanLabel = i.modelLabel.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const cleanId = i.id.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const cleanAliases = (i.aliases || []).map(a => a.toLowerCase().replace(/[^a-z0-9]/g, ''));
+
+                    return (
+                        cleanMatch === cleanTitle || 
+                        cleanMatch === cleanLabel || 
+                        cleanMatch === cleanId || 
+                        cleanAliases.includes(cleanMatch)
+                    );
+                });
 
                 if (matchedItem && !unlockedItemIds.includes(matchedItem.id)) {
                     scanLockout = true;
@@ -740,6 +758,10 @@
         function resetAllProgress() {
             unlockedItemIds = [];
             localStorage.removeItem('event2_unlocked_catalogue_items');
+            modelUrl = DEFAULT_MODEL_URL;
+            localStorage.setItem('event2_teachable_model_url', DEFAULT_MODEL_URL);
+            const urlInput = document.getElementById('modelUrlInput');
+            if (urlInput) urlInput.value = DEFAULT_MODEL_URL;
             renderCatalogueGrid();
             updateProgress();
             openConfigModal();
