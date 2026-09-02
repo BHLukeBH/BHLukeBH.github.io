@@ -242,9 +242,9 @@
             <!-- Camera Viewport & Overlay -->
             <div class="p-4 flex flex-col items-center gap-4">
                 <div class="relative w-full aspect-square bg-black rounded-xl overflow-hidden border-2 border-victorian-600 flex items-center justify-center shadow-inner">
-                    <!-- WebCam Container -->
-                    <div id="webcamContainer" class="w-full h-full flex items-center justify-center">
-                        <!-- Teachable Machine Canvas attached here -->
+                    <!-- WebCam Video Element for Native iOS / Android WebRTC -->
+                    <div id="webcamContainer" class="w-full h-full flex items-center justify-center relative bg-black">
+                        <video id="scannerVideo" autoplay playsinline webkit-playsinline muted class="w-full h-full object-cover"></video>
                     </div>
 
                     <!-- Scanning Line -->
@@ -288,7 +288,14 @@
 
             <!-- Scanner Footer -->
             <div class="p-3 bg-victorian-900 border-t border-victorian-700 flex justify-between items-center text-xs">
-                <span class="text-victorian-paperdark">Hold camera steady over physical item</span>
+                <div class="flex items-center gap-2">
+                    <span class="text-victorian-paperdark hidden sm:inline">Hold camera steady</span>
+                    <!-- Camera Switcher for mobile multi-camera setups -->
+                    <button id="switchCameraBtn" onclick="switchCamera()" class="px-2.5 py-1 bg-victorian-800 hover:bg-victorian-700 border border-victorian-600 text-victorian-brass rounded text-[11px] flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-camera-rotate"></i>
+                        <span>Flip Cam</span>
+                    </button>
+                </div>
                 <button onclick="closeScannerModal()" class="px-4 py-2 bg-victorian-700 hover:bg-victorian-600 text-victorian-paper rounded-lg">
                     Cancel
                 </button>
@@ -445,10 +452,13 @@
         let modelUrl = localStorage.getItem('event2_teachable_model_url') || DEFAULT_MODEL_URL;
         let unlockedItemIds = JSON.parse(localStorage.getItem('event2_unlocked_catalogue_items')) || [];
         
-        // Teachable Machine Variables
-        let model, webcam, maxPredictions;
+        // Teachable Machine & Native Camera Variables
+        let model, maxPredictions;
+        let videoStream = null;
+        let currentFacingMode = "environment"; // default rear camera on mobile
         let isScannerRunning = false;
         let scanLockout = false;
+        let animFrameId = null;
 
         // On DOM Load initialization
         window.addEventListener('DOMContentLoaded', () => {
@@ -561,66 +571,127 @@
             const statusTitle = document.getElementById('scannerStatusTitle');
             const statusDesc = document.getElementById('scannerStatusDesc');
             const statusIcon = document.getElementById('scannerStatusIcon');
+            const videoEl = document.getElementById('scannerVideo');
             
             modal.classList.remove('hidden');
             overlay.classList.remove('hidden');
             statusIcon.className = "fa-solid fa-circle-notch fa-spin text-3xl text-victorian-brass";
             statusTitle.innerText = "Initializing Camera & AI Model...";
-            statusDesc.innerText = "Please wait while TensorFlow.js loads...";
+            statusDesc.innerText = "Loading AI neural network and requesting camera stream...";
 
             if (!modelUrl) {
                 statusIcon.className = "fa-solid fa-triangle-exclamation text-3xl text-amber-400";
                 statusTitle.innerText = "No Model URL Configured";
-                statusDesc.innerHTML = 'Please click <button onclick="closeScannerModal(); openConfigModal();" class="text-victorian-brass underline font-bold">Settings</button> to paste your Teachable Machine URL, or use manual unlock.';
+                statusDesc.innerHTML = 'Please click <button onclick="closeScannerModal(); openConfigModal();" class="text-victorian-brass underline font-bold">Settings</button> to configure your model, or use manual unlock.';
                 return;
             }
 
             try {
-                const modelURL = modelUrl.endsWith('/') ? modelUrl + "model.json" : modelUrl + "/model.json";
-                const metadataURL = modelUrl.endsWith('/') ? modelUrl + "metadata.json" : modelUrl + "/metadata.json";
+                // 1. Load Model if not already cached
+                if (!model) {
+                    const modelURL = modelUrl.endsWith('/') ? modelUrl + "model.json" : modelUrl + "/model.json";
+                    const metadataURL = modelUrl.endsWith('/') ? modelUrl + "metadata.json" : modelUrl + "/metadata.json";
+                    model = await tmImage.load(modelURL, metadataURL);
+                    maxPredictions = model.getTotalClasses();
+                }
 
-                model = await tmImage.load(modelURL, metadataURL);
-                maxPredictions = model.getTotalClasses();
-
-                // Setup Mobile Webcam facing rear/environment camera
-                const flip = false; // facing camera
-                webcam = new tmImage.Webcam(300, 300, flip);
-                
-                await webcam.setup({ facingMode: "environment" });
-                await webcam.play();
-                
-                isScannerRunning = true;
-                
-                const webcamContainer = document.getElementById('webcamContainer');
-                webcamContainer.innerHTML = '';
-                webcamContainer.appendChild(webcam.canvas);
+                // 2. Start iOS-compatible Native WebRTC Stream
+                await startCameraStream();
 
                 overlay.classList.add('hidden');
-                window.requestAnimationFrame(scannerLoop);
+                isScannerRunning = true;
+                scanLockout = false;
+                animFrameId = window.requestAnimationFrame(scannerLoop);
 
             } catch (err) {
                 console.error("Camera/Model loading error:", err);
-                statusIcon.className = "fa-solid fa-circle-xmark text-3xl text-red-400";
-                statusTitle.innerText = "Camera Access Failed";
-                statusDesc.innerText = "Unable to access camera or load model. Check browser permissions or test with Manual Unlock.";
+                statusIcon.className = "fa-solid fa-triangle-exclamation text-3xl text-amber-400";
+                
+                if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+                    statusTitle.innerText = "Camera Permission Denied";
+                    statusDesc.innerHTML = "Safari blocked camera access. Tap the <strong>'AA'</strong> or <strong>Website Settings</strong> icon in the Safari address bar, or go to <strong>iOS Settings > Safari > Camera</strong> to allow access.";
+                } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+                    statusTitle.innerText = "No Camera Detected";
+                    statusDesc.innerText = "No video capture device was found on this hardware.";
+                } else {
+                    statusTitle.innerText = "Camera Access Failed";
+                    statusDesc.innerText = err.message || "Ensure you are using Safari on iOS and have accepted camera permissions.";
+                }
+            }
+        }
+
+        async function startCameraStream() {
+            const videoEl = document.getElementById('scannerVideo');
+
+            // Stop existing tracks if any
+            if (videoStream) {
+                videoStream.getTracks().forEach(t => t.stop());
+                videoStream = null;
+            }
+
+            // Required attributes for iOS Safari inline WebRTC playback
+            videoEl.setAttribute('autoplay', '');
+            videoEl.setAttribute('muted', '');
+            videoEl.setAttribute('playsinline', '');
+            videoEl.setAttribute('webkit-playsinline', '');
+            videoEl.muted = true;
+
+            // Media constraints with soft fallback for mobile
+            let constraints = {
+                audio: false,
+                video: {
+                    facingMode: { ideal: currentFacingMode },
+                    width: { ideal: 640 },
+                    height: { ideal: 640 }
+                }
+            };
+
+            try {
+                videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+            } catch (primaryErr) {
+                console.warn("Ideal constraints failed, attempting fallback:", primaryErr);
+                // Fallback to basic video request without strict dimensions
+                constraints = { audio: false, video: true };
+                videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+            }
+
+            videoEl.srcObject = videoStream;
+
+            // Wait for video metadata to load and play
+            await new Promise((resolve) => {
+                videoEl.onloadedmetadata = () => {
+                    videoEl.play().then(resolve).catch(resolve);
+                };
+            });
+        }
+
+        async function switchCamera() {
+            currentFacingMode = (currentFacingMode === "environment") ? "user" : "environment";
+            try {
+                await startCameraStream();
+            } catch (err) {
+                console.warn("Unable to switch camera:", err);
             }
         }
 
         async function scannerLoop() {
             if (!isScannerRunning) return;
 
-            webcam.update();
-            await predict();
+            const videoEl = document.getElementById('scannerVideo');
+            if (videoEl && videoEl.readyState >= 2) { // HAVE_CURRENT_DATA or higher
+                await predict(videoEl);
+            }
             
             if (isScannerRunning) {
-                window.requestAnimationFrame(scannerLoop);
+                animFrameId = window.requestAnimationFrame(scannerLoop);
             }
         }
 
-        async function predict() {
-            if (!model || scanLockout) return;
+        async function predict(videoEl) {
+            if (!model || scanLockout || !videoEl) return;
 
-            const prediction = await model.predict(webcam.canvas);
+            // Teachable Machine's predict function accepts native HTMLVideoElement directly
+            const prediction = await model.predict(videoEl);
             const container = document.getElementById('predictionBars');
             container.innerHTML = '';
 
@@ -654,10 +725,10 @@
             if (highestProb > 0.45) {
                 highestLabel.innerText = `${topMatch} (${Math.round(highestProb * 100)}%)`;
             } else {
-                highestLabel.innerText = "Searching...";
+                highestLabel.innerText = "Scanning...";
             }
 
-            // Threshold for unlock trigger (> 82% confidence)
+            // Threshold for unlock trigger (> 80% confidence)
             if (highestProb >= 0.80 && topMatch && topMatch.toLowerCase() !== 'background') {
                 const cleanMatch = topMatch.toLowerCase().replace(/[^a-z0-9]/g, '');
 
@@ -698,9 +769,22 @@
         function closeScannerModal() {
             isScannerRunning = false;
             scanLockout = false;
-            if (webcam) {
-                try { webcam.stop(); } catch(e){}
+            
+            if (animFrameId) {
+                cancelAnimationFrame(animFrameId);
+                animFrameId = null;
             }
+
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+                videoStream = null;
+            }
+
+            const videoEl = document.getElementById('scannerVideo');
+            if (videoEl) {
+                videoEl.srcObject = null;
+            }
+
             document.getElementById('scannerModal').classList.add('hidden');
         }
 
