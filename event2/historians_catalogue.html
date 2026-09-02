@@ -16,9 +16,9 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- TensorFlow.js and Teachable Machine Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tfjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <!-- TensorFlow.js and Teachable Machine Libraries (Pinned to stable compatible versions) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.5/dist/teachablemachine-image.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -587,15 +587,28 @@
             }
 
             try {
-                // 1. Load Model if not already cached
+                // 1. Verify and wait for tmImage library to be ready on window
+                let retries = 0;
+                while ((typeof tmImage === 'undefined' || !window.tmImage) && retries < 25) {
+                    await new Promise(r => setTimeout(r, 150));
+                    retries++;
+                }
+
+                if (typeof tmImage === 'undefined' && typeof window.tmImage === 'undefined') {
+                    throw new Error("Teachable Machine library failed to load. Check your internet connection.");
+                }
+
+                const tm = window.tmImage || tmImage;
+
+                // 2. Load Model if not already cached
                 if (!model) {
                     const modelURL = modelUrl.endsWith('/') ? modelUrl + "model.json" : modelUrl + "/model.json";
                     const metadataURL = modelUrl.endsWith('/') ? modelUrl + "metadata.json" : modelUrl + "/metadata.json";
-                    model = await tmImage.load(modelURL, metadataURL);
+                    model = await tm.load(modelURL, metadataURL);
                     maxPredictions = model.getTotalClasses();
                 }
 
-                // 2. Start iOS-compatible Native WebRTC Stream
+                // 3. Start iOS-compatible Native WebRTC Stream
                 await startCameraStream();
 
                 overlay.classList.add('hidden');
