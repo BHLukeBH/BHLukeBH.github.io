@@ -123,11 +123,11 @@
                 <!-- AI Camera Scanner Trigger -->
                 <button onclick="openScannerModal()" class="px-3.5 py-1.5 rounded-lg bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md transition duration-200">
                     <i class="fa-solid fa-camera"></i>
-                    <span>Scan Physical Item</span>
+                    <span>Scan Item</span>
                 </button>
 
                 <!-- Configuration & Manual Override -->
-                <button onclick="openConfigModal()" class="px-3 py-1.5 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-600 text-victorian-brass text-xs sm:text-sm flex items-center gap-2 transition duration-200" title="Model & Passcode Settings">
+                <button onclick="openConfigModal()" class="px-3 py-1.5 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-600 text-victorian-brass text-xs sm:text-sm flex items-center gap-2 transition duration-200" title="Manual Unlocks & Progress">
                     <i class="fa-solid fa-gear"></i>
                     <span class="hidden md:inline">Settings</span>
                 </button>
@@ -161,6 +161,16 @@
 
         <div id="catalogueGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Dynamically populated via JavaScript -->
+        </div>
+
+        <!-- Navigation to Questioning Room -->
+        <div class="flex justify-center pt-2 pb-2">
+            <a href="https://invitation.visitbritishhills.com/event2/questioning_room.html" 
+               class="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-sm sm:text-base cinzel tracking-wider shadow-lg border border-victorian-brasslight/40 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
+                <i class="fa-solid fa-door-open text-base sm:text-lg"></i>
+                <span>Questioning Room</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
         </div>
 
     </main>
@@ -308,33 +318,21 @@
         <div class="bg-victorian-800 border border-victorian-brass rounded-2xl max-w-xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 bg-victorian-900 border-b border-victorian-700 flex justify-between items-center">
                 <h3 class="cinzel text-lg font-bold text-victorian-brass flex items-center gap-2">
-                    <i class="fa-solid fa-sliders"></i> Catalogue & Model Settings
+                    <i class="fa-solid fa-sliders"></i> Catalogue Settings
                 </h3>
                 <button onclick="closeConfigModal()" class="text-victorian-paperdark hover:text-victorian-paper text-lg">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
-            <div class="p-5 overflow-y-auto flex-1 space-y-6">
-                <!-- Teachable Machine Model Link -->
-                <div>
-                    <label class="block text-xs font-bold text-victorian-brass uppercase tracking-wider mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-brain"></i> Teachable Machine Model URL:
-                    </label>
-                    <input type="text" id="modelUrlInput" placeholder="https://teachablemachine.withgoogle.com/models/YOUR_MODEL_ID/" 
-                        class="w-full bg-victorian-900 border border-victorian-600 rounded-lg p-3 text-xs text-victorian-paper focus:border-victorian-brass focus:outline-none font-mono">
-                    <p class="text-[11px] text-victorian-paperdark mt-1.5">
-                        Paste your exported Teachable Machine model URL here. The model should have labels matching the 6 item names or IDs.
-                    </p>
-                </div>
-
+            <div class="p-5 overflow-y-auto flex-1 space-y-4">
                 <!-- Manual Unlock Override Panel -->
-                <div class="pt-4 border-t border-victorian-700/80">
-                    <h4 class="text-xs font-bold text-victorian-brass uppercase tracking-wider mb-3 flex items-center gap-2">
+                <div>
+                    <h4 class="text-xs font-bold text-victorian-brass uppercase tracking-wider mb-2 flex items-center gap-2">
                         <i class="fa-solid fa-key"></i> Teacher / Manual Unlock Override
                     </h4>
                     <p class="text-xs text-victorian-paperdark mb-3">
-                        Use these controls to manually unlock items for testing or if lighting conditions hinder camera recognition.
+                        Use these controls to manually toggle unlock status for testing or if lighting conditions hinder camera recognition.
                     </p>
 
                     <div id="manualUnlockList" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -347,12 +345,9 @@
                 <button onclick="resetAllProgress()" class="text-xs text-red-400 hover:underline">
                     Reset All Unlocks
                 </button>
-                <div class="flex gap-2">
-                    <button onclick="closeConfigModal()" class="px-4 py-2 bg-victorian-700 hover:bg-victorian-600 text-victorian-paper text-xs rounded-lg">Cancel</button>
-                    <button onclick="saveSettings()" class="px-4 py-2 bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-xs rounded-lg">
-                        Save Settings
-                    </button>
-                </div>
+                <button onclick="closeConfigModal()" class="px-4 py-2 bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-xs rounded-lg">
+                    Done
+                </button>
             </div>
         </div>
     </div>
@@ -360,7 +355,6 @@
     <footer class="border-t border-victorian-700/60 bg-victorian-900/90 py-3 px-4 text-center text-xs text-victorian-paperdark mt-6">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
             <p>Event 2: A Soldier's Final Retreat — Historian's Catalogue</p>
-            <p class="text-victorian-paperdark/60">Scan physical evidence to verify historical records.</p>
         </div>
     </footer>
 
@@ -449,7 +443,7 @@
             }
         ];
 
-        let modelUrl = localStorage.getItem('event2_teachable_model_url') || DEFAULT_MODEL_URL;
+        const modelUrl = DEFAULT_MODEL_URL;
         let unlockedItemIds = JSON.parse(localStorage.getItem('event2_unlocked_catalogue_items')) || [];
         
         // Teachable Machine & Native Camera Variables
@@ -464,10 +458,6 @@
         window.addEventListener('DOMContentLoaded', () => {
             renderCatalogueGrid();
             updateProgress();
-            
-            // Populate model URL input default
-            const urlInput = document.getElementById('modelUrlInput');
-            if (urlInput) urlInput.value = modelUrl;
         });
 
         function renderCatalogueGrid() {
@@ -475,7 +465,22 @@
             if (!gridContainer) return;
             gridContainer.innerHTML = '';
 
-            catalogueItems.forEach(item => {
+            // Sort so that unlocked items appear at the top, ordered with the most recently unlocked first
+            const sortedItems = [...catalogueItems].sort((a, b) => {
+                const aIndex = unlockedItemIds.indexOf(a.id);
+                const bIndex = unlockedItemIds.indexOf(b.id);
+                const aUnlocked = aIndex !== -1;
+                const bUnlocked = bIndex !== -1;
+
+                if (aUnlocked && bUnlocked) {
+                    return aIndex - bIndex; // Lowest index = most recently unlocked
+                }
+                if (aUnlocked) return -1;
+                if (bUnlocked) return 1;
+                return 0;
+            });
+
+            sortedItems.forEach(item => {
                 const isUnlocked = unlockedItemIds.includes(item.id);
                 const card = document.createElement('div');
                 card.className = `bg-victorian-800/90 border rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 relative overflow-hidden group ${
@@ -767,12 +772,12 @@
         }
 
         function unlockArtifact(itemId) {
-            if (!unlockedItemIds.includes(itemId)) {
-                unlockedItemIds.push(itemId);
-                localStorage.setItem('event2_unlocked_catalogue_items', JSON.stringify(unlockedItemIds));
-                renderCatalogueGrid();
-                updateProgress();
-            }
+            // Remove if already present and prepend so it becomes the most recently unlocked
+            unlockedItemIds = unlockedItemIds.filter(id => id !== itemId);
+            unlockedItemIds.unshift(itemId);
+            localStorage.setItem('event2_unlocked_catalogue_items', JSON.stringify(unlockedItemIds));
+            renderCatalogueGrid();
+            updateProgress();
 
             // Close scanner and open detail view immediately
             closeScannerModal();
@@ -835,7 +840,7 @@
             if (unlockedItemIds.includes(itemId)) {
                 unlockedItemIds = unlockedItemIds.filter(id => id !== itemId);
             } else {
-                unlockedItemIds.push(itemId);
+                unlockedItemIds.unshift(itemId); // Prepend to top as most recently unlocked
             }
             localStorage.setItem('event2_unlocked_catalogue_items', JSON.stringify(unlockedItemIds));
             renderCatalogueGrid();
@@ -843,22 +848,9 @@
             openConfigModal(); // refresh list button state
         }
 
-        function saveSettings() {
-            const urlInput = document.getElementById('modelUrlInput');
-            if (urlInput) {
-                modelUrl = urlInput.value.trim();
-                localStorage.setItem('event2_teachable_model_url', modelUrl);
-            }
-            closeConfigModal();
-        }
-
         function resetAllProgress() {
             unlockedItemIds = [];
             localStorage.removeItem('event2_unlocked_catalogue_items');
-            modelUrl = DEFAULT_MODEL_URL;
-            localStorage.setItem('event2_teachable_model_url', DEFAULT_MODEL_URL);
-            const urlInput = document.getElementById('modelUrlInput');
-            if (urlInput) urlInput.value = DEFAULT_MODEL_URL;
             renderCatalogueGrid();
             updateProgress();
             openConfigModal();
