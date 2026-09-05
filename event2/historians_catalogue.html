@@ -242,7 +242,7 @@
             <div class="p-4 bg-victorian-900 border-b border-victorian-700 flex justify-between items-center">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-eye text-victorian-brass text-lg animate-pulse"></i>
-                    <h3 class="cinzel text-lg font-bold text-victorian-paper">AI Artifact Scanner</h3>
+                    <h3 class="cinzel text-lg font-bold text-victorian-paper">Artifact Scanner</h3>
                 </div>
                 <button onclick="closeScannerModal()" class="text-victorian-paperdark hover:text-victorian-paper text-xl w-8 h-8 rounded-full flex items-center justify-center hover:bg-victorian-700 transition">
                     <i class="fa-solid fa-xmark"></i>
@@ -277,21 +277,23 @@
                         <i id="scannerStatusIcon" class="fa-solid fa-circle-notch fa-spin text-3xl text-victorian-brass"></i>
                         <h4 id="scannerStatusTitle" class="cinzel font-bold text-victorian-paper text-base">Preparing Investigative Camera...</h4>
                         <p id="scannerStatusDesc" class="text-xs text-victorian-paperdark max-w-xs">
-                            Please grant camera permissions when prompted.
+                            Loading camera stream and investigative tools...
                         </p>
                     </div>
                 </div>
 
-                <!-- Real-time Predictions Confidence Bars -->
-                <div class="w-full bg-victorian-900/90 p-3 rounded-xl border border-victorian-700 space-y-2">
-                    <div class="flex justify-between items-center text-xs text-victorian-brass mb-1 font-semibold">
-                        <span>Recognition Match:</span>
-                        <span id="highestMatchLabel" class="font-mono text-emerald-400">Scanning...</span>
+                <!-- Real-time Anonymous Detection Meter -->
+                <div class="w-full bg-victorian-900/90 p-3.5 rounded-xl border border-victorian-700 space-y-2">
+                    <div class="flex justify-between items-center text-xs text-victorian-brass font-semibold">
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-crosshairs text-victorian-brass"></i> Scanner Status:
+                        </span>
+                        <span id="highestMatchLabel" class="font-mono text-victorian-paperdark">Scanning...</span>
                     </div>
 
-                    <div id="predictionBars" class="space-y-1.5 max-h-36 overflow-y-auto pr-1 text-[11px]">
-                        <!-- Populated dynamically during camera classification -->
-                        <div class="text-victorian-paperdark/60 italic text-center py-2">Waiting for camera feed...</div>
+                    <!-- Unified anonymous detection progress bar -->
+                    <div class="w-full bg-victorian-800 rounded-full h-2.5 overflow-hidden border border-victorian-700">
+                        <div id="detectionProgressBar" class="bg-gradient-to-r from-victorian-brass to-amber-400 h-full transition-all duration-150 rounded-full" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
@@ -710,45 +712,41 @@
 
             // Teachable Machine's predict function accepts native HTMLVideoElement directly
             const prediction = await model.predict(videoEl);
-            const container = document.getElementById('predictionBars');
-            container.innerHTML = '';
 
-            let topMatch = null;
-            let highestProb = 0;
+            let bestArtifactProb = 0;
+            let bestArtifactClass = null;
 
+            // Identify the top non-background detection without revealing names
             for (let i = 0; i < prediction.length; i++) {
                 const probability = prediction[i].probability;
                 const className = prediction[i].className;
-                const percentage = Math.round(probability * 100);
 
-                if (probability > highestProb) {
-                    highestProb = probability;
-                    topMatch = className;
+                if (className.toLowerCase() !== 'background') {
+                    if (probability > bestArtifactProb) {
+                        bestArtifactProb = probability;
+                        bestArtifactClass = className;
+                    }
                 }
-
-                // Render confidence bar
-                const barRow = document.createElement('div');
-                barRow.className = 'flex items-center justify-between gap-2';
-                barRow.innerHTML = `
-                    <span class="w-28 truncate text-victorian-paper font-mono">${className}</span>
-                    <div class="flex-1 bg-victorian-800 rounded-full h-2 overflow-hidden border border-victorian-700">
-                        <div class="bg-victorian-brass h-full transition-all duration-200" style="width: ${percentage}%"></div>
-                    </div>
-                    <span class="w-10 text-right font-mono text-victorian-brass">${percentage}%</span>
-                `;
-                container.appendChild(barRow);
             }
 
             const highestLabel = document.getElementById('highestMatchLabel');
-            if (highestProb > 0.45) {
-                highestLabel.innerText = `${topMatch} (${Math.round(highestProb * 100)}%)`;
+            const progressBar = document.getElementById('detectionProgressBar');
+            const percentage = Math.round(bestArtifactProb * 100);
+
+            // Display anonymous detection status
+            if (bestArtifactProb >= 0.30) {
+                highestLabel.innerText = `Artifact Detected (${percentage}%)`;
+                highestLabel.className = 'font-mono text-emerald-400';
+                if (progressBar) progressBar.style.width = `${percentage}%`;
             } else {
                 highestLabel.innerText = "Scanning...";
+                highestLabel.className = 'font-mono text-victorian-paperdark';
+                if (progressBar) progressBar.style.width = "0%";
             }
 
             // Threshold for unlock trigger (> 80% confidence)
-            if (highestProb >= 0.80 && topMatch && topMatch.toLowerCase() !== 'background') {
-                const cleanMatch = topMatch.toLowerCase().replace(/[^a-z0-9]/g, '');
+            if (bestArtifactProb >= 0.80 && bestArtifactClass) {
+                const cleanMatch = bestArtifactClass.toLowerCase().replace(/[^a-z0-9]/g, '');
 
                 const matchedItem = catalogueItems.find(i => {
                     const cleanTitle = i.title.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -765,6 +763,8 @@
                 });
 
                 if (matchedItem && !unlockedItemIds.includes(matchedItem.id)) {
+                    highestLabel.innerText = "Artifact Identified!";
+                    if (progressBar) progressBar.style.width = "100%";
                     scanLockout = true;
                     unlockArtifact(matchedItem.id);
                 }
