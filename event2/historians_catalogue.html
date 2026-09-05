@@ -2,368 +2,725 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Soldier's Final Retreat - Historian's Catalogue</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Cinzel, Inter, Special Elite -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Historian's Catalogue - A Soldier's Final Retreat</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Special+Elite&family=Courier+Prime&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- TensorFlow.js and Teachable Machine Libraries (Pinned to stable compatible versions) -->
+    
+    <!-- TensorFlow.js & Teachable Machine (Pinned Versions for compatibility) -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.5/dist/teachablemachine-image.min.js"></script>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        victorian: {
-                            900: '#0d0907',
-                            800: '#1a130f',
-                            700: '#2c211a',
-                            600: '#423328',
-                            brass: '#c59b27',
-                            brasslight: '#e5b842',
-                            paper: '#f3ebd9',
-                            paperdark: '#ded2b8',
-                            crimson: '#6b1d1d',
-                            crimsonlight: '#942929'
-                        }
-                    },
-                    fontFamily: {
-                        cinzel: ['Cinzel', 'serif'],
-                        inter: ['Inter', 'sans-serif'],
-                        typewriter: ['Special Elite', 'monospace']
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
+        :root {
+            --bg-color: #0d0c0b;
+            --panel-bg: #1a1715;
+            --gold-primary: #d4af37;
+            --gold-dim: #aa8c2c;
+            --gold-hover: #f1cf5b;
+            --text-main: #e0d5c1;
+            --text-dim: #8b8070;
+            --border-color: #3d3324;
+            --unlocked-color: #2ea869;
+            --locked-color: #9e3636;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            background-color: #0d0907;
-            color: #f3ebd9;
-            font-family: 'Inter', sans-serif;
-            background-image: radial-gradient(circle at 50% 30%, #1a130f 0%, #0d0907 100%);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Courier Prime', monospace;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        .cinzel { font-family: 'Cinzel', serif; }
-        .typewriter { font-family: 'Special Elite', monospace; }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a130f;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #423328;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #c59b27;
-        }
-
-        /* Scan Line Effect for Camera Modal */
-        .scan-line {
-            position: absolute;
+        /* --- Header --- */
+        .main-header {
+            background-color: var(--panel-bg);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: sticky;
             top: 0;
-            left: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--gold-primary);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            letter-spacing: 1px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.75rem;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .progress-counter {
+            font-family: 'Special Elite', cursive;
+            color: var(--gold-primary);
+            font-size: 1.2rem;
+        }
+
+        .scan-btn {
+            background: linear-gradient(135deg, #8b6d1f 0%, #d4af37 50%, #8b6d1f 100%);
+            color: #111;
+            border: 1px solid #ffea99;
+            padding: 0.6rem 1.2rem;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+        }
+
+        .scan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .settings-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-dim);
+            width: 38px;
+            height: 38px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .settings-btn:hover {
+            color: var(--gold-primary);
+            border-color: var(--gold-dim);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* --- Main Layout --- */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
             width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #c59b27, transparent);
-            box-shadow: 0 0 15px #c59b27;
-            animation: scan 2.5s infinite ease-in-out;
         }
 
-        @keyframes scan {
-            0% { top: 0%; opacity: 0.2; }
-            50% { top: 95%; opacity: 1; }
-            100% { top: 0%; opacity: 0.2; }
+        .catalogue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
         }
 
-        /* Card Unlocked Glow */
-        .card-unlocked {
-            border-color: #c59b27 !important;
-            box-shadow: 0 0 20px rgba(197, 155, 39, 0.25);
+        /* --- Item Cards --- */
+        .item-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        /* Audio Player Customization */
-        audio::-webkit-media-controls-panel {
-            background-color: #2c211a;
+        .item-card.locked {
+            opacity: 0.7;
+            filter: grayscale(100%);
+            cursor: not-allowed;
+        }
+
+        .item-card.unlocked {
+            border-color: var(--gold-dim);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+        }
+
+        .item-card.unlocked:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
+            border-color: var(--gold-primary);
+        }
+
+        .item-image-container {
+            height: 220px;
+            background-color: #111;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .item-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .item-card.unlocked .item-image {
+            opacity: 1;
+        }
+
+        .locked-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(13, 12, 11, 0.8);
+            color: var(--text-dim);
+        }
+
+        .item-card.unlocked .locked-overlay {
+            display: none;
+        }
+
+        .locked-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.6; }
+            100% { transform: scale(1); opacity: 0.3; }
+        }
+
+        .item-status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        .status-locked {
+            background-color: rgba(0,0,0,0.8);
+            color: var(--locked-color);
+            border: 1px solid var(--locked-color);
+        }
+
+        .status-unlocked {
+            background-color: rgba(0,0,0,0.8);
+            color: var(--unlocked-color);
+            border: 1px solid var(--unlocked-color);
+        }
+
+        .item-details {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-title {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-primary);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-card.locked .item-title {
+            color: var(--text-dim);
+            font-family: 'Courier Prime', monospace;
+        }
+
+        .item-action {
+            margin-top: auto;
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--gold-dim);
+            font-size: 0.9rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .item-card.locked .item-action {
+            display: none;
+        }
+
+        /* --- Modals --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--panel-bg);
+            border: 2px solid var(--gold-dim);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to right, rgba(212,175,55,0.05), transparent);
+        }
+
+        .modal-title {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-primary);
+            font-size: 1.5rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: var(--gold-primary);
+        }
+
+        /* --- Inspection Modal Specifics --- */
+        .inspection-body {
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .inspection-image {
+            width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: #000;
+        }
+
+        .audio-container {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem;
+            border-radius: 4px;
+            border-left: 3px solid var(--gold-dim);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .custom-audio-btn {
+            background: var(--gold-dim);
+            color: #000;
+            border: none;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .custom-audio-btn:hover {
+            background: var(--gold-primary);
+            transform: scale(1.05);
+        }
+
+        .audio-label {
+            font-family: 'Special Elite', cursive;
+            color: var(--text-main);
+        }
+
+        .inspection-text {
+            font-family: 'Courier Prime', monospace;
+            color: #d0c8b8;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .inspection-text p {
+            margin-bottom: 1rem;
+        }
+
+        /* --- Scanner Modal Specifics --- */
+        .scanner-body {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .camera-container {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1;
+            background: #000;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #webcam-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #webcam-container video, #webcam-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
+
+        .scanner-overlay-ui {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            border: 2px dashed rgba(212, 175, 55, 0.3);
+            margin: 10%;
+        }
+
+        .scanner-status {
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            padding: 1rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .status-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 4px;
+        }
+        
+        .status-bar-label {
+            font-size: 0.85rem;
+            width: 180px;
+            font-weight: bold;
+            color: var(--gold-primary);
+        }
+
+        .status-bar-track {
+            flex: 1;
+            height: 8px;
+            background: #222;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .status-bar-fill {
+            height: 100%;
+            background: var(--gold-dim);
+            width: 0%;
+            transition: width 0.1s ease, background-color 0.3s;
+        }
+
+        .status-bar-value {
+            font-size: 0.8rem;
+            width: 40px;
+            text-align: right;
+            color: var(--text-dim);
+        }
+
+        /* --- Settings Modal Specifics --- */
+        .settings-body {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .settings-section {
+            background: rgba(0,0,0,0.3);
+            padding: 1.25rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .settings-section-title {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-section-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+        }
+
+        .danger-btn {
+            background: rgba(158, 54, 54, 0.2);
+            color: #ff8585;
+            border: 1px solid var(--locked-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-family: 'Courier Prime', monospace;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .danger-btn:hover {
+            background: var(--locked-color);
+            color: #fff;
+        }
+
+        /* --- Navigation Button --- */
+        .nav-button-container {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #8b6d1f 0%, #d4af37 50%, #8b6d1f 100%);
+            color: #111;
+            border: 1px solid #ffea99;
+            padding: 1rem 2.5rem;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+            filter: brightness(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .catalogue-grid {
+                grid-template-columns: 1fr;
+            }
+            .inspection-body {
+                padding: 1rem;
+            }
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-victorian-brass selection:text-victorian-900">
+<body>
 
-    <header class="border-b border-victorian-600/60 bg-victorian-900/90 backdrop-blur sticky top-0 z-30 px-4 py-3">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-victorian-700 border border-victorian-brass flex items-center justify-center text-victorian-brass shadow-md">
-                    <i class="fa-solid fa-scroll text-lg"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl md:text-2xl font-bold cinzel text-victorian-paper tracking-wide">A Soldier's Final Retreat</h1>
-                    <p class="text-xs text-victorian-brass font-mono">Historian's Catalogue</p>
-                </div>
+    <header class="main-header">
+        <div class="logo-container">
+            <i class="fas fa-search logo-icon"></i>
+            <div class="logo-text">
+                <span class="logo-subtitle">A SOLDIER'S FINAL RETREAT</span>
+                <h1 class="logo-title">Historical Artifact Scanner</h1>
             </div>
-
-            <div class="flex items-center gap-2 sm:gap-3">
-                <!-- AI Camera Scanner Trigger -->
-                <button onclick="openScannerModal()" class="px-3.5 py-1.5 rounded-lg bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md transition duration-200">
-                    <i class="fa-solid fa-camera"></i>
-                    <span>Scan Item</span>
-                </button>
-
-                <!-- Configuration & Manual Override -->
-                <button onclick="openConfigModal()" class="px-3 py-1.5 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-600 text-victorian-brass text-xs sm:text-sm flex items-center gap-2 transition duration-200" title="Manual Unlocks & Progress">
-                    <i class="fa-solid fa-gear"></i>
-                    <span class="hidden md:inline">Settings</span>
-                </button>
+        </div>
+        <div class="header-actions">
+            <div class="progress-counter">
+                <i class="fas fa-unlock-alt"></i> <span id="unlock-count">0</span> / 6
             </div>
+            <button class="scan-btn" onclick="openScannerModal()">
+                <i class="fas fa-camera"></i> Scan Item
+            </button>
+            <button class="settings-btn" onclick="openSettingsModal()" title="Investigation Settings">
+                <i class="fas fa-gear"></i>
+            </button>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto w-full p-4 md:p-6 flex-1 flex flex-col gap-6">
-
-        <!-- Progress Banner -->
-        <div class="bg-victorian-800/80 rounded-xl p-4 border border-victorian-600/50 backdrop-blur flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div>
-                <h2 class="cinzel text-lg font-bold text-victorian-paper flex items-center gap-2">
-                    <i class="fa-solid fa-boxes-stacked text-victorian-brass"></i> Historical Artifact Scanner
-                </h2>
-                <p class="text-xs text-victorian-paperdark mt-1">
-                    Scan physical artifacts using your camera to identify and unlock their catalogue entries.
-                </p>
-            </div>
-
-            <div class="flex items-center gap-4 shrink-0 bg-victorian-900/80 px-4 py-2 rounded-lg border border-victorian-700">
-                <div class="text-right">
-                    <span class="text-[10px] text-victorian-paperdark uppercase tracking-wider block">Unlocked Artifacts</span>
-                    <span class="text-base font-bold font-mono text-victorian-brass" id="progressText">0 / 6</span>
-                </div>
-                <div class="w-10 h-10 rounded-full border-2 border-victorian-brass flex items-center justify-center text-victorian-brass">
-                    <i class="fa-solid fa-award text-lg"></i>
-                </div>
-            </div>
+    <main class="main-content">
+        <div class="catalogue-grid" id="catalogue-grid">
+            <!-- Cards generated by JS -->
         </div>
 
-        <div id="catalogueGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Dynamically populated via JavaScript -->
-        </div>
-
-        <!-- Navigation to Questioning Room -->
-        <div class="flex justify-center pt-2 pb-2">
-            <a href="https://invitation.visitbritishhills.com/event2/questioning_room.html" 
-               class="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-sm sm:text-base cinzel tracking-wider shadow-lg border border-victorian-brasslight/40 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
-                <i class="fa-solid fa-door-open text-base sm:text-lg"></i>
-                <span>Questioning Room</span>
-                <i class="fa-solid fa-arrow-right text-xs"></i>
+        <div class="nav-button-container">
+            <a href="https://invitation.visitbritishhills.com/event2/questioning_room.html" class="nav-btn">
+                <i class="fas fa-door-open"></i> Questioning Room
             </a>
         </div>
-
     </main>
 
-    <div id="itemDetailModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-victorian-800 border-2 border-victorian-brass rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden relative">
-            
-            <!-- Modal Header -->
-            <div class="p-4 bg-victorian-900 border-b border-victorian-700 flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px] uppercase tracking-wider font-semibold">Unlocked Artifact</span>
-                    <h3 id="modalItemTitle" class="cinzel text-lg font-bold text-victorian-paper">Artifact Name</h3>
-                </div>
-                <button onclick="closeDetailModal()" class="text-victorian-paperdark hover:text-victorian-paper text-xl w-8 h-8 rounded-full flex items-center justify-center hover:bg-victorian-700 transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+    <!-- Inspection Modal -->
+    <div class="modal-overlay" id="inspection-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="inspect-title">Artifact Title</h2>
+                <button class="close-modal" onclick="closeModals()"><i class="fas fa-times"></i></button>
             </div>
-
-            <!-- Modal Content -->
-            <div class="p-5 overflow-y-auto flex-1 space-y-5">
-                
-                <!-- Image Container -->
-                <div class="w-full h-56 md:h-64 rounded-xl border border-victorian-600 overflow-hidden bg-victorian-900 relative">
-                    <img id="modalItemImage" src="" alt="Artifact" class="w-full h-full object-cover">
+            <div class="inspection-body">
+                <img src="" alt="" id="inspect-image" class="inspection-image">
+                <div class="audio-container">
+                    <button class="custom-audio-btn" id="inspect-audio-btn" onclick="toggleAudio()">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <span class="audio-label">Historian's Commentary</span>
+                    <audio id="inspect-audio" src="" onended="audioEnded()"></audio>
                 </div>
-
-                <!-- Custom Audio Narration Controls -->
-                <div class="bg-victorian-900/90 border border-victorian-600/70 p-4 rounded-xl flex flex-col gap-3">
-                    <div class="flex items-center justify-between text-xs text-victorian-brass">
-                        <span class="font-semibold flex items-center gap-2">
-                            <i class="fa-solid fa-headphones text-sm"></i> Official Historian Narration
-                        </span>
-                        <span id="audioStatusText" class="font-mono text-victorian-paperdark text-[11px]">Ready</span>
-                    </div>
-
-                    <!-- Audio Player Element -->
-                    <audio id="artifactAudioPlayer" class="w-full h-10 rounded focus:outline-none" controls>
-                        <source id="audioSource" src="" type="audio/mp3">
-                        Your browser does not support audio playback.
-                    </audio>
+                <div class="inspection-text" id="inspect-text">
+                    <!-- Text injected here -->
                 </div>
-
-                <!-- Historical Description Paragraphs -->
-                <div class="space-y-3 pt-2 border-t border-victorian-700/60">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-victorian-brass font-mono flex items-center gap-2">
-                        <i class="fa-solid fa-book-open"></i> Archival Details & History
-                    </h4>
-                    <div id="modalItemText" class="text-sm text-victorian-paper/90 leading-relaxed typewriter space-y-3 bg-victorian-900/50 p-4 rounded-xl border border-victorian-700/50">
-                        <!-- Content inserted dynamically -->
-                    </div>
-                </div>
-
             </div>
-
-            <!-- Modal Footer -->
-            <div class="p-3 bg-victorian-900 border-t border-victorian-700 flex justify-end">
-                <button onclick="closeDetailModal()" class="px-5 py-2 bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-sm rounded-lg transition">
-                    Close Record
-                </button>
-            </div>
-
         </div>
     </div>
 
-    <div id="scannerModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-victorian-800 border-2 border-victorian-brass rounded-2xl max-w-lg w-full flex flex-col shadow-2xl overflow-hidden relative">
-            
-            <!-- Scanner Header -->
-            <div class="p-4 bg-victorian-900 border-b border-victorian-700 flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-eye text-victorian-brass text-lg animate-pulse"></i>
-                    <h3 class="cinzel text-lg font-bold text-victorian-paper">Artifact Scanner</h3>
-                </div>
-                <button onclick="closeScannerModal()" class="text-victorian-paperdark hover:text-victorian-paper text-xl w-8 h-8 rounded-full flex items-center justify-center hover:bg-victorian-700 transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+    <!-- AI Scanner Modal -->
+    <div class="modal-overlay" id="scanner-modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2 class="modal-title">Artifact Scanner</h2>
+                <button class="close-modal" onclick="closeScannerModal()"><i class="fas fa-times"></i></button>
             </div>
-
-            <!-- Camera Viewport & Overlay -->
-            <div class="p-4 flex flex-col items-center gap-4">
-                <div class="relative w-full aspect-square bg-black rounded-xl overflow-hidden border-2 border-victorian-600 flex items-center justify-center shadow-inner">
-                    <!-- WebCam Video Element for Native iOS / Android WebRTC -->
-                    <div id="webcamContainer" class="w-full h-full flex items-center justify-center relative bg-black">
-                        <video id="scannerVideo" autoplay playsinline webkit-playsinline muted class="w-full h-full object-cover"></video>
+            <div class="scanner-body">
+                <div class="camera-container">
+                    <div id="webcam-container">
+                        <!-- Camera feed goes here -->
                     </div>
-
-                    <!-- Scanning Line -->
-                    <div class="scan-line pointer-events-none"></div>
-
-                    <!-- Target Reticle Overlay -->
-                    <div class="absolute inset-8 border border-victorian-brass/40 rounded-lg pointer-events-none flex flex-col justify-between p-2">
-                        <div class="flex justify-between">
-                            <span class="w-4 h-4 border-t-2 border-l-2 border-victorian-brass"></span>
-                            <span class="w-4 h-4 border-t-2 border-r-2 border-victorian-brass"></span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="w-4 h-4 border-b-2 border-l-2 border-victorian-brass"></span>
-                            <span class="w-4 h-4 border-b-2 border-r-2 border-victorian-brass"></span>
-                        </div>
-                    </div>
-
-                    <!-- Loading / Warning Overlay -->
-                    <div id="scannerOverlay" class="absolute inset-0 bg-victorian-900/95 flex flex-col items-center justify-center p-6 text-center gap-3">
-                        <i id="scannerStatusIcon" class="fa-solid fa-circle-notch fa-spin text-3xl text-victorian-brass"></i>
-                        <h4 id="scannerStatusTitle" class="cinzel font-bold text-victorian-paper text-base">Preparing Investigative Camera...</h4>
-                        <p id="scannerStatusDesc" class="text-xs text-victorian-paperdark max-w-xs">
-                            Loading camera stream and investigative tools...
-                        </p>
-                    </div>
+                    <div class="scanner-overlay-ui"></div>
                 </div>
-
-                <!-- Real-time Anonymous Detection Meter -->
-                <div class="w-full bg-victorian-900/90 p-3.5 rounded-xl border border-victorian-700 space-y-2">
-                    <div class="flex justify-between items-center text-xs text-victorian-brass font-semibold">
-                        <span class="flex items-center gap-2">
-                            <i class="fa-solid fa-crosshairs text-victorian-brass"></i> Scanner Status:
-                        </span>
-                        <span id="highestMatchLabel" class="font-mono text-victorian-paperdark">Scanning...</span>
+                
+                <div class="scanner-status" id="scanner-status">
+                    <div style="text-align: center; color: var(--gold-dim); margin-bottom: 1rem; font-family: 'Cinzel', serif;" id="scanner-message">
+                        Initializing Camera & AI Model...
                     </div>
-
-                    <!-- Unified anonymous detection progress bar -->
-                    <div class="w-full bg-victorian-800 rounded-full h-2.5 overflow-hidden border border-victorian-700">
-                        <div id="detectionProgressBar" class="bg-gradient-to-r from-victorian-brass to-amber-400 h-full transition-all duration-150 rounded-full" style="width: 0%"></div>
+                    <div id="label-container">
+                        <!-- Dynamic detection bar injected here -->
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Scanner Footer -->
-            <div class="p-3 bg-victorian-900 border-t border-victorian-700 flex justify-between items-center text-xs">
-                <div class="flex items-center gap-2">
-                    <span class="text-victorian-paperdark hidden sm:inline">Hold camera steady</span>
-                    <!-- Camera Switcher for mobile multi-camera setups -->
-                    <button id="switchCameraBtn" onclick="switchCamera()" class="px-2.5 py-1 bg-victorian-800 hover:bg-victorian-700 border border-victorian-600 text-victorian-brass rounded text-[11px] flex items-center gap-1.5 transition">
-                        <i class="fa-solid fa-camera-rotate"></i>
-                        <span>Flip Cam</span>
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2 class="modal-title">Investigation Settings</h2>
+                <button class="close-modal" onclick="closeSettingsModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="settings-body">
+                <div class="settings-section">
+                    <h3 class="settings-section-title">Reset Catalogue Progress</h3>
+                    <p class="settings-section-desc">Clear all unlocked artifacts and return the catalogue to its initial locked state. Useful for new student sessions or re-testing scans.</p>
+                    <button class="danger-btn" onclick="resetCatalogueProgress()">
+                        <i class="fas fa-rotate-left"></i> Reset All Progress
                     </button>
                 </div>
-                <button onclick="closeScannerModal()" class="px-4 py-2 bg-victorian-700 hover:bg-victorian-600 text-victorian-paper rounded-lg">
-                    Cancel
-                </button>
-            </div>
-
-        </div>
-    </div>
-
-    <div id="configModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-victorian-800 border border-victorian-brass rounded-2xl max-w-xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-4 bg-victorian-900 border-b border-victorian-700 flex justify-between items-center">
-                <h3 class="cinzel text-lg font-bold text-victorian-brass flex items-center gap-2">
-                    <i class="fa-solid fa-sliders"></i> Catalogue Settings
-                </h3>
-                <button onclick="closeConfigModal()" class="text-victorian-paperdark hover:text-victorian-paper text-lg">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <div class="p-5 overflow-y-auto flex-1 space-y-4">
-                <!-- Manual Unlock Override Panel -->
-                <div>
-                    <h4 class="text-xs font-bold text-victorian-brass uppercase tracking-wider mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-key"></i> Teacher / Manual Unlock Override
-                    </h4>
-                    <p class="text-xs text-victorian-paperdark mb-3">
-                        Use these controls to manually toggle unlock status for testing or if lighting conditions hinder camera recognition.
-                    </p>
-
-                    <div id="manualUnlockList" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <!-- Populated dynamically via JS -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-4 bg-victorian-900 border-t border-victorian-700 flex justify-between items-center">
-                <button onclick="resetAllProgress()" class="text-xs text-red-400 hover:underline">
-                    Reset All Unlocks
-                </button>
-                <button onclick="closeConfigModal()" class="px-4 py-2 bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-xs rounded-lg">
-                    Done
-                </button>
             </div>
         </div>
     </div>
 
-    <footer class="border-t border-victorian-700/60 bg-victorian-900/90 py-3 px-4 text-center text-xs text-victorian-paperdark mt-6">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-            <p>Event 2: A Soldier's Final Retreat — Historian's Catalogue</p>
-        </div>
-    </footer>
+    <!-- Audio element for success sound -->
+    <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" preload="auto"></audio>
 
     <script>
-        // Master Catalog Dataset with exact image paths in event2images/ and audio in event2audio/
+        // --- DATA & CONFIGURATION ---
         const DEFAULT_MODEL_URL = 'https://teachablemachine.withgoogle.com/models/k78k70ASC/';
-
+        const UNLOCK_THRESHOLD = 0.80; // 80% confidence required
+        
+        // Use local folders for images and audio
         const catalogueItems = [
             {
                 id: 'jezail_plaque',
@@ -427,8 +784,8 @@
                 audio: 'event2audio/pot_pourri.mp3',
                 paragraphs: [
                     "Pot Pourri. A natural air freshener made from fragrant materials such as flowers or herbs. Often displayed in decorative bowls to create a pleasing aesthetic to a room.",
-                    "Taken from the name of the Spanish slow cooked meat stew, olla podrida, or in English, rotten pot because the slow cooking process was akin to that of meat being left to slowly rot. This dish was later adopted by the French who translated it as Pot Pourri.",
-                    "It is believed that the perfume of modern-day pot pourri was reminiscent of the aromas created during the cooking process and so the name Pot Pourri became synonymous with both the dish and the air freshener."
+                    "Taken from the name of the Spanish slow cooked meat stew, olla podrida, or in English, rotten pot because the slow cooking process was akin to that of meat being left to slowly rot.",
+                    "This dish was later adopted by the French who translated it as Pot Pourri. It is believed that the perfume of modern-day pot pourri was reminiscent of the aromas created during the cooking process and so the name Pot Pourri became synonymous with both the dish and the air freshener."
                 ]
             },
             {
@@ -439,425 +796,347 @@
                 image: 'event2images/magna_carta.jpg',
                 audio: 'event2audio/magna_carta.mp3',
                 paragraphs: [
-                    "Magna Carta, the first document which put into writing the principle that the king and his government were not above the law. It was issued and signed by King John in June 1215 at Runnymede, England.",
+                    "Magna Carta, the first document which put into writing the principle that the king and his government were not above the law.",
+                    "It was issued and signed by King John in June 1215 at Runnymede, England.",
                     "There are four original copies and although this, alas, is a replica, it is still a fascinating charter to discover."
                 ]
             }
         ];
 
-        const modelUrl = DEFAULT_MODEL_URL;
-        let unlockedItemIds = JSON.parse(localStorage.getItem('event2_unlocked_catalogue_items')) || [];
-        
-        // Teachable Machine & Native Camera Variables
-        let model, maxPredictions;
-        let videoStream = null;
-        let currentFacingMode = "environment"; // default rear camera on mobile
-        let isScannerRunning = false;
-        let scanLockout = false;
-        let animFrameId = null;
+        let unlockedItems = [];
 
-        window.addEventListener('DOMContentLoaded', () => {
-            renderCatalogueGrid();
-            updateProgress();
-        });
+        // --- INITIALIZATION ---
+        window.onload = function() {
+            loadProgress();
+            renderGrid();
+        };
 
-        function renderCatalogueGrid() {
-            const gridContainer = document.getElementById('catalogueGrid');
-            if (!gridContainer) return;
-            gridContainer.innerHTML = '';
+        function loadProgress() {
+            const saved = localStorage.getItem('historianProgress');
+            if (saved) {
+                unlockedItems = JSON.parse(saved);
+            }
+            updateCounter();
+        }
 
-            // Sort so that unlocked items appear at the top, ordered with the most recently unlocked first
+        function saveProgress() {
+            localStorage.setItem('historianProgress', JSON.stringify(unlockedItems));
+            updateCounter();
+            renderGrid();
+        }
+
+        function updateCounter() {
+            document.getElementById('unlock-count').innerText = unlockedItems.length;
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('catalogue-grid');
+            grid.innerHTML = '';
+
+            // Sort logic: Unlocked items first, followed by locked items
+            // To make recently unlocked appear at the top, we map their index in unlockedItems
             const sortedItems = [...catalogueItems].sort((a, b) => {
-                const aIndex = unlockedItemIds.indexOf(a.id);
-                const bIndex = unlockedItemIds.indexOf(b.id);
-                const aUnlocked = aIndex !== -1;
-                const bUnlocked = bIndex !== -1;
-
-                if (aUnlocked && bUnlocked) {
-                    return aIndex - bIndex; // Lowest index = most recently unlocked
+                const aIdx = unlockedItems.indexOf(a.id);
+                const bIdx = unlockedItems.indexOf(b.id);
+                
+                if (aIdx > -1 && bIdx > -1) {
+                    return bIdx - aIdx; // Higher index = unlocked more recently
+                } else if (aIdx > -1) {
+                    return -1; // a is unlocked, b is locked
+                } else if (bIdx > -1) {
+                    return 1; // b is unlocked, a is locked
+                } else {
+                    return 0; // both locked, keep original order
                 }
-                if (aUnlocked) return -1;
-                if (bUnlocked) return 1;
-                return 0;
             });
 
             sortedItems.forEach(item => {
-                const isUnlocked = unlockedItemIds.includes(item.id);
+                const isUnlocked = unlockedItems.includes(item.id);
                 const card = document.createElement('div');
-                card.className = `bg-victorian-800/90 border rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 relative overflow-hidden group ${
-                    isUnlocked 
-                        ? 'card-unlocked cursor-pointer hover:-translate-y-1' 
-                        : 'border-victorian-700/80 bg-victorian-900/40 opacity-90'
-                }`;
+                card.className = `item-card ${isUnlocked ? 'unlocked' : 'locked'}`;
+                card.onclick = () => isUnlocked ? openInspection(item.id) : null;
 
-                if (isUnlocked) {
-                    card.onclick = () => openDetailModal(item.id);
-                    card.innerHTML = `
-                        <div>
-                            <div class="relative w-full h-44 rounded-xl overflow-hidden border border-victorian-600 mb-3 bg-victorian-900">
-                                <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                                <span class="absolute top-2 right-2 bg-emerald-950/90 text-emerald-400 border border-emerald-700/80 text-[10px] px-2.5 py-1 rounded-full font-semibold uppercase tracking-wider backdrop-blur">
-                                    <i class="fa-solid fa-lock-open mr-1"></i> Unlocked
-                                </span>
-                            </div>
-                            <h3 class="cinzel font-bold text-base text-victorian-paper">${item.title}</h3>
+                card.innerHTML = `
+                    <div class="item-status-badge ${isUnlocked ? 'status-unlocked' : 'status-locked'}">
+                        <i class="fas ${isUnlocked ? 'fa-unlock' : 'fa-lock'}"></i> ${isUnlocked ? 'UNLOCKED' : 'LOCKED'}
+                    </div>
+                    <div class="item-image-container">
+                        <div class="locked-overlay">
+                            <i class="fas fa-question-circle locked-icon"></i>
+                            <span>Awaiting Scan</span>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-victorian-700/60 flex items-center justify-between text-xs text-victorian-brass font-medium">
+                        <img src="${item.image}" alt="${item.title}" class="item-image">
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-title">${isUnlocked ? item.title : 'UNKNOWN ARTIFACT'}</h3>
+                        <div class="item-action">
                             <span>Inspect & Listen</span>
-                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                            <i class="fas fa-arrow-right"></i>
                         </div>
-                    `;
-                } else {
-                    card.onclick = () => openScannerModal();
-                    card.innerHTML = `
-                        <div>
-                            <div class="relative w-full h-44 rounded-xl overflow-hidden border border-victorian-700/60 mb-3 bg-victorian-900/90 flex flex-col items-center justify-center p-4">
-                                <div class="w-14 h-14 rounded-full border-2 border-dashed border-victorian-600 flex items-center justify-center text-victorian-600 mb-2">
-                                    <i class="fa-solid fa-question text-2xl animate-pulse"></i>
-                                </div>
-                                <span class="text-[11px] text-victorian-paperdark/60 italic">Scan physical item to unlock</span>
-                                <span class="absolute top-2 right-2 bg-victorian-800/90 text-victorian-paperdark/70 border border-victorian-700 text-[10px] px-2.5 py-1 rounded-full font-semibold uppercase tracking-wider">
-                                    <i class="fa-solid fa-lock mr-1"></i> Locked
-                                </span>
-                            </div>
-                            <h3 class="cinzel font-bold text-base text-victorian-paperdark/70">Unidentified Artifact</h3>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-victorian-700/40 flex items-center justify-between text-xs text-victorian-paperdark/60">
-                            <span>Tap to Open Scanner</span>
-                            <i class="fa-solid fa-camera"></i>
-                        </div>
-                    `;
-                }
-
-                gridContainer.appendChild(card);
+                    </div>
+                `;
+                grid.appendChild(card);
             });
         }
 
-        function openDetailModal(itemId) {
-            const item = catalogueItems.find(i => i.id === itemId);
+        // --- INSPECTION MODAL ---
+        const audioEl = document.getElementById('inspect-audio');
+        const audioBtnIcon = document.querySelector('#inspect-audio-btn i');
+
+        function openInspection(id) {
+            const item = catalogueItems.find(i => i.id === id);
             if (!item) return;
 
-            document.getElementById('modalItemTitle').innerText = item.title;
-            document.getElementById('modalItemImage').src = item.image;
-
-            // Audio Player Configuration
-            const audioPlayer = document.getElementById('artifactAudioPlayer');
-            const audioSource = document.getElementById('audioSource');
-            const statusText = document.getElementById('audioStatusText');
-
-            audioSource.src = item.audio;
-            audioPlayer.load();
-
-            statusText.innerText = "Playing Audio...";
-            audioPlayer.play().catch(err => {
-                console.warn("Autoplay restricted or audio file unreadable:", err);
-                statusText.innerText = "Ready to Play";
-            });
-
-            audioPlayer.onended = () => { statusText.innerText = "Playback Finished"; };
-            audioPlayer.onpause = () => { statusText.innerText = "Paused"; };
-            audioPlayer.onplay = () => { statusText.innerText = "Playing Audio..."; };
-
-            // Paragraphs formatting
-            const textContainer = document.getElementById('modalItemText');
+            document.getElementById('inspect-title').innerText = item.title;
+            document.getElementById('inspect-image').src = item.image;
+            
+            const textContainer = document.getElementById('inspect-text');
             textContainer.innerHTML = item.paragraphs.map(p => `<p>${p}</p>`).join('');
 
-            document.getElementById('itemDetailModal').classList.remove('hidden');
+            audioEl.src = item.audio;
+            audioBtnIcon.className = 'fas fa-play';
+
+            document.getElementById('inspection-modal').classList.add('active');
         }
 
-        function closeDetailModal() {
-            const audioPlayer = document.getElementById('artifactAudioPlayer');
-            if (audioPlayer) audioPlayer.pause();
-            document.getElementById('itemDetailModal').classList.add('hidden');
-        }
-
-        async function openScannerModal() {
-            const modal = document.getElementById('scannerModal');
-            const overlay = document.getElementById('scannerOverlay');
-            const statusTitle = document.getElementById('scannerStatusTitle');
-            const statusDesc = document.getElementById('scannerStatusDesc');
-            const statusIcon = document.getElementById('scannerStatusIcon');
-            
-            modal.classList.remove('hidden');
-            overlay.classList.remove('hidden');
-            statusIcon.className = "fa-solid fa-circle-notch fa-spin text-3xl text-victorian-brass";
-            statusTitle.innerText = "Preparing Investigative Camera...";
-            statusDesc.innerText = "Loading camera stream and investigative tools...";
-
-            if (!modelUrl) {
-                statusIcon.className = "fa-solid fa-triangle-exclamation text-3xl text-amber-400";
-                statusTitle.innerText = "No Model URL Configured";
-                statusDesc.innerHTML = 'Please click <button onclick="closeScannerModal(); openConfigModal();" class="text-victorian-brass underline font-bold">Settings</button> to configure your model, or use manual unlock.';
-                return;
-            }
-
-            try {
-                // 1. Verify and wait for tmImage library to be ready on window
-                let retries = 0;
-                while ((typeof tmImage === 'undefined' || !window.tmImage) && retries < 25) {
-                    await new Promise(r => setTimeout(r, 150));
-                    retries++;
-                }
-
-                if (typeof tmImage === 'undefined' && typeof window.tmImage === 'undefined') {
-                    throw new Error("Teachable Machine library failed to load. Check your internet connection.");
-                }
-
-                const tm = window.tmImage || tmImage;
-
-                // 2. Load Model if not already cached
-                if (!model) {
-                    const modelURL = modelUrl.endsWith('/') ? modelUrl + "model.json" : modelUrl + "/model.json";
-                    const metadataURL = modelUrl.endsWith('/') ? modelUrl + "metadata.json" : modelUrl + "/metadata.json";
-                    model = await tm.load(modelURL, metadataURL);
-                    maxPredictions = model.getTotalClasses();
-                }
-
-                // 3. Start iOS-compatible Native WebRTC Stream
-                await startCameraStream();
-
-                overlay.classList.add('hidden');
-                isScannerRunning = true;
-                scanLockout = false;
-                animFrameId = window.requestAnimationFrame(scannerLoop);
-
-            } catch (err) {
-                console.error("Camera/Model loading error:", err);
-                statusIcon.className = "fa-solid fa-triangle-exclamation text-3xl text-amber-400";
-                
-                if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-                    statusTitle.innerText = "Camera Permission Denied";
-                    statusDesc.innerHTML = "Safari blocked camera access. Tap the <strong>'AA'</strong> or <strong>Website Settings</strong> icon in the Safari address bar, or go to <strong>iOS Settings > Safari > Camera</strong> to allow access.";
-                } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
-                    statusTitle.innerText = "No Camera Detected";
-                    statusDesc.innerText = "No video capture device was found on this hardware.";
-                } else {
-                    statusTitle.innerText = "Camera Access Failed";
-                    statusDesc.innerText = err.message || "Ensure you are using Safari on iOS and have accepted camera permissions.";
-                }
-            }
-        }
-
-        async function startCameraStream() {
-            const videoEl = document.getElementById('scannerVideo');
-
-            // Stop existing tracks if any
-            if (videoStream) {
-                videoStream.getTracks().forEach(t => t.stop());
-                videoStream = null;
-            }
-
-            // Required attributes for iOS Safari inline WebRTC playback
-            videoEl.setAttribute('autoplay', '');
-            videoEl.setAttribute('muted', '');
-            videoEl.setAttribute('playsinline', '');
-            videoEl.setAttribute('webkit-playsinline', '');
-            videoEl.muted = true;
-
-            // Media constraints with soft fallback for mobile
-            let constraints = {
-                audio: false,
-                video: {
-                    facingMode: { ideal: currentFacingMode },
-                    width: { ideal: 640 },
-                    height: { ideal: 640 }
-                }
-            };
-
-            try {
-                videoStream = await navigator.mediaDevices.getUserMedia(constraints);
-            } catch (primaryErr) {
-                console.warn("Ideal constraints failed, attempting fallback:", primaryErr);
-                constraints = { audio: false, video: true };
-                videoStream = await navigator.mediaDevices.getUserMedia(constraints);
-            }
-
-            videoEl.srcObject = videoStream;
-
-            // Wait for video metadata to load and play
-            await new Promise((resolve) => {
-                videoEl.onloadedmetadata = () => {
-                    videoEl.play().then(resolve).catch(resolve);
-                };
-            });
-        }
-
-        async function switchCamera() {
-            currentFacingMode = (currentFacingMode === "environment") ? "user" : "environment";
-            try {
-                await startCameraStream();
-            } catch (err) {
-                console.warn("Unable to switch camera:", err);
-            }
-        }
-
-        async function scannerLoop() {
-            if (!isScannerRunning) return;
-
-            const videoEl = document.getElementById('scannerVideo');
-            if (videoEl && videoEl.readyState >= 2) {
-                await predict(videoEl);
-            }
-            
-            if (isScannerRunning) {
-                animFrameId = window.requestAnimationFrame(scannerLoop);
-            }
-        }
-
-        async function predict(videoEl) {
-            if (!model || scanLockout || !videoEl) return;
-
-            const prediction = await model.predict(videoEl);
-
-            let bestArtifactProb = 0;
-            let bestArtifactClass = null;
-
-            // Identify the top non-background detection without revealing names
-            for (let i = 0; i < prediction.length; i++) {
-                const probability = prediction[i].probability;
-                const className = prediction[i].className;
-
-                if (className.toLowerCase() !== 'background') {
-                    if (probability > bestArtifactProb) {
-                        bestArtifactProb = probability;
-                        bestArtifactClass = className;
-                    }
-                }
-            }
-
-            const highestLabel = document.getElementById('highestMatchLabel');
-            const progressBar = document.getElementById('detectionProgressBar');
-            const percentage = Math.round(bestArtifactProb * 100);
-
-            // Display anonymous detection status
-            if (bestArtifactProb >= 0.30) {
-                highestLabel.innerText = `Artifact Detected (${percentage}%)`;
-                highestLabel.className = 'font-mono text-emerald-400';
-                if (progressBar) progressBar.style.width = `${percentage}%`;
+        function toggleAudio() {
+            if (audioEl.paused) {
+                audioEl.play().catch(e => console.error("Playback failed:", e));
+                audioBtnIcon.className = 'fas fa-pause';
             } else {
-                highestLabel.innerText = "Scanning...";
-                highestLabel.className = 'font-mono text-victorian-paperdark';
-                if (progressBar) progressBar.style.width = "0%";
+                audioEl.pause();
+                audioBtnIcon.className = 'fas fa-play';
             }
+        }
 
-            // Threshold for unlock trigger (> 80% confidence)
-            if (bestArtifactProb >= 0.80 && bestArtifactClass) {
-                const cleanMatch = bestArtifactClass.toLowerCase().replace(/[^a-z0-9]/g, '');
+        function audioEnded() {
+            audioBtnIcon.className = 'fas fa-play';
+        }
 
-                const matchedItem = catalogueItems.find(i => {
-                    const cleanTitle = i.title.toLowerCase().replace(/[^a-z0-9]/g, '');
-                    const cleanLabel = i.modelLabel.toLowerCase().replace(/[^a-z0-9]/g, '');
-                    const cleanId = i.id.toLowerCase().replace(/[^a-z0-9]/g, '');
-                    const cleanAliases = (i.aliases || []).map(a => a.toLowerCase().replace(/[^a-z0-9]/g, ''));
+        function closeModals() {
+            document.getElementById('inspection-modal').classList.remove('active');
+            audioEl.pause();
+            audioEl.currentTime = 0;
+            audioBtnIcon.className = 'fas fa-play';
+        }
 
-                    return (
-                        cleanMatch === cleanTitle || 
-                        cleanMatch === cleanLabel || 
-                        cleanMatch === cleanId || 
-                        cleanAliases.includes(cleanMatch)
-                    );
+        // --- TEACHABLE MACHINE SCANNER (iOS Compatible) ---
+        let model, webcam, maxPredictions;
+        let scannerActive = false;
+        let unlockCooldown = false;
+
+        async function initScanner() {
+            const modelURL = DEFAULT_MODEL_URL + "model.json";
+            const metadataURL = DEFAULT_MODEL_URL + "metadata.json";
+
+            document.getElementById('scanner-message').innerHTML = `
+                <i class="fas fa-circle-notch fa-spin" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                Preparing Investigative Camera...<br>
+                <span style="font-size: 0.8rem; color: var(--text-dim);">Loading AI neural network and requesting camera stream...</span>
+            `;
+
+            try {
+                // Ensure TM library is loaded
+                if (typeof tmImage === 'undefined') {
+                    throw new Error("Teachable Machine library not loaded.");
+                }
+
+                model = await tmImage.load(modelURL, metadataURL);
+                maxPredictions = model.getTotalClasses();
+
+                const container = document.getElementById("webcam-container");
+                container.innerHTML = ""; // Clear existing
+
+                // Setup Native Video Element for iOS compatibility
+                const videoElement = document.createElement('video');
+                videoElement.setAttribute('autoplay', '');
+                videoElement.setAttribute('playsinline', '');
+                videoElement.setAttribute('muted', '');
+                videoElement.style.width = '100%';
+                videoElement.style.height = '100%';
+                videoElement.style.objectFit = 'cover';
+                
+                container.appendChild(videoElement);
+
+                // Request camera (back camera preferred)
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: "environment" },
+                    audio: false
+                });
+                
+                videoElement.srcObject = stream;
+                
+                // Wait for video to be ready
+                await new Promise((resolve) => {
+                    videoElement.onloadedmetadata = () => {
+                        resolve();
+                    };
                 });
 
-                if (matchedItem && !unlockedItemIds.includes(matchedItem.id)) {
-                    highestLabel.innerText = "Artifact Identified!";
-                    if (progressBar) progressBar.style.width = "100%";
-                    scanLockout = true;
-                    unlockArtifact(matchedItem.id);
-                }
+                videoElement.play();
+                webcam = {
+                    canvas: videoElement,
+                    play: () => videoElement.play(),
+                    pause: () => videoElement.pause(),
+                    stop: () => {
+                        const tracks = stream.getTracks();
+                        tracks.forEach(track => track.stop());
+                    }
+                };
+
+                document.getElementById('scanner-message').innerText = "Camera Active. Point at an artifact.";
+                
+                // Setup Single Anonymous Progress Bar UI
+                const labelContainer = document.getElementById("label-container");
+                labelContainer.innerHTML = `
+                    <div class="status-bar-container">
+                        <div class="status-bar-label">Artifact Detected:</div>
+                        <div class="status-bar-track">
+                            <div class="status-bar-fill" id="mystery-bar-fill"></div>
+                        </div>
+                        <div class="status-bar-value" id="mystery-bar-val">0%</div>
+                    </div>
+                `;
+                
+                window.requestAnimationFrame(loop);
+            } catch (error) {
+                console.error(error);
+                document.getElementById('scanner-message').innerHTML = `
+                    <span style="color: var(--locked-color);">
+                        <i class="fas fa-exclamation-triangle"></i> Camera Access Failed.<br>
+                        ${error.message}<br>
+                        Please ensure you are using Safari and have granted camera permissions.
+                    </span>
+                `;
             }
         }
 
-        function unlockArtifact(itemId) {
-            // Remove if already present and prepend so it becomes the most recently unlocked
-            unlockedItemIds = unlockedItemIds.filter(id => id !== itemId);
-            unlockedItemIds.unshift(itemId);
-            localStorage.setItem('event2_unlocked_catalogue_items', JSON.stringify(unlockedItemIds));
-            renderCatalogueGrid();
-            updateProgress();
+        async function loop() {
+            if (!scannerActive) return;
+            webcam.play(); // Ensure playing
+            await predict();
+            window.requestAnimationFrame(loop);
+        }
 
-            // Close scanner and open detail view immediately
-            closeScannerModal();
-            openDetailModal(itemId);
+        async function predict() {
+            if (unlockCooldown) return;
+
+            const prediction = await model.predict(webcam.canvas);
+            
+            // Find highest non-background prediction
+            let highestMatch = null;
+            let highestVal = 0;
+
+            for (let i = 0; i < maxPredictions; i++) {
+                let className = prediction[i].className.toLowerCase();
+                let probability = prediction[i].probability;
+
+                // Ignore 'background' class if present
+                if (className !== 'background' && className !== 'none' && probability > highestVal) {
+                    highestVal = probability;
+                    highestMatch = prediction[i].className;
+                }
+            }
+
+            const fillEl = document.getElementById('mystery-bar-fill');
+            const valEl = document.getElementById('mystery-bar-val');
+            
+            if (fillEl && valEl) {
+                const displayVal = Math.round(highestVal * 100);
+                
+                // Only show bar if confidence is somewhat noticeable
+                if (displayVal > 15) {
+                    fillEl.style.width = displayVal + "%";
+                    valEl.innerText = displayVal + "%";
+                    
+                    if (displayVal >= (UNLOCK_THRESHOLD * 100)) {
+                        fillEl.style.backgroundColor = 'var(--unlocked-color)';
+                    } else {
+                        fillEl.style.backgroundColor = 'var(--gold-dim)';
+                    }
+                } else {
+                    fillEl.style.width = "0%";
+                    valEl.innerText = "0%";
+                }
+            }
+
+            // Check if threshold met to unlock
+            if (highestMatch && highestVal >= UNLOCK_THRESHOLD) {
+                handleScanMatch(highestMatch);
+            }
+        }
+
+        function handleScanMatch(className) {
+            // Find matching catalog item based on class name or aliases
+            const cleanClass = className.toLowerCase().trim();
+            const matchedItem = catalogueItems.find(item => 
+                item.modelLabel.toLowerCase() === cleanClass || 
+                item.aliases.includes(cleanClass)
+            );
+
+            if (matchedItem && !unlockedItems.includes(matchedItem.id)) {
+                unlockCooldown = true;
+                
+                // Play sound
+                document.getElementById('success-sound').play().catch(e=>console.log(e));
+
+                // Add to unlocked list
+                unlockedItems.push(matchedItem.id);
+                saveProgress();
+
+                document.getElementById('scanner-message').innerHTML = `<span style="color: var(--unlocked-color); font-weight: bold;"><i class="fas fa-check-circle"></i> NEW ARTIFACT UNLOCKED!</span>`;
+                
+                setTimeout(() => {
+                    closeScannerModal();
+                    openInspection(matchedItem.id);
+                    unlockCooldown = false;
+                }, 1500);
+            }
+        }
+
+        function openScannerModal() {
+            scannerActive = true;
+            unlockCooldown = false;
+            document.getElementById('scanner-modal').classList.add('active');
+            
+            // Wait for TFJS and Teachable Machine to load if not cached yet
+            if (typeof tmImage === 'undefined') {
+                document.getElementById('scanner-message').innerHTML = `
+                    <i class="fas fa-circle-notch fa-spin"></i> Loading Libraries...
+                `;
+                setTimeout(initScanner, 1000);
+            } else {
+                initScanner();
+            }
         }
 
         function closeScannerModal() {
-            isScannerRunning = false;
-            scanLockout = false;
-            
-            if (animFrameId) {
-                cancelAnimationFrame(animFrameId);
-                animFrameId = null;
-            }
-
-            if (videoStream) {
-                videoStream.getTracks().forEach(track => track.stop());
-                videoStream = null;
-            }
-
-            const videoEl = document.getElementById('scannerVideo');
-            if (videoEl) {
-                videoEl.srcObject = null;
-            }
-
-            document.getElementById('scannerModal').classList.add('hidden');
-        }
-
-        function openConfigModal() {
-            const modal = document.getElementById('configModal');
-            const listContainer = document.getElementById('manualUnlockList');
-            listContainer.innerHTML = '';
-
-            catalogueItems.forEach(item => {
-                const isUnlocked = unlockedItemIds.includes(item.id);
-                const itemBox = document.createElement('div');
-                itemBox.className = 'flex items-center justify-between p-2.5 bg-victorian-900 rounded-lg border border-victorian-700 text-xs';
-                
-                itemBox.innerHTML = `
-                    <span class="font-medium text-victorian-paper">${item.title}</span>
-                    <button onclick="toggleItemUnlock('${item.id}')" class="px-3 py-1 rounded font-bold transition ${
-                        isUnlocked 
-                            ? 'bg-emerald-900 text-emerald-300 border border-emerald-700 hover:bg-emerald-800' 
-                            : 'bg-victorian-800 text-victorian-brass border border-victorian-600 hover:bg-victorian-700'
-                    }">
-                        ${isUnlocked ? 'Unlocked ✓' : 'Unlock Now'}
-                    </button>
-                `;
-                listContainer.appendChild(itemBox);
-            });
-
-            modal.classList.remove('hidden');
-        }
-
-        function closeConfigModal() {
-            document.getElementById('configModal').classList.add('hidden');
-        }
-
-        function toggleItemUnlock(itemId) {
-            if (unlockedItemIds.includes(itemId)) {
-                unlockedItemIds = unlockedItemIds.filter(id => id !== itemId);
-            } else {
-                unlockedItemIds.unshift(itemId);
-            }
-            localStorage.setItem('event2_unlocked_catalogue_items', JSON.stringify(unlockedItemIds));
-            renderCatalogueGrid();
-            updateProgress();
-            openConfigModal();
-        }
-
-        function resetAllProgress() {
-            unlockedItemIds = [];
-            localStorage.removeItem('event2_unlocked_catalogue_items');
-            renderCatalogueGrid();
-            updateProgress();
-            openConfigModal();
-        }
-
-        function updateProgress() {
-            const progressEl = document.getElementById('progressText');
-            if (progressEl) {
-                progressEl.innerText = `${unlockedItemIds.length} / ${catalogueItems.length}`;
+            scannerActive = false;
+            document.getElementById('scanner-modal').classList.remove('active');
+            if (webcam) {
+                webcam.stop();
             }
         }
+
+        // --- SETTINGS MODAL ---
+        function openSettingsModal() {
+            document.getElementById('settings-modal').classList.add('active');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settings-modal').classList.remove('active');
+        }
+
+        function resetCatalogueProgress() {
+            if (confirm("Are you sure you want to reset all unlocked artifacts? This will lock all items back up.")) {
+                unlockedItems = [];
+                localStorage.removeItem('historianProgress');
+                updateCounter();
+                renderGrid();
+                closeSettingsModal();
+            }
+        }
+
     </script>
 </body>
 </html>
