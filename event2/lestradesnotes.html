@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Soldier's Final Retreat - Lestrade's Field Notebook</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Cinzel, Special Elite, Caveat (Handwriting), Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        victorian: {
+                            900: '#0d0907',
+                            800: '#1a130f',
+                            700: '#2c211a',
+                            600: '#423328',
+                            brass: '#c59b27',
+                            brasslight: '#e5b842',
+                            paper: '#f5ecd7',
+                            paperdark: '#e3d4b6',
+                            ruled: '#d3c3a1',
+                            leather: '#24140b',
+                            crimson: '#8f1d1d',
+                            scrawl: '#a81c1c'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        typewriter: ['Special Elite', 'monospace'],
+                        hand: ['Caveat', 'cursive'],
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0d0907;
+            color: #2c211a;
+            font-family: 'Inter', sans-serif;
+            background-image: radial-gradient(circle at 50% 25%, #1d1612 0%, #0d0907 100%);
+        }
+
+        .cinzel { font-family: 'Cinzel', serif; }
+        .typewriter { font-family: 'Special Elite', monospace; }
+        .handwriting { font-family: 'Caveat', cursive; }
+
+        /* Notebook Ruled Page Styling */
+        .notebook-page {
+            background-color: #f6efe1;
+            background-image: 
+                linear-gradient(90deg, transparent 48px, #d78282 49px, #d78282 51px, transparent 52px),
+                repeating-linear-gradient(transparent, transparent 29px, #dfd2b9 30px);
+            box-shadow: 
+                0 1px 1px rgba(0,0,0,0.15), 
+                0 10px 0 -5px #eee5d3, 
+                0 10px 1px -4px rgba(0,0,0,0.15), 
+                0 20px 0 -10px #e6dbc4, 
+                0 20px 1px -9px rgba(0,0,0,0.15),
+                0 25px 35px rgba(0,0,0,0.6);
+        }
+
+        @media (max-width: 640px) {
+            .notebook-page {
+                background-image: 
+                    linear-gradient(90deg, transparent 26px, #d78282 27px, #d78282 28px, transparent 29px),
+                    repeating-linear-gradient(transparent, transparent 29px, #dfd2b9 30px);
+            }
+        }
+
+        /* Leather Cover Texture */
+        .leather-binding {
+            background: linear-gradient(135deg, #2b170c 0%, #170d07 100%);
+            border-left: 12px solid #3d2314;
+            box-shadow: inset 2px 0 6px rgba(0,0,0,0.8), 0 15px 30px rgba(0,0,0,0.7);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a130f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #423328;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c59b27;
+        }
+
+        /* Red Pencil Underline & Circle */
+        .scrawl-underline {
+            border-bottom: 2px dashed #b91c1c;
+            padding-bottom: 1px;
+        }
+
+        .scrawl-circle {
+            border: 2px solid #b91c1c;
+            border-radius: 45% 55% 40% 60% / 55% 45% 55% 45%;
+            padding: 2px 6px;
+        }
+
+        /* Audio Element Styling */
+        audio::-webkit-media-controls-panel {
+            background-color: #f1e4cb;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-red-800 selection:text-white">
+
+    <!-- Header Bar -->
+    <header class="border-b border-victorian-600/60 bg-victorian-900/95 backdrop-blur sticky top-0 z-30 px-4 py-3">
+        <div class="max-w-4xl mx-auto flex flex-wrap justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-victorian-800 border border-victorian-brass flex items-center justify-center text-victorian-brass shadow-md">
+                    <i class="fa-solid fa-book-skull text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold cinzel text-victorian-paper tracking-wide">Lestrade's Notes</h1>
+                    <p class="text-xs text-victorian-brass font-mono">Confidential Case Journal — Field Statements</p>
+                </div>
+            </div>
+
+            <!-- Page Quick Switcher -->
+            <div class="flex items-center gap-2">
+                <a href="https://invitation.visitbritishhills.com/event2/questioning_room.html" class="px-3 py-1.5 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-600 text-victorian-paper text-xs flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-door-open text-victorian-brass"></i>
+                    <span>Questioning Room</span>
+                </a>
+                <a href="https://invitation.visitbritishhills.com/event2/historians_catalogue.html" class="px-3 py-1.5 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-600 text-victorian-paper text-xs flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-scroll text-victorian-brass"></i>
+                    <span>Catalogue</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Notebook Container -->
+    <main class="max-w-4xl mx-auto w-full p-3 sm:p-6 flex-1 flex flex-col items-center">
+
+        <!-- Notebook Cover / Shell -->
+        <div class="w-full leather-binding rounded-2xl p-2.5 sm:p-5 border-2 border-victorian-700 relative">
+
+            <!-- Notebook Bookmark Ribbon -->
+            <div class="absolute -top-3 right-8 w-6 h-14 bg-red-900 border border-red-700 shadow-md transform rotate-2 z-20 pointer-events-none flex flex-col justify-end">
+                <div class="w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[8px] border-b-victorian-900 self-center"></div>
+            </div>
+
+            <!-- Ruled Notebook Interior Page -->
+            <div class="notebook-page rounded-xl p-4 sm:p-8 sm:pl-16 relative border border-victorian-600/40 text-victorian-900 overflow-hidden">
+                
+                <!-- Inspector Notebook Top Banner / Watermark -->
+                <div class="border-b-2 border-victorian-700/60 pb-3 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="typewriter text-xs uppercase tracking-widest text-victorian-700 font-bold">Investigation Dossier</span>
+                            <span class="px-2 py-0.5 rounded bg-red-900 text-white font-mono text-[10px] font-bold tracking-wide">CONFIDENTIAL</span>
+                        </div>
+                        <h2 class="cinzel text-lg sm:text-2xl font-bold text-victorian-900">A Soldier's Final Retreat</h2>
+                    </div>
+                    <div class="text-left sm:text-right font-mono text-xs text-victorian-700">
+                        <div>Investigating Officer: <strong>G. Lestrade</strong></div>
+                        <div class="text-[11px] text-red-900 font-bold">Suspect in Custody: Dr. J. H. Watson</div>
+                    </div>
+                </div>
+
+                <!-- Hand-written Foreword from Lestrade -->
+                <div class="mb-8 p-3.5 bg-[#f0e4cc]/90 rounded-lg border border-[#dbc69f] relative shadow-inner">
+                    <div class="handwriting text-xl sm:text-2xl text-red-900 leading-snug">
+                        "The facts speak for themselves! Every witness confirms the timeline. Watson was enraged, armed with his standard issue revolver, and left alone in the library. All other suspects possess verified alibis."
+                    </div>
+                    <div class="text-right handwriting text-lg text-red-900 font-bold mt-1">— G. Lestrade</div>
+                </div>
+
+                <!-- Statements List -->
+                <div class="space-y-8" id="statementsContainer">
+
+                    <!-- Statement 1: Lady Sterling -->
+                    <section class="statement-card relative pl-2 sm:pl-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 mb-2 border-b border-victorian-600/40">
+                            <div>
+                                <span class="typewriter text-xs text-victorian-600 font-semibold block">Witness 01 // Sterling Household</span>
+                                <h3 class="cinzel text-base sm:text-lg font-bold text-victorian-900">Lady Persimma Sterling</h3>
+                            </div>
+                            <!-- Audio Control Button -->
+                            <div class="shrink-0 flex items-center gap-2">
+                                <button onclick="toggleStatementAudio('audio-lady-sterling', this)" class="audio-btn px-3 py-1.5 rounded-md bg-victorian-800 hover:bg-victorian-700 text-victorian-paper text-xs font-semibold flex items-center gap-2 shadow transition">
+                                    <i class="fa-solid fa-play text-victorian-brass"></i>
+                                    <span>Play Statement</span>
+                                </button>
+                                <audio id="audio-lady-sterling" preload="none" onended="resetAudioButton(this)">
+                                    <source src="audio/statement_lady_sterling.mp3" type="audio/mp3">
+                                </audio>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+                            <!-- Statement Text -->
+                            <div class="md:col-span-8 typewriter text-xs sm:text-sm text-victorian-900 leading-relaxed bg-[#fbf6ec]/60 p-3 rounded border border-[#e4d8bf]">
+                                “I was with Archie in the kitchen. Chef had left already so we were putting together some cold meats and cheese for the boys. It seemed like they had a lot to catch up on, and it was going to be a long night, so I thought they would appreciate some light refreshments.”
+                            </div>
+                            <!-- Lestrade Scrawled Margin Note -->
+                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/50 p-2.5 rounded border border-red-200/80 transform rotate-1 shadow-sm">
+                                <i class="fa-solid fa-pen-nib text-xs text-red-700 mr-1"></i>
+                                <strong>Lestrade:</strong> <span class="scrawl-underline">Irrefutable alibi!</span> In kitchen alongside Archibald. Neither was in library when the trigger was pulled. Eliminates both!
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Statement 2: Archibald Sterling -->
+                    <section class="statement-card relative pl-2 sm:pl-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 mb-2 border-b border-victorian-600/40">
+                            <div>
+                                <span class="typewriter text-xs text-victorian-600 font-semibold block">Witness 02 // Son of the House</span>
+                                <h3 class="cinzel text-base sm:text-lg font-bold text-victorian-900">Archibald Sterling</h3>
+                            </div>
+                            <!-- Audio Control Button -->
+                            <div class="shrink-0 flex items-center gap-2">
+                                <button onclick="toggleStatementAudio('audio-archibald', this)" class="audio-btn px-3 py-1.5 rounded-md bg-victorian-800 hover:bg-victorian-700 text-victorian-paper text-xs font-semibold flex items-center gap-2 shadow transition">
+                                    <i class="fa-solid fa-play text-victorian-brass"></i>
+                                    <span>Play Statement</span>
+                                </button>
+                                <audio id="audio-archibald" preload="none" onended="resetAudioButton(this)">
+                                    <source src="audio/statement_archibald.mp3" type="audio/mp3">
+                                </audio>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+                            <!-- Statement Text -->
+                            <div class="md:col-span-8 typewriter text-xs sm:text-sm text-victorian-900 leading-relaxed bg-[#fbf6ec]/60 p-3 rounded border border-[#e4d8bf]">
+                                “I was in the kitchen. Mother had asked me to help prepare some food for the guests. Not sure why Chef couldn’t have done it. Most of the preparation for tonight was already done, so making a small light supper wouldn’t have been too much trouble for him. All our staff seem a little lazy to me. I mean, mother even had to go and take the food to the library. We have a maid to do that. Where was she?”
+                            </div>
+                            <!-- Lestrade Scrawled Margin Note -->
+                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/50 p-2.5 rounded border border-red-200/80 transform -rotate-1 shadow-sm">
+                                <i class="fa-solid fa-pen-nib text-xs text-red-700 mr-1"></i>
+                                <strong>Lestrade:</strong> Corroborates his mother completely. The staff being dismissed gave Watson the <span class="scrawl-circle">isolated wing</span> he required to carry out the deed undisturbed!
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Statement 3: Silas Thorne -->
+                    <section class="statement-card relative pl-2 sm:pl-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 mb-2 border-b border-victorian-600/40">
+                            <div>
+                                <span class="typewriter text-xs text-victorian-600 font-semibold block">Witness 03 // Veteran Officer</span>
+                                <h3 class="cinzel text-base sm:text-lg font-bold text-victorian-900">Silas Thorne</h3>
+                            </div>
+                            <!-- Audio Control Button -->
+                            <div class="shrink-0 flex items-center gap-2">
+                                <button onclick="toggleStatementAudio('audio-thorne', this)" class="audio-btn px-3 py-1.5 rounded-md bg-victorian-800 hover:bg-victorian-700 text-victorian-paper text-xs font-semibold flex items-center gap-2 shadow transition">
+                                    <i class="fa-solid fa-play text-victorian-brass"></i>
+                                    <span>Play Statement</span>
+                                </button>
+                                <audio id="audio-thorne" preload="none" onended="resetAudioButton(this)">
+                                    <source src="audio/statement_thorne.mp3" type="audio/mp3">
+                                </audio>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+                            <!-- Statement Text -->
+                            <div class="md:col-span-8 typewriter text-xs sm:text-sm text-victorian-900 leading-relaxed bg-[#fbf6ec]/60 p-3 rounded border border-[#e4d8bf]">
+                                “I used to have a lot of respect for that man. He was my commanding officer after all. But I don’t know, seeing that photo of us all together, happy, and then finding out that he knew the Afghans were coming, it all changed. It’s as if that happy memory ceased to exist. I’ve never seen Watson that angry. Even on the battlefield. But I think he was angry on my behalf. I had to take him outside to calm down. And he did. Once I’d explained that I’d accepted that Simon died doing a job he loved, he seemed to be able to accept that too.”
+                            </div>
+                            <!-- Lestrade Scrawled Margin Note -->
+                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/50 p-2.5 rounded border border-red-200/80 transform rotate-1 shadow-sm">
+                                <i class="fa-solid fa-circle-exclamation text-xs text-red-700 mr-1"></i>
+                                <span class="font-bold underline uppercase">THE SMOKING GUN!</span> Thorne admits: <span class="scrawl-underline">"Never seen Watson that angry."</span> Motive: vengeful bloodlust over the Afghan ambush! Thorne claims he calmed down? Absurd! Watson circled back with his service revolver!
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Statement 4: Maple Strand -->
+                    <section class="statement-card relative pl-2 sm:pl-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 mb-2 border-b border-victorian-600/40">
+                            <div>
+                                <span class="typewriter text-xs text-victorian-600 font-semibold block">Witness 04 // Manor Maid</span>
+                                <h3 class="cinzel text-base sm:text-lg font-bold text-victorian-900">Maple Strand</h3>
+                            </div>
+                            <!-- Audio Control Button -->
+                            <div class="shrink-0 flex items-center gap-2">
+                                <button onclick="toggleStatementAudio('audio-maple', this)" class="audio-btn px-3 py-1.5 rounded-md bg-victorian-800 hover:bg-victorian-700 text-victorian-paper text-xs font-semibold flex items-center gap-2 shadow transition">
+                                    <i class="fa-solid fa-play text-victorian-brass"></i>
+                                    <span>Play Statement</span>
+                                </button>
+                                <audio id="audio-maple" preload="none" onended="resetAudioButton(this)">
+                                    <source src="audio/statement_maple.mp3" type="audio/mp3">
+                                </audio>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+                            <!-- Statement Text -->
+                            <div class="md:col-span-8 typewriter text-xs sm:text-sm text-victorian-900 leading-relaxed bg-[#fbf6ec]/60 p-3 rounded border border-[#e4d8bf]">
+                                “I only got to meet the soldiers briefly. After dinner when they were all chatting in the library, her ladyship said that what with all the other guests arriving the next day, and how busy it was going to be, I could take the rest of the night off. Well, you don’t need to tell me twice. Not often I get a chance to put my feet up.”
+                            </div>
+                            <!-- Lestrade Scrawled Margin Note -->
+                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/50 p-2.5 rounded border border-red-200/80 transform -rotate-1 shadow-sm">
+                                <i class="fa-solid fa-pen-nib text-xs text-red-700 mr-1"></i>
+                                <strong>Lestrade:</strong> Maid absent, retired to quarters. Explains Archie's confusion over missing servants. Watson knew the floor was deserted.
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Statement 5: Evelyn Ashgrove -->
+                    <section class="statement-card relative pl-2 sm:pl-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 mb-2 border-b border-victorian-600/40">
+                            <div>
+                                <span class="typewriter text-xs text-victorian-600 font-semibold block">Witness 05 // Guest</span>
+                                <h3 class="cinzel text-base sm:text-lg font-bold text-victorian-900">Evelyn Ashgrove</h3>
+                            </div>
+                            <!-- Audio Control Button -->
+                            <div class="shrink-0 flex items-center gap-2">
+                                <button onclick="toggleStatementAudio('audio-ashgrove', this)" class="audio-btn px-3 py-1.5 rounded-md bg-victorian-800 hover:bg-victorian-700 text-victorian-paper text-xs font-semibold flex items-center gap-2 shadow transition">
+                                    <i class="fa-solid fa-play text-victorian-brass"></i>
+                                    <span>Play Statement</span>
+                                </button>
+                                <audio id="audio-ashgrove" preload="none" onended="resetAudioButton(this)">
+                                    <source src="audio/statement_ashgrove.mp3" type="audio/mp3">
+                                </audio>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+                            <!-- Statement Text -->
+                            <div class="md:col-span-8 typewriter text-xs sm:text-sm text-victorian-900 leading-relaxed bg-[#fbf6ec]/60 p-3 rounded border border-[#e4d8bf]">
+                                “I probably shouldn’t have left the room when all the arguing started. It must seem a little bit like I’d lit the blue touch paper and retired, but I didn’t know what else to do. They seemed like such gentlemen, so I thought if I left them together to talk it out, all would be resolved. I had no idea they would react the way they did.”
+                            </div>
+                            <!-- Lestrade Scrawled Margin Note -->
+                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/50 p-2.5 rounded border border-red-200/80 transform rotate-1 shadow-sm">
+                                <i class="fa-solid fa-pen-nib text-xs text-red-700 mr-1"></i>
+                                <strong>Lestrade:</strong> Ashgrove fled because of Watson's terrifying quarrel! Leaving Watson as the <span class="scrawl-circle">last man in the room</span> before the fatal shot! Case closed!
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+                <!-- Final Dossier Summary Seal -->
+                <div class="mt-10 pt-6 border-t-2 border-red-900/60 bg-[#eeddc0]/80 p-4 sm:p-6 rounded-xl border border-[#d8c39e] relative">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i class="fa-solid fa-stamp text-red-800 text-2xl"></i>
+                        <h4 class="cinzel font-bold text-red-900 text-base sm:text-lg uppercase tracking-wider">Lestrade's Official Finding & Conclusion</h4>
+                    </div>
+                    <p class="typewriter text-xs sm:text-sm text-victorian-900 leading-relaxed">
+                        "The weapon recovered is a standard military six-chamber revolver — the very make issued to Dr. John H. Watson during his service. Thorne affirms Watson was consumed with murderous rage over the Afghan massacre. Ashgrove confirms the room was vacated except for the combatants. The Sterling family were occupied in the kitchens. There is no other conclusion admissible: <strong>Dr. Watson pulled the trigger.</strong>"
+                    </p>
+                    <div class="mt-3 flex justify-end items-center text-xs font-mono text-red-900 font-bold border-t border-red-300 pt-2">
+                        <span>Verdict: Watson's Guilt Proven</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="w-full flex flex-col sm:flex-row justify-center items-center gap-3 pt-6 pb-2">
+            <a href="https://invitation.visitbritishhills.com/event2/questioning_room.html" 
+               class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 py-3 rounded-xl bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-sm sm:text-base cinzel tracking-wider shadow-lg border border-victorian-brasslight/40 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
+                <i class="fa-solid fa-door-open text-base sm:text-lg"></i>
+                <span>Questioning Room</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+
+            <a href="https://invitation.visitbritishhills.com/event2/historians_catalogue.html" 
+               class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 py-3 rounded-xl bg-victorian-800 hover:bg-victorian-700 text-victorian-brass font-bold text-sm sm:text-base cinzel tracking-wider shadow-lg border border-victorian-600 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
+                <i class="fa-solid fa-scroll text-base sm:text-lg"></i>
+                <span>Historian's Catalogue</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-victorian-700/60 bg-victorian-900/90 py-3 px-4 text-center text-xs text-victorian-paperdark mt-4">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p>Event 2: A Soldier's Final Retreat — Lestrade's Notes</p>
+            <p class="text-victorian-paperdark/60">Cross-reference with suspect interrogations and archival catalogue.</p>
+        </div>
+    </footer>
+
+    <!-- Audio Player Logic -->
+    <script>
+        let currentlyPlayingAudio = null;
+        let currentlyActiveButton = null;
+
+        function toggleStatementAudio(audioId, btnElement) {
+            const audio = document.getElementById(audioId);
+            if (!audio) return;
+
+            // If this audio is already playing, pause it
+            if (currentlyPlayingAudio === audio && !audio.paused) {
+                audio.pause();
+                resetButtonState(btnElement);
+                currentlyPlayingAudio = null;
+                currentlyActiveButton = null;
+                return;
+            }
+
+            // If another audio was playing, pause and reset that button
+            if (currentlyPlayingAudio && currentlyPlayingAudio !== audio) {
+                currentlyPlayingAudio.pause();
+                currentlyPlayingAudio.currentTime = 0;
+                if (currentlyActiveButton) {
+                    resetButtonState(currentlyActiveButton);
+                }
+            }
+
+            // Play the requested audio
+            audio.play().then(() => {
+                currentlyPlayingAudio = audio;
+                currentlyActiveButton = btnElement;
+                btnElement.classList.remove('bg-victorian-800');
+                btnElement.classList.add('bg-red-900');
+                btnElement.innerHTML = `
+                    <i class="fa-solid fa-pause text-victorian-brass animate-pulse"></i>
+                    <span>Pause Statement</span>
+                `;
+            }).catch(err => {
+                console.warn("Audio playback issue (likely placeholder audio file):", err);
+                // Flash button to indicate click registered
+                btnElement.classList.add('bg-victorian-700');
+                setTimeout(() => btnElement.classList.remove('bg-victorian-700'), 500);
+            });
+        }
+
+        function resetAudioButton(audioElement) {
+            if (currentlyActiveButton) {
+                resetButtonState(currentlyActiveButton);
+            }
+            currentlyPlayingAudio = null;
+            currentlyActiveButton = null;
+        }
+
+        function resetButtonState(btnElement) {
+            btnElement.classList.remove('bg-red-900');
+            btnElement.classList.add('bg-victorian-800');
+            btnElement.innerHTML = `
+                <i class="fa-solid fa-play text-victorian-brass"></i>
+                <span>Play Statement</span>
+            `;
+        }
+    </script>
+</body>
+</html>
