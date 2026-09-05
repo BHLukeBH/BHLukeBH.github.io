@@ -176,7 +176,7 @@
     </main>
 
     <div id="itemDetailModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-victorian-800 border-2 border-victorian-brass rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden relative animate-fade-in">
+        <div class="bg-victorian-800 border-2 border-victorian-brass rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden relative">
             
             <!-- Modal Header -->
             <div class="p-4 bg-victorian-900 border-b border-victorian-700 flex justify-between items-center">
@@ -361,7 +361,7 @@
     </footer>
 
     <script>
-        // Master Catalog Dataset with exact user descriptions and placeholder assets
+        // Master Catalog Dataset with exact image paths in event2images/ and audio in event2audio/
         const DEFAULT_MODEL_URL = 'https://teachablemachine.withgoogle.com/models/k78k70ASC/';
 
         const catalogueItems = [
@@ -370,8 +370,8 @@
                 title: 'Jezail Plaque',
                 modelLabel: 'Jezail Plaque',
                 aliases: ['jezail', 'jezail plaque', 'rifle', 'riffle'],
-                image: 'https://placehold.co/600x400/2c211a/c59b27?text=Jezail+Plaque',
-                audio: 'audio/jezail_plaque.mp3', // Relative MP3 path
+                image: 'event2images/jezail_plaque.jpg',
+                audio: 'event2audio/jezail_plaque.mp3',
                 paragraphs: [
                     "The jezail. A long-barrelled weapon common in Central Asia and British India and parts of the Middle East.",
                     "The main weapon used by the various ethnic tribesmen of Afghanistan (who, in 1809, deposed Shah Shuja, ruler of Afghanistan 1803-1809 and 1839-1842). They also fought in the First and Second Anglo-Afghan Wars.",
@@ -384,8 +384,8 @@
                 title: 'Deer’s Head',
                 modelLabel: 'Deer Head',
                 aliases: ['deer head', 'deer', 'deers head', 'deer’s head'],
-                image: 'https://placehold.co/600x400/2c211a/c59b27?text=Deer%27s+Head',
-                audio: 'audio/deers_head.mp3',
+                image: 'event2images/deers_head.jpg',
+                audio: 'event2audio/deers_head.mp3',
                 paragraphs: [
                     "A trophy or souvenir to celebrate the successful hunting of an animal. Common creatures hunted in England include deer, fox, bear. More exotic species include lion, elephant, zebra.",
                     "A popular pursuit of the wealthy classes. The main reasons for displaying these trophies are to remember significant hunts, or to showcase one’s skill and to show appreciation for nature as well as showing man’s dominance over other creatures."
@@ -396,8 +396,8 @@
                 title: 'Grand Tour Brochure',
                 modelLabel: 'Grand Tour Brochure',
                 aliases: ['grand tour brochure', 'grand tour', 'brochure'],
-                image: 'https://placehold.co/600x400/2c211a/c59b27?text=Grand+Tour+Brochure',
-                audio: 'audio/grand_tour_brochure.mp3',
+                image: 'event2images/grand_tour_brochure.jpg',
+                audio: 'event2audio/grand_tour_brochure.mp3',
                 paragraphs: [
                     "The Grand Tour. A slightly outdated tradition amongst the British nobility but still popular amongst other wealthy individuals whereby young men would travel throughout continental Europe affording them the opportunity to immerse themselves in new cultures.",
                     "Although the trips are recreational, the primary purpose is for education and therefore, the young men are often accompanied by a tutor or family member. Not uncommonly, an unmarried aunt."
@@ -408,8 +408,8 @@
                 title: 'Revolver',
                 modelLabel: 'Gun',
                 aliases: ['gun', 'revolver', 'smith & wesson', 'pistol'],
-                image: 'https://placehold.co/600x400/2c211a/c59b27?text=Revolver',
-                audio: 'audio/revolver.mp3',
+                image: 'event2images/revolver.jpg',
+                audio: 'event2audio/revolver.mp3',
                 paragraphs: [
                     "Smith & Wesson Revolver.",
                     "Standard military issue revolver for the British Army 1856-1880.",
@@ -423,8 +423,8 @@
                 title: 'Pot Pourri',
                 modelLabel: 'Pot Pourri',
                 aliases: ['pot pourri', 'potpourri'],
-                image: 'https://placehold.co/600x400/2c211a/c59b27?text=Pot+Pourri',
-                audio: 'audio/pot_pourri.mp3',
+                image: 'event2images/pot_pourri.jpg',
+                audio: 'event2audio/pot_pourri.mp3',
                 paragraphs: [
                     "Pot Pourri. A natural air freshener made from fragrant materials such as flowers or herbs. Often displayed in decorative bowls to create a pleasing aesthetic to a room.",
                     "Taken from the name of the Spanish slow cooked meat stew, olla podrida, or in English, rotten pot because the slow cooking process was akin to that of meat being left to slowly rot. This dish was later adopted by the French who translated it as Pot Pourri.",
@@ -436,8 +436,8 @@
                 title: 'Magna Carta',
                 modelLabel: 'Magna Carta',
                 aliases: ['magna carta', 'charter'],
-                image: 'https://placehold.co/600x400/2c211a/c59b27?text=Magna+Carta',
-                audio: 'audio/magna_carta.mp3',
+                image: 'event2images/magna_carta.jpg',
+                audio: 'event2audio/magna_carta.mp3',
                 paragraphs: [
                     "Magna Carta, the first document which put into writing the principle that the king and his government were not above the law. It was issued and signed by King John in June 1215 at Runnymede, England.",
                     "There are four original copies and although this, alas, is a replica, it is still a fascinating charter to discover."
@@ -456,7 +456,6 @@
         let scanLockout = false;
         let animFrameId = null;
 
-        // On DOM Load initialization
         window.addEventListener('DOMContentLoaded', () => {
             renderCatalogueGrid();
             updateProgress();
@@ -578,7 +577,6 @@
             const statusTitle = document.getElementById('scannerStatusTitle');
             const statusDesc = document.getElementById('scannerStatusDesc');
             const statusIcon = document.getElementById('scannerStatusIcon');
-            const videoEl = document.getElementById('scannerVideo');
             
             modal.classList.remove('hidden');
             overlay.classList.remove('hidden');
@@ -670,7 +668,6 @@
                 videoStream = await navigator.mediaDevices.getUserMedia(constraints);
             } catch (primaryErr) {
                 console.warn("Ideal constraints failed, attempting fallback:", primaryErr);
-                // Fallback to basic video request without strict dimensions
                 constraints = { audio: false, video: true };
                 videoStream = await navigator.mediaDevices.getUserMedia(constraints);
             }
@@ -698,7 +695,7 @@
             if (!isScannerRunning) return;
 
             const videoEl = document.getElementById('scannerVideo');
-            if (videoEl && videoEl.readyState >= 2) { // HAVE_CURRENT_DATA or higher
+            if (videoEl && videoEl.readyState >= 2) {
                 await predict(videoEl);
             }
             
@@ -710,7 +707,6 @@
         async function predict(videoEl) {
             if (!model || scanLockout || !videoEl) return;
 
-            // Teachable Machine's predict function accepts native HTMLVideoElement directly
             const prediction = await model.predict(videoEl);
 
             let bestArtifactProb = 0;
@@ -840,12 +836,12 @@
             if (unlockedItemIds.includes(itemId)) {
                 unlockedItemIds = unlockedItemIds.filter(id => id !== itemId);
             } else {
-                unlockedItemIds.unshift(itemId); // Prepend to top as most recently unlocked
+                unlockedItemIds.unshift(itemId);
             }
             localStorage.setItem('event2_unlocked_catalogue_items', JSON.stringify(unlockedItemIds));
             renderCatalogueGrid();
             updateProgress();
-            openConfigModal(); // refresh list button state
+            openConfigModal();
         }
 
         function resetAllProgress() {
