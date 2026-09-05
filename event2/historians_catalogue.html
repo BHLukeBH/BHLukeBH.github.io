@@ -275,7 +275,7 @@
                     <!-- Loading / Warning Overlay -->
                     <div id="scannerOverlay" class="absolute inset-0 bg-victorian-900/95 flex flex-col items-center justify-center p-6 text-center gap-3">
                         <i id="scannerStatusIcon" class="fa-solid fa-circle-notch fa-spin text-3xl text-victorian-brass"></i>
-                        <h4 id="scannerStatusTitle" class="cinzel font-bold text-victorian-paper text-base">Initializing Camera & AI Model...</h4>
+                        <h4 id="scannerStatusTitle" class="cinzel font-bold text-victorian-paper text-base">Preparing Investigative Camera...</h4>
                         <p id="scannerStatusDesc" class="text-xs text-victorian-paperdark max-w-xs">
                             Please grant camera permissions when prompted.
                         </p>
@@ -581,8 +581,8 @@
             modal.classList.remove('hidden');
             overlay.classList.remove('hidden');
             statusIcon.className = "fa-solid fa-circle-notch fa-spin text-3xl text-victorian-brass";
-            statusTitle.innerText = "Initializing Camera & AI Model...";
-            statusDesc.innerText = "Loading AI neural network and requesting camera stream...";
+            statusTitle.innerText = "Preparing Investigative Camera...";
+            statusDesc.innerText = "Loading camera stream and investigative tools...";
 
             if (!modelUrl) {
                 statusIcon.className = "fa-solid fa-triangle-exclamation text-3xl text-amber-400";
