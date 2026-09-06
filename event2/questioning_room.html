@@ -951,8 +951,7 @@
                 chip.className = `suspect-chip flex flex-col items-center p-2 rounded-xl text-center w-[76px] sm:w-[88px] ${
                     isSelected ? 'active-chip' : ''
                 }`;
-                chip.onclick = (e) => {
-                    if (e.target.closest('.sherlock-suspect-btn')) return;
+                chip.onclick = () => {
                     selectSuspect(suspect.id);
                 };
 
@@ -961,9 +960,6 @@
                         <img src="${suspect.avatar}" alt="${suspect.name}" class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 ${
                             isSelected ? 'border-victorian-brass shadow-md' : 'border-victorian-700'
                         } object-cover shrink-0">
-                        <button type="button" class="sherlock-btn sherlock-btn-xs sherlock-suspect-btn absolute -bottom-1 -right-1" onclick="openSuspectSherlockNote('${suspect.id}')" title="Sherlock's Profile for ${suspect.name}">
-                            <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
-                        </button>
                     </div>
                     <span class="text-[10px] sm:text-[11px] font-bold text-victorian-paper cinzel leading-tight line-clamp-1 w-full">${suspect.shortName || suspect.name.split(' ')[0]}</span>
                     <span class="text-[9px] text-victorian-brass font-mono mt-0.5">${suspect.statements.length} topics</span>
