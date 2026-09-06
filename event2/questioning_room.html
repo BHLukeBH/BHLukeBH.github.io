@@ -6,7 +6,7 @@
     <title>A Soldier's Final Retreat - Suspect Questioning Room</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Playfair Display & Inter -->
+    <!-- Google Fonts: Cinzel, Inter, Special Elite -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
@@ -91,9 +91,205 @@
             background-color: rgba(197, 155, 39, 0.15) !important;
             box-shadow: 0 0 15px rgba(197, 155, 39, 0.3);
         }
+
+        /* --- Sherlock Deerstalker Clue Buttons & Dispatch Modal --- */
+        .sherlock-btn {
+            background: linear-gradient(135deg, #2b1f14 0%, #150f0a 100%);
+            border: 1.5px solid #e5a93c;
+            color: #e5a93c;
+            border-radius: 50%;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(229, 169, 60, 0.25);
+            flex-shrink: 0;
+        }
+
+        .sherlock-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 14px rgba(229, 169, 60, 0.55);
+            border-color: #ffd27d;
+            color: #ffd27d;
+        }
+
+        .sherlock-btn-sm {
+            width: 28px;
+            height: 28px;
+        }
+
+        .sherlock-btn-md {
+            width: 34px;
+            height: 34px;
+        }
+
+        .deerstalker-icon {
+            width: 60%;
+            height: 60%;
+            fill: currentColor;
+            display: block;
+        }
+
+        /* Sherlock Dispatch Parchment Modal */
+        .sherlock-modal-content {
+            background: #f4ecdc;
+            color: #2b1f14;
+            border: 3px solid #8c6d37;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 620px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(184, 150, 94, 0.25);
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(200, 160, 90, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(160, 120, 60, 0.15) 0%, transparent 45%);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .sherlock-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 2px dashed #99783f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sherlock-seal-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sherlock-seal {
+            width: 38px;
+            height: 38px;
+            background: #8b2525;
+            color: #f7e6d2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            border: 1px solid #5a1111;
+        }
+
+        .sherlock-header-text h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.15rem;
+            color: #2b170c;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .sherlock-header-text span {
+            font-size: 0.75rem;
+            color: #7d592b;
+            font-family: 'Special Elite', cursive;
+            display: block;
+        }
+
+        .sherlock-body {
+            padding: 1.5rem 1.75rem;
+            overflow-y: auto;
+            line-height: 1.85;
+            font-size: 0.95rem;
+            color: #24170d;
+        }
+
+        .sherlock-body .salutation {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #8b2525;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .sherlock-body p {
+            margin-bottom: 0.85rem;
+        }
+
+        .sherlock-clue-box {
+            background: rgba(139, 37, 37, 0.06);
+            border-left: 3px solid #8b2525;
+            padding: 0.75rem 1rem;
+            margin: 0.85rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .sherlock-clue-box strong {
+            color: #751a1a;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .sherlock-vocab-list {
+            margin: 0.75rem 0;
+            padding-left: 1.25rem;
+            font-size: 0.9rem;
+        }
+
+        .sherlock-vocab-list li {
+            margin-bottom: 0.35rem;
+        }
+
+        .sherlock-vocab-list code {
+            background: #e8dcc4;
+            padding: 1px 5px;
+            border-radius: 3px;
+            color: #5c3513;
+            font-family: 'Special Elite', monospace;
+            font-weight: bold;
+        }
+
+        .sherlock-signoff {
+            margin-top: 1.25rem;
+            text-align: right;
+            font-family: 'Special Elite', cursive;
+            font-size: 1rem;
+            color: #5a3c1a;
+        }
+
+        .sherlock-close-btn {
+            background: #382416;
+            color: #f7ecd7;
+            border: 1px solid #755531;
+            padding: 0.6rem 1.5rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            cursor: pointer;
+            align-self: center;
+            margin-bottom: 1.25rem;
+            transition: all 0.2s;
+        }
+
+        .sherlock-close-btn:hover {
+            background: #8b2525;
+            color: #fff;
+            border-color: #a83232;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-victorian-brass selection:text-victorian-900">
+
+    <!-- SVG Icon Definition for Deerstalker Hat -->
+    <svg style="display: none;">
+        <symbol id="icon-deerstalker" viewBox="0 0 64 64">
+            <path d="M32 10 C20 10 12 18 10 26 C6 28 2 32 2 36 C2 38 4 40 8 40 C10 40 12 39 14 37 C16 41 23 44 32 44 C41 44 48 41 50 37 C52 39 54 40 56 40 C60 40 62 38 62 36 C62 32 58 28 54 26 C52 18 44 10 32 10 Z" />
+            <path d="M12 28 C20 22 44 22 52 28" stroke="#000" stroke-width="2" fill="none" opacity="0.4" />
+            <path d="M32 10 L32 22" stroke="#000" stroke-width="2.5" fill="none" opacity="0.5" />
+            <ellipse cx="32" cy="11" rx="4" ry="2.5" />
+            <path d="M28 12 C30 15 34 15 36 12" stroke="#000" stroke-width="1.5" fill="none" opacity="0.6" />
+        </symbol>
+    </svg>
 
     <header class="border-b border-victorian-600/60 bg-victorian-900/90 backdrop-blur sticky top-0 z-30 px-4 py-3">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
@@ -101,8 +297,12 @@
                 <div class="w-10 h-10 rounded-full bg-victorian-700 border border-victorian-brass flex items-center justify-center text-victorian-brass shadow-md">
                     <i class="fa-solid fa-magnifying-glass text-lg"></i>
                 </div>
-                <div>
+                <div class="flex items-center gap-2">
                     <h1 class="text-xl md:text-2xl font-bold cinzel text-victorian-paper tracking-wide">A Soldier's Final Retreat</h1>
+                    <!-- Header Sherlock Dispatch Button -->
+                    <button class="sherlock-btn sherlock-btn-md" onclick="openSherlockNote('header')" title="Sherlock's Interrogation Strategy">
+                        <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
+                    </button>
                 </div>
             </div>
 
@@ -144,9 +344,15 @@
 
             <!-- Interrogation Guide Helper -->
             <div class="bg-victorian-800/60 rounded-xl p-4 border border-victorian-600/40">
-                <h3 class="text-sm font-semibold text-victorian-paper mb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-lightbulb text-victorian-brass"></i> Interrogation Tips
-                </h3>
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-sm font-semibold text-victorian-paper flex items-center gap-2">
+                        <i class="fa-solid fa-lightbulb text-victorian-brass"></i> Interrogation Tips
+                    </h3>
+                    <!-- Interrogation Phrasing Sherlock Button -->
+                    <button class="sherlock-btn sherlock-btn-sm" onclick="openSherlockNote('phrasing')" title="Sherlock's Phrasing & Keyword Advice">
+                        <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
+                    </button>
+                </div>
                 <ul class="text-xs text-victorian-paperdark space-y-1.5 list-disc list-inside">
                     <li>Type inquiries like <span class="text-victorian-brass font-mono">"Tell me about the gun"</span> or <span class="text-victorian-brass font-mono">"What do you know of Paris?"</span>.</li>
                     <li>Single key terms or full phrases trigger responses.</li>
@@ -155,9 +361,10 @@
             </div>
         </section>
 
+        <!-- Interrogation Theatre & Stage -->
         <section class="lg:col-span-8 flex flex-col gap-4">
             
-            <!-- Active Suspect Header Banner (No subtitles/roles) -->
+            <!-- Active Suspect Header Banner -->
             <div class="bg-victorian-800/90 border border-victorian-600/60 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-4 w-full sm:w-auto">
                     <img id="activeSuspectAvatar" src="" alt="Suspect Portrait" class="w-16 h-16 rounded-full border-2 border-victorian-brass object-cover shadow-lg">
@@ -165,6 +372,10 @@
                         <div class="flex items-center gap-2">
                             <h2 id="activeSuspectName" class="text-xl font-bold cinzel text-victorian-paper">Suspect Name</h2>
                             <span class="text-xs px-2 py-0.5 rounded bg-victorian-700 text-victorian-brass border border-victorian-600">Suspect</span>
+                            <!-- Active Suspect Profile Sherlock Button -->
+                            <button class="sherlock-btn sherlock-btn-sm" onclick="openCurrentSuspectSherlockNote()" title="Sherlock's Profile of this Suspect">
+                                <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -238,7 +449,7 @@
                     </button>
                 </form>
 
-                <!-- Discovered Topics (Starts empty, unlocks as questions are asked) -->
+                <!-- Discovered Topics -->
                 <div class="mt-3 pt-3 border-t border-victorian-700/60 flex flex-wrap items-center gap-1.5">
                     <span class="text-xs text-victorian-paperdark/80 mr-1"><i class="fa-solid fa-tags text-[10px] text-victorian-brass"></i> Discovered Topics:</span>
                     <div id="quickTopicTags" class="flex flex-wrap gap-1.5">
@@ -251,7 +462,7 @@
             <div class="bg-victorian-800/80 border border-victorian-600/50 rounded-xl p-4 flex-1">
                 <h3 class="text-sm font-bold cinzel text-victorian-brass mb-2 flex items-center justify-between">
                     <span class="flex items-center gap-2">
-                        <i class="fa-solid fa-file-lines"></i> Official Statement Transcript
+                        <i class="fa-solid fa-file-lines"></i> Statement Transcript
                     </span>
                     <span id="transcriptStatusBadge" class="text-[11px] font-sans font-normal text-victorian-paperdark bg-victorian-900 px-2 py-0.5 rounded border border-victorian-700">Awaiting Query</span>
                 </h3>
@@ -265,7 +476,6 @@
 
         </section>
 
-        <!-- Navigation to Historian's Catalogue -->
         <div class="lg:col-span-12 flex justify-center pt-2 pb-2">
             <a href="https://invitation.visitbritishhills.com/event2/historians_catalogue.html" 
                class="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-sm sm:text-base cinzel tracking-wider shadow-lg border border-victorian-brasslight/40 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
@@ -276,6 +486,29 @@
         </div>
     </main>
 
+    <!-- Sherlock Holmes Dispatch Slip Modal (Japanese Conceit) -->
+    <div id="sherlockModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="sherlock-modal-content">
+            <div class="sherlock-header">
+                <div class="sherlock-seal-group">
+                    <div class="sherlock-seal">S.H.</div>
+                    <div class="sherlock-header-text">
+                        <h3 id="sherlockNoteTitle">CONFIDENTIAL DISPATCH</h3>
+                        <span>Encoded Transmission — For Fellow Detectives</span>
+                    </div>
+                </div>
+                <button onclick="closeSherlockModal()" class="text-[#7d592b] hover:text-[#2b170c] text-xl font-bold">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="sherlock-body" id="sherlockNoteBody">
+                <!-- Dynamically populated Japanese guidance text -->
+            </div>
+            <button class="sherlock-close-btn" onclick="closeSherlockModal()">閉じる (Close Note)</button>
+        </div>
+    </div>
+
+    <!-- ... existing code -->
     <div id="caseNotesModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-victorian-800 border border-victorian-brass rounded-xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 bg-victorian-900 border-b border-victorian-700 flex justify-between items-center">
@@ -339,7 +572,7 @@
     </footer>
 
     <script>
-        // Initial master suspect dataset containing all keywords from Event 2 specs
+        // Master suspect dataset containing keywords and dialogue from Event 2 specifications
         const initialSuspectsData = {
             persimma: {
                 id: 'persimma',
@@ -541,6 +774,132 @@
         let discoveredClues = JSON.parse(localStorage.getItem('event2_discovered_clues')) || [];
         let discoveredTopics = JSON.parse(localStorage.getItem('event2_discovered_topics')) || [];
 
+        const sherlockSuspectProfiles = {
+            persimma: {
+                name: 'Lady Persimma Sterling',
+                title: 'Lady Persimma Sterling について',
+                salutation: 'My Fellow Detectives,',
+                content: `
+                    <p>スターリング家の誇り高き当主夫人だ。彼女のような身分の高い婦人は、家族の秘密や不名誉を何よりも覆い隠そうとするものだ。</p>
+                    <div class="sherlock-clue-box">
+                        <strong>【尋問の糸口】</strong>
+                        彼女は料理室にいたと主張しているが、屋敷の移動や手紙、あるいは海外への旅の計画について尋ねてみる価値がある。
+                    </div>
+                    <p><strong>英語表現の手がかり:</strong></p>
+                    <ul class="sherlock-vocab-list">
+                        <li><code>unacquainted with</code>: 〜をよく知らない、〜に不慣れである</li>
+                        <li><code>discarded by accident</code>: 誤って捨てられた</li>
+                        <li><code>has no bearing on</code>: 〜には何の関係もない</li>
+                    </ul>
+                `
+            },
+            archibald: {
+                name: 'Archibald Sterling',
+                title: 'Archibald Sterling について',
+                salutation: 'My Fellow Detectives,',
+                content: `
+                    <p>屋敷の若き後継者アーチボルドだ。自信ありげに振る舞っているが、家の財政事情や父親の遺産については強いプレッシャーを抱えているようだ。</p>
+                    <div class="sherlock-clue-box">
+                        <strong>【尋問の糸口】</strong>
+                        屋敷に飾られた戦利品や、書斎で見かけた不審な物品について詳しく知っているはずだ。彼が何に気付き、何を隠そうとしているかを探りたまえ。
+                    </div>
+                    <p><strong>英語表現の手がかり:</strong></p>
+                    <ul class="sherlock-vocab-list">
+                        <li><code>pressing</code>: 差し迫った、緊急の</li>
+                        <li><code>relocated</code>: 配置を変えられた、移動された</li>
+                        <li><code>correspondence</code>: 文通、手紙のやり取り</li>
+                    </ul>
+                `
+            },
+            silas: {
+                name: 'Silas Thorne',
+                title: 'Silas Thorne について',
+                salutation: 'My Fellow Detectives,',
+                content: `
+                    <p>かつて我が友ワトソンと共にアフガニスタンの激戦を生き延びた退役軍人だ。その胸には癒えぬ傷と、戦場で失った仲間への強い情念が渦巻いている。</p>
+                    <div class="sherlock-clue-box">
+                        <strong>【尋問の糸口】</strong>
+                        彼とワトソンが戦ったマイワンドの戦いや、悲劇の退却劇の日付について直接尋ねてみたまえ。軍隊の銃器にも精通しているはずだ。
+                    </div>
+                    <p><strong>英語表現の手がかり:</strong></p>
+                    <ul class="sherlock-vocab-list">
+                        <li><code>chaotic catastrophe</code>: 混沌とした壊滅的大惨事</li>
+                        <li><code>standard service revolver</code>: 軍の制式支給リボルバー</li>
+                        <li><code>hunting party</code>: 狩猟隊、狩りの集まり</li>
+                    </ul>
+                `
+            },
+            maple: {
+                name: 'Maple Strand',
+                title: 'Maple Strand について',
+                salutation: 'My Fellow Detectives,',
+                content: `
+                    <p>屋敷に仕える女中メイプルだ。貴族たちは使用人の存在を意識せずに行動するため、彼女は館内で起きた奇妙な物音や人の動きを最もよく見聞きしている。</p>
+                    <div class="sherlock-clue-box">
+                        <strong>【尋問の糸口】</strong>
+                        事件前後に書斎の周辺で誰を見かけたか、また屋敷に届いていた手紙について彼女に語らせてみたまえ。
+                    </div>
+                    <p><strong>英語表現の手がかり:</strong></p>
+                    <ul class="sherlock-vocab-list">
+                        <li><code>lingering around</code>: 〜の周りをうろつく、立ち去りかねている</li>
+                        <li><code>pedestal</code>: 像などの台座、柱台</li>
+                        <li><code>put my feet up</code>: （足を伸ばして）一休みする</li>
+                    </ul>
+                `
+            },
+            evelyn: {
+                name: 'Evelyn Ashgrove',
+                title: 'Evelyn Ashgrove について',
+                salutation: 'My Fellow Detectives,',
+                content: `
+                    <p>事件の夜に晩餐へ招かれていた客人のエヴリンだ。彼女は軍人たちの間で起きた激しい口論を目撃した最後の人物の一人である。</p>
+                    <div class="sherlock-clue-box">
+                        <strong>【尋問の糸口】</strong>
+                        口論の原因となった写真や回想録、そして兵士たちが動揺した軍の記録について尋ねてみたまえ。
+                    </div>
+                    <p><strong>英語表現の手がかり:</strong></p>
+                    <ul class="sherlock-vocab-list">
+                        <li><code>ruin prominent reputations</code>: 名ある人々の名声を失墜させる</li>
+                        <li><code>lit the blue touch paper</code>: 導火線に火をつけた（騒ぎの引き金を引いた）</li>
+                        <li><code>fateful expedition</code>: 運命の遠征、破滅の探検</li>
+                    </ul>
+                `
+            }
+        };
+
+        const generalSherlockNotes = {
+            header: {
+                title: "尋問室の進め方について",
+                salutation: "My Fellow Detectives,",
+                content: `
+                    <p>事件の真相を解き明かすためには、容疑者たちの言葉に潜む「鍵」を見つけ出さねばならない。</p>
+                    <div class="sherlock-clue-box">
+                        <strong>【尋問の手順】</strong>
+                        1. 左のリストから尋問したい人物を選ぶ。<br>
+                        2. 下の入力欄に、歴史編纂官の目録や現場で目にした<strong>物・人名・地名・日付</strong>を入力して質問する。<br>
+                        3. 容疑者がその話題に心当たりを持っていれば、録画された証言が再生される。
+                    </div>
+                    <p>もし容疑者が「心当たりがない」と答えたとしても、失望してはならない。それはその話題が別の容疑者にとっての急所であることを意味しているのだ。</p>
+                `
+            },
+            phrasing: {
+                title: "質問の英語フレーズとキーワードのコツ",
+                salutation: "My Fellow Detectives,",
+                content: `
+                    <p>英語で容疑者を追及する際は、難しく考える必要はない。以下のパターンが効果的だ:</p>
+                    <ul class="sherlock-vocab-list">
+                        <li><code>Tell me about [the gun / Paris / the memoirs].</code><br>（〜について話してもらおうか。）</li>
+                        <li><code>What do you know of [the retreat / July 26th]?</code><br>（〜について何を知っている？）</li>
+                        <li><code>Where were you during the incident?</code><br>（事件のときどこにいた？）</li>
+                    </ul>
+                    <div class="sherlock-clue-box">
+                        <strong>【手短な入力でも反応する】</strong>
+                        長文を組み立てずとも、気になる名詞や地名、日付などの単語をひとつ投げかけるだけで尋問は成立する。現場や目録で見つけた言葉を次々とぶつけてみたまえ。
+                    </div>
+                `
+            }
+        };
+
         window.addEventListener('DOMContentLoaded', () => {
             renderSuspectList();
             selectSuspect(activeSuspectId);
@@ -548,9 +907,6 @@
             renderDiscoveredTopics();
         });
 
-        /**
-         * Renders the suspect cards in the left panel.
-         */
         function renderSuspectList() {
             const listContainer = document.getElementById('suspectList');
             if (!listContainer) return;
@@ -562,7 +918,10 @@
                 card.className = `p-3 rounded-lg border transition cursor-pointer flex items-center justify-between gap-3 ${
                     isSelected ? 'active-suspect border-victorian-brass' : 'bg-victorian-900/60 border-victorian-700/60 hover:bg-victorian-700/50 hover:border-victorian-600'
                 }`;
-                card.onclick = () => selectSuspect(suspect.id);
+                card.onclick = (e) => {
+                    if (e.target.closest('.sherlock-suspect-btn')) return;
+                    selectSuspect(suspect.id);
+                };
 
                 card.innerHTML = `
                     <div class="flex items-center gap-3">
@@ -571,23 +930,56 @@
                             <h4 class="font-bold text-sm text-victorian-paper cinzel">${suspect.name}</h4>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <span class="text-[10px] px-2 py-0.5 rounded bg-victorian-800 text-victorian-brass border border-victorian-700">${suspect.statements.length} Topics</span>
+                    <div class="flex items-center gap-2">
+                        <button type="button" class="sherlock-btn sherlock-btn-sm sherlock-suspect-btn" onclick="openSuspectSherlockNote('${suspect.id}')" title="Sherlock's Profile for ${suspect.name}">
+                            <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
+                        </button>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-victorian-800 text-victorian-brass border border-victorian-700 shrink-0">${suspect.statements.length} Topics</span>
                     </div>
                 `;
                 listContainer.appendChild(card);
             });
         }
 
-        /**
-         * Selects a suspect and updates UI context.
-         */
+        function openSherlockNote(type) {
+            const noteData = generalSherlockNotes[type];
+            if (!noteData) return;
+
+            document.getElementById('sherlockNoteTitle').innerText = noteData.title;
+            document.getElementById('sherlockNoteBody').innerHTML = `
+                <span class="salutation">${noteData.salutation}</span>
+                ${noteData.content}
+                <div class="sherlock-signoff">— S.H.</div>
+            `;
+            document.getElementById('sherlockModal').classList.remove('hidden');
+        }
+
+        function openSuspectSherlockNote(suspectId) {
+            const profile = sherlockSuspectProfiles[suspectId];
+            if (!profile) return;
+
+            document.getElementById('sherlockNoteTitle').innerText = profile.title;
+            document.getElementById('sherlockNoteBody').innerHTML = `
+                <span class="salutation">${profile.salutation}</span>
+                ${profile.content}
+                <div class="sherlock-signoff">— S.H.</div>
+            `;
+            document.getElementById('sherlockModal').classList.remove('hidden');
+        }
+
+        function openCurrentSuspectSherlockNote() {
+            openSuspectSherlockNote(activeSuspectId);
+        }
+
+        function closeSherlockModal() {
+            document.getElementById('sherlockModal').classList.add('hidden');
+        }
+
         function selectSuspect(suspectId) {
             activeSuspectId = suspectId;
             const suspect = suspectsData[suspectId];
             if (!suspect) return;
 
-            // Update UI header & avatar
             const nameEl = document.getElementById('activeSuspectName');
             const avatarEl = document.getElementById('activeSuspectAvatar');
             const placeholderSuspectName = document.getElementById('placeholderSuspectName');
@@ -596,7 +988,6 @@
             if (avatarEl) avatarEl.src = suspect.avatar;
             if (placeholderSuspectName) placeholderSuspectName.innerText = suspect.name;
 
-            // Reset video / placeholder UI
             const videoPlayer = document.getElementById('videoPlayer');
             const videoPlaceholder = document.getElementById('videoPlaceholder');
             if (videoPlayer) {
@@ -616,9 +1007,6 @@
             renderSuspectList();
         }
 
-        /**
-         * Renders quick topic buttons discovered by the student.
-         */
         function renderDiscoveredTopics() {
             const container = document.getElementById('quickTopicTags');
             if (!container) return;
@@ -642,9 +1030,6 @@
             });
         }
 
-        /**
-         * Interrogation Engine: Matches user queries against keyword sets
-         */
         function handleQuestionSubmit(e) {
             if (e) e.preventDefault();
 
@@ -659,7 +1044,6 @@
             const cleanQuery = query.replace(/[^\w\s]/gi, '');
             let matchedStatement = null;
 
-            // Search suspect's statement keyword array
             for (let stmt of suspect.statements) {
                 const hasMatch = stmt.keywords.some(kw => {
                     const cleanKw = kw.toLowerCase();
@@ -673,7 +1057,6 @@
             }
 
             if (matchedStatement) {
-                // Add matched topic to discovered topics if not present
                 if (!discoveredTopics.includes(matchedStatement.title)) {
                     discoveredTopics.push(matchedStatement.title);
                     localStorage.setItem('event2_discovered_topics', JSON.stringify(discoveredTopics));
@@ -682,14 +1065,10 @@
 
                 playStatementResponse(suspect, matchedStatement.title, matchedStatement.videoUrl, matchedStatement.transcript, matchedStatement.id);
             } else {
-                // Generic response
                 playStatementResponse(suspect, 'Unrecognized Subject', suspect.genericVideo, suspect.genericTranscript, null);
             }
         }
 
-        /**
-         * Plays statement video and renders text transcript
-         */
         function playStatementResponse(suspect, topicTitle, videoUrl, transcript, statementId) {
             const videoPlayer = document.getElementById('videoPlayer');
             const videoSource = document.getElementById('videoSource');
