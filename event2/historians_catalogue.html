@@ -666,7 +666,7 @@
         </div>
     </div>
 
-    <!-- AI Scanner Modal -->
+    <!-- Scanner Modal -->
     <div class="modal-overlay" id="scanner-modal">
         <div class="modal-content" style="max-width: 600px;">
             <div class="modal-header">
@@ -683,7 +683,7 @@
                 
                 <div class="scanner-status" id="scanner-status">
                     <div style="text-align: center; color: var(--gold-dim); margin-bottom: 1rem; font-family: 'Cinzel', serif;" id="scanner-message">
-                        Initializing Camera & AI Model...
+                        Preparing Investigative Camera...
                     </div>
                     <div id="label-container">
                         <!-- Dynamic detection bar injected here -->
@@ -931,8 +931,7 @@
 
             document.getElementById('scanner-message').innerHTML = `
                 <i class="fas fa-circle-notch fa-spin" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                Preparing Investigative Camera...<br>
-                <span style="font-size: 0.8rem; color: var(--text-dim);">Loading AI neural network and requesting camera stream...</span>
+                Preparing Investigative Camera...
             `;
 
             try {
@@ -1102,7 +1101,7 @@
             // Wait for TFJS and Teachable Machine to load if not cached yet
             if (typeof tmImage === 'undefined') {
                 document.getElementById('scanner-message').innerHTML = `
-                    <i class="fas fa-circle-notch fa-spin"></i> Loading Libraries...
+                    <i class="fas fa-circle-notch fa-spin"></i> Preparing Investigative Camera...
                 `;
                 setTimeout(initScanner, 1000);
             } else {
