@@ -7,7 +7,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Special+Elite&family=Courier+Prime&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Special+Elite&family=Courier+Prime&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -27,6 +27,7 @@
             --border-color: #3d3324;
             --unlocked-color: #2ea869;
             --locked-color: #9e3636;
+            --sherlock-amber: #e5a93c;
         }
 
         * {
@@ -76,6 +77,12 @@
             flex-direction: column;
         }
 
+        .title-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
         .logo-title {
             font-family: 'Cinzel', serif;
             font-size: 1.5rem;
@@ -96,10 +103,19 @@
             gap: 1.25rem;
         }
 
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .progress-counter {
             font-family: 'Special Elite', cursive;
             color: var(--gold-primary);
             font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
         }
 
         .scan-btn {
@@ -143,6 +159,54 @@
             color: var(--gold-primary);
             border-color: var(--gold-dim);
             background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* --- Sherlock Deerstalker Clue Buttons --- */
+        .sherlock-btn {
+            background: linear-gradient(135deg, #2b1f14 0%, #150f0a 100%);
+            border: 1.5px solid var(--sherlock-amber);
+            color: var(--sherlock-amber);
+            border-radius: 50%;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(229, 169, 60, 0.25);
+            position: relative;
+        }
+
+        .sherlock-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 14px rgba(229, 169, 60, 0.55);
+            border-color: #ffd27d;
+            color: #ffd27d;
+        }
+
+        .sherlock-btn-header {
+            width: 34px;
+            height: 34px;
+            font-size: 1.05rem;
+        }
+
+        .sherlock-btn-counter {
+            width: 28px;
+            height: 28px;
+            font-size: 0.85rem;
+        }
+
+        .sherlock-btn-modal {
+            width: 36px;
+            height: 36px;
+            font-size: 1.1rem;
+        }
+
+        /* Hat SVG Icon Styling */
+        .deerstalker-icon {
+            width: 60%;
+            height: 60%;
+            fill: currentColor;
+            display: block;
         }
 
         /* --- Main Layout --- */
@@ -330,7 +394,7 @@
         }
 
         .modal-header {
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
@@ -341,7 +405,13 @@
         .modal-title {
             font-family: 'Cinzel', serif;
             color: var(--gold-primary);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .modal-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .close-modal {
@@ -359,7 +429,7 @@
 
         /* --- Inspection Modal Specifics --- */
         .inspection-body {
-            padding: 2rem;
+            padding: 1.5rem 2rem 2rem;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -419,6 +489,152 @@
 
         .inspection-text p {
             margin-bottom: 1rem;
+        }
+
+        /* --- Sherlock Note Modal (Parchment Dispatch Slip) --- */
+        .sherlock-modal-content {
+            background: #f4ecdc;
+            color: #2b1f14;
+            border: 3px solid #8c6d37;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 620px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(184, 150, 94, 0.25);
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(200, 160, 90, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(160, 120, 60, 0.15) 0%, transparent 45%);
+            font-family: 'Noto Serif JP', serif;
+        }
+
+        .sherlock-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 2px dashed #99783f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sherlock-seal-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sherlock-seal {
+            width: 38px;
+            height: 38px;
+            background: #8b2525;
+            color: #f7e6d2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            border: 1px solid #5a1111;
+        }
+
+        .sherlock-header-text h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.15rem;
+            color: #2b170c;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .sherlock-header-text span {
+            font-size: 0.75rem;
+            color: #7d592b;
+            font-family: 'Special Elite', cursive;
+            display: block;
+        }
+
+        .sherlock-body {
+            padding: 1.5rem 1.75rem;
+            overflow-y: auto;
+            line-height: 1.85;
+            font-size: 0.98rem;
+            color: #24170d;
+        }
+
+        .sherlock-body .salutation {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #8b2525;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .sherlock-body p {
+            margin-bottom: 0.85rem;
+        }
+
+        .sherlock-clue-box {
+            background: rgba(139, 37, 37, 0.06);
+            border-left: 3px solid #8b2525;
+            padding: 0.75rem 1rem;
+            margin: 0.85rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .sherlock-clue-box strong {
+            color: #751a1a;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .sherlock-vocab-list {
+            margin: 0.75rem 0;
+            padding-left: 1.25rem;
+            font-size: 0.9rem;
+        }
+
+        .sherlock-vocab-list li {
+            margin-bottom: 0.35rem;
+        }
+
+        .sherlock-vocab-list code {
+            background: #e8dcc4;
+            padding: 1px 5px;
+            border-radius: 3px;
+            color: #5c3513;
+            font-family: 'Courier Prime', monospace;
+            font-weight: bold;
+        }
+
+        .sherlock-signoff {
+            margin-top: 1.25rem;
+            text-align: right;
+            font-family: 'Special Elite', cursive;
+            font-size: 1rem;
+            color: #5a3c1a;
+        }
+
+        .sherlock-close-btn {
+            background: #382416;
+            color: #f7ecd7;
+            border: 1px solid #755531;
+            padding: 0.6rem 1.5rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            cursor: pointer;
+            align-self: center;
+            margin-bottom: 1.25rem;
+            transition: all 0.2s;
+        }
+
+        .sherlock-close-btn:hover {
+            background: #8b2525;
+            color: #fff;
+            border-color: #a83232;
         }
 
         /* --- Scanner Modal Specifics --- */
@@ -610,17 +826,43 @@
 </head>
 <body>
 
+    <!-- SVG Icon Definition for Deerstalker Hat -->
+    <svg style="display: none;">
+        <symbol id="icon-deerstalker" viewBox="0 0 64 64">
+            <!-- Deerstalker Cap Silhouette -->
+            <path d="M32 10 C20 10 12 18 10 26 C6 28 2 32 2 36 C2 38 4 40 8 40 C10 40 12 39 14 37 C16 41 23 44 32 44 C41 44 48 41 50 37 C52 39 54 40 56 40 C60 40 62 38 62 36 C62 32 58 28 54 26 C52 18 44 10 32 10 Z" />
+            <!-- Front/Back Peaks & Crown Crease -->
+            <path d="M12 28 C20 22 44 22 52 28" stroke="#000" stroke-width="2" fill="none" opacity="0.4" />
+            <path d="M32 10 L32 22" stroke="#000" stroke-width="2.5" fill="none" opacity="0.5" />
+            <!-- Earflap Bow / Ribbon on Top -->
+            <ellipse cx="32" cy="11" rx="4" ry="2.5" />
+            <path d="M28 12 C30 15 34 15 36 12" stroke="#000" stroke-width="1.5" fill="none" opacity="0.6" />
+        </symbol>
+    </svg>
+
     <header class="main-header">
         <div class="logo-container">
             <i class="fas fa-search logo-icon"></i>
             <div class="logo-text">
                 <span class="logo-subtitle">A SOLDIER'S FINAL RETREAT</span>
-                <h1 class="logo-title">Historical Artifact Scanner</h1>
+                <div class="title-row">
+                    <h1 class="logo-title">Historical Artifact Scanner</h1>
+                    <!-- Header Sherlock Dispatch Button -->
+                    <button class="sherlock-btn sherlock-btn-header" onclick="openSherlockNote('header')" title="Sherlock's Encoded Dispatch">
+                        <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
+                    </button>
+                </div>
             </div>
         </div>
         <div class="header-actions">
-            <div class="progress-counter">
-                <i class="fas fa-unlock-alt"></i> <span id="unlock-count">0</span> / 6
+            <div class="progress-container">
+                <div class="progress-counter">
+                    <i class="fas fa-unlock-alt"></i> <span id="unlock-count">0</span> / 6
+                </div>
+                <!-- Counter Sherlock Hint Button -->
+                <button class="sherlock-btn sherlock-btn-counter" onclick="openSherlockNote('progress')" title="Sherlock's Investigation Tip">
+                    <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
+                </button>
             </div>
             <button class="scan-btn" onclick="openScannerModal()">
                 <i class="fas fa-camera"></i> Scan Item
@@ -648,7 +890,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="inspect-title">Artifact Title</h2>
-                <button class="close-modal" onclick="closeModals()"><i class="fas fa-times"></i></button>
+                <div class="modal-header-actions">
+                    <!-- Sherlock Clue inside Artifact Inspection -->
+                    <button class="sherlock-btn sherlock-btn-modal" id="modal-sherlock-btn" onclick="openCurrentArtifactSherlockNote()" title="Sherlock's Clue & Language Notes">
+                        <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
+                    </button>
+                    <button class="close-modal" onclick="closeModals()"><i class="fas fa-times"></i></button>
+                </div>
             </div>
             <div class="inspection-body">
                 <img src="" alt="" id="inspect-image" class="inspection-image">
@@ -663,6 +911,26 @@
                     <!-- Text injected here -->
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Sherlock Holmes Dispatch Slip Modal (Japanese Conceit) -->
+    <div class="modal-overlay" id="sherlock-modal">
+        <div class="sherlock-modal-content">
+            <div class="sherlock-header">
+                <div class="sherlock-seal-group">
+                    <div class="sherlock-seal">S.H.</div>
+                    <div class="sherlock-header-text">
+                        <h3 id="sherlock-note-title">CONFIDENTIAL DISPATCH</h3>
+                        <span>Encoded Transmission — For Fellow Detectives</span>
+                    </div>
+                </div>
+                <button class="close-modal" onclick="closeSherlockModal()" style="color: #7d592b;"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="sherlock-body" id="sherlock-note-body">
+                <!-- Dynamically populated Japanese hint text -->
+            </div>
+            <button class="sherlock-close-btn" onclick="closeSherlockModal()">閉じる (Close Note)</button>
         </div>
     </div>
 
@@ -720,7 +988,7 @@
         const DEFAULT_MODEL_URL = 'https://teachablemachine.withgoogle.com/models/k78k70ASC/';
         const UNLOCK_THRESHOLD = 0.80; // 80% confidence required
         
-        // Use local folders for images and audio
+        // Artifacts data with local assets & Sherlock's encoded deduction notes
         const catalogueItems = [
             {
                 id: 'jezail_plaque',
@@ -734,7 +1002,24 @@
                     "The main weapon used by the various ethnic tribesmen of Afghanistan (who, in 1809, deposed Shah Shuja, ruler of Afghanistan 1803-1809 and 1839-1842). They also fought in the First and Second Anglo-Afghan Wars.",
                     "Well-crafted handmade weapons, sometimes personal, with unique construction and decoration.",
                     "High calibre, which makes them unsuitable for hunting, but good for warfare, especially in mountainous regions where sniper weapons are advantageous."
-                ]
+                ],
+                sherlockHint: {
+                    title: "Jezail Plaque に関する考察",
+                    salutation: "My Fellow Detectives,",
+                    content: `
+                        <p>この記念額（plaque）に記された銃「ジェザイル（Jezail）」を見よ。アフガン戦争で部族勢力が使用した極めて特徴的な長銃だ。</p>
+                        <div class="sherlock-clue-box">
+                            <strong>【ホームズの着眼点】</strong>
+                            ワトソン医師、そしてサイラス・ソーン（Silas Thorne）の両名が、かつてアフガニスタンの戦場で負傷していることを忘れてはならない。この長銃の存在に強い感情を抱く人物は誰か？ 尋問室でこの銃について問い詰めてみるのだ。
+                        </div>
+                        <p><strong>知っておくべき英語表現:</strong></p>
+                        <ul class="sherlock-vocab-list">
+                            <li><code>deposed</code>: （王や支配者を）退位させた、追放した</li>
+                            <li><code>calibre</code>: 口径（銃弾の大きさ・破壊力）</li>
+                            <li><code>advantageous</code>: 有利な、都合が良い</li>
+                        </ul>
+                    `
+                }
             },
             {
                 id: 'deers_head',
@@ -746,7 +1031,24 @@
                 paragraphs: [
                     "A trophy or souvenir to celebrate the successful hunting of an animal. Common creatures hunted in England include deer, fox, bear. More exotic species include lion, elephant, zebra.",
                     "A popular pursuit of the wealthy classes. The main reasons for displaying these trophies are to remember significant hunts, or to showcase one’s skill and to show appreciation for nature as well as showing man’s dominance over other creatures."
-                ]
+                ],
+                sherlockHint: {
+                    title: "Deer's Head に関する考察",
+                    salutation: "My Fellow Detectives,",
+                    content: `
+                        <p>壁に掲げられた鹿の剥製（Hunting Trophy）だ。英国の上流階級において、狩猟は単なる娯楽ではなく、己の腕前や権力を誇示する儀式であった。</p>
+                        <div class="sherlock-clue-box">
+                            <strong>【ホームズの着眼点】</strong>
+                            屋敷の人間はこの剥製に誇りを持っているようだが、最近何者かがこの額や周囲に触れた形跡がある。単なる装飾品なのか、それとも何かを隠す、あるいは事件の夜の会話の火種となったのか？
+                        </div>
+                        <p><strong>知っておくべき英語表現:</strong></p>
+                        <ul class="sherlock-vocab-list">
+                            <li><code>trophy / souvenir</code>: 獲物の記念品、形見</li>
+                            <li><code>pursuit</code>: 追求、気晴らし、娯楽</li>
+                            <li><code>dominance</code>: 支配、優位性</li>
+                        </ul>
+                    `
+                }
             },
             {
                 id: 'grand_tour_brochure',
@@ -758,7 +1060,24 @@
                 paragraphs: [
                     "The Grand Tour. A slightly outdated tradition amongst the British nobility but still popular amongst other wealthy individuals whereby young men would travel throughout continental Europe affording them the opportunity to immerse themselves in new cultures.",
                     "Although the trips are recreational, the primary purpose is for education and therefore, the young men are often accompanied by a tutor or family member. Not uncommonly, an unmarried aunt."
-                ]
+                ],
+                sherlockHint: {
+                    title: "Grand Tour Brochure に関する考察",
+                    salutation: "My Fellow Detectives,",
+                    content: `
+                        <p>「グランド・ツアー（Grand Tour）」——かつて英国の貴族階級の若者が、見聞を広め教養を深めるためにヨーロッパ大陸各地を巡った長期旅行のパンフレットだ。</p>
+                        <div class="sherlock-clue-box">
+                            <strong>【ホームズの着眼点】</strong>
+                            なぜ今、この屋敷にパリ行きの切符やグランド・ツアーの案内があるのか？ 容疑者の中に、事件直後に大陸へ急ぎ旅立とうと計画していた者はいないか？ 「逃亡」の隠れ蓑として旅行を利用しようとした者がいるはずだ。
+                        </div>
+                        <p><strong>知っておくべき英語表現:</strong></p>
+                        <ul class="sherlock-vocab-list">
+                            <li><code>outdated tradition</code>: 時代遅れの慣習</li>
+                            <li><code>affording them the opportunity</code>: 機会を与える</li>
+                            <li><code>immerse themselves</code>: 没頭する、身を浸す</li>
+                        </ul>
+                    `
+                }
             },
             {
                 id: 'revolver',
@@ -773,7 +1092,25 @@
                     "Manufactured in London and first exhibited at the Great Exhibition of 1851.",
                     "A six-chamber double-action trigger revolver, self-cocking, allowing it to fire six shots rapidly.",
                     "This feature enables a high rate of fire, allowing it to take on multiple assailants. However, it requires a heavy pull on the trigger, making it almost impossible to aim the weapon over a long range but does give exceptional power at close range. This feature also helps to prevent accidental firing making it an ideal weapon for both a trained professional and a determined amateur."
-                ]
+                ],
+                sherlockHint: {
+                    title: "Revolver に関する重要考察",
+                    salutation: "My Fellow Detectives,",
+                    content: `
+                        <p>レストレード警部が「決定的な凶器」と決めつけているスミス＆ウェッソン軍用リボルバーだ。我が友ワトソンが軍務時代に支給されていた型と同じである。</p>
+                        <div class="sherlock-clue-box">
+                            <strong>【ホームズの着眼点】</strong>
+                            解説文のこの記述に注目せよ: <em>"requires a heavy pull on the trigger"</em>（引き金を引くのに強い力が必要）。<br>
+                            この銃は安全対策のため引き金が非常に重い。軍務経験のない者、あるいは腕力の弱い人物が本当にこの銃を軽々と撃てたのか？ それとも別の真実があるのか？
+                        </div>
+                        <p><strong>知っておくべき英語表現:</strong></p>
+                        <ul class="sherlock-vocab-list">
+                            <li><code>standard military issue</code>: 軍の標準官給品</li>
+                            <li><code>double-action</code>: ダブルアクション（引き金を引くだけで撃鉄が起き上がり連続発射できる機構）</li>
+                            <li><code>accidental firing</code>: 暴発、誤射</li>
+                        </ul>
+                    `
+                }
             },
             {
                 id: 'pot_pourri',
@@ -786,7 +1123,24 @@
                     "Pot Pourri. A natural air freshener made from fragrant materials such as flowers or herbs. Often displayed in decorative bowls to create a pleasing aesthetic to a room.",
                     "Taken from the name of the Spanish slow cooked meat stew, olla podrida, or in English, rotten pot because the slow cooking process was akin to that of meat being left to slowly rot.",
                     "This dish was later adopted by the French who translated it as Pot Pourri. It is believed that the perfume of modern-day pot pourri was reminiscent of the aromas created during the cooking process and so the name Pot Pourri became synonymous with both the dish and the air freshener."
-                ]
+                ],
+                sherlockHint: {
+                    title: "Pot Pourri に関する考察",
+                    salutation: "My Fellow Detectives,",
+                    content: `
+                        <p>花やハーブを乾燥させた室内芳香剤「ポプリ（Pot Pourri）」だ。語源はスペイン語の煮込み料理「腐った鍋（rotten pot）」に由来するという風変わりな歴史を持つ。</p>
+                        <div class="sherlock-clue-box">
+                            <strong>【ホームズの着眼点】</strong>
+                            一見無害な装飾品だが、事件現場の図書館で強い香りを放っていた。誰かが何らかの「別の匂い」——例えば硝煙の匂いや薬品の匂い——を誤魔化すために利用した可能性はないだろうか？
+                        </div>
+                        <p><strong>知っておくべき英語表現:</strong></p>
+                        <ul class="sherlock-vocab-list">
+                            <li><code>fragrant materials</code>: 香りの良い素材</li>
+                            <li><code>pleasing aesthetic</code>: 心地よい美観・雰囲気</li>
+                            <li><code>synonymous with</code>: 〜と同義である、〜の代名詞</li>
+                        </ul>
+                    `
+                }
             },
             {
                 id: 'magna_carta',
@@ -799,11 +1153,61 @@
                     "Magna Carta, the first document which put into writing the principle that the king and his government were not above the law.",
                     "It was issued and signed by King John in June 1215 at Runnymede, England.",
                     "There are four original copies and although this, alas, is a replica, it is still a fascinating charter to discover."
-                ]
+                ],
+                sherlockHint: {
+                    title: "Magna Carta に関する考察",
+                    salutation: "My Fellow Detectives,",
+                    content: `
+                        <p>1215年にジョン王が署名した英国憲政史上最重要の文書「マグナ・カルタ（大憲章）」——王であっても法の支配下にあることを定めた憲章だ。</p>
+                        <div class="sherlock-clue-box">
+                            <strong>【ホームズの着眼点】</strong>
+                            解説にある通り、ここに飾られているのは精密な「模造品（replica）」だ。この屋敷には本物と偽物が混在している。文書や手紙の類も、額面通りに信じてはならない。何が本物で、何が偽装なのかを見極めるのだ。
+                        </div>
+                        <p><strong>知っておくべき英語表現:</strong></p>
+                        <ul class="sherlock-vocab-list">
+                            <li><code>above the law</code>: 法を超越した存在（法の裁きを受けない）</li>
+                            <li><code>replica</code>: 複製品、レプリカ</li>
+                            <li><code>charter</code>: 憲章、特許状</li>
+                        </ul>
+                    `
+                }
             }
         ];
 
         let unlockedItems = [];
+        let currentlyInspectingId = null;
+
+        // General Sherlock Notes (Header & Progress Counter)
+        const generalSherlockNotes = {
+            header: {
+                title: "カメラ・オブスキュラ装置について",
+                salutation: "My Fellow Detectives,",
+                content: `
+                    <p>スコットランド・ヤードのレストレード警部は視野が狭く、私の現場介入を快く思っていない。そのため、私は直接捜査の指揮を執ることができぬ身だ。</p>
+                    <p>そこで、我が信頼厚き探偵諸君に、特別に改良した<strong>「カメラ・オブスキュラ（暗箱式撮像装置）」</strong>を託すことにした。スマートフォンのカメラを通じ、屋敷内に散らばる重要証拠を捉えるのだ。</p>
+                    <div class="sherlock-clue-box">
+                        <strong>【諸君への指示】</strong>
+                        上の<strong>「Scan Item」</strong>ボタンを押し、怪しい物体を枠内に収めるのだ。装置が対象物を識別すれば、歴史編纂官（Historian）の詳細な記録と音声が解禁される。<br>
+                        集めた物証の記録は、尋問室で容疑者たちの嘘を暴くための強力な武器となるはずだ。健闘を祈る！
+                    </div>
+                `
+            },
+            progress: {
+                title: "捜索状況と収集すべき手がかり",
+                salutation: "My Fellow Detectives,",
+                content: `
+                    <p>館内に残された重要証拠は<strong>全部で6つ</strong>存在する。</p>
+                    <div class="sherlock-clue-box">
+                        <strong>【捜索の手がかり】</strong>
+                        単に無作為に探すのではなく、事件の背景に関わる3つの要素を意識したまえ:<br>
+                        1. <strong>戦火の記憶</strong>（軍用銃や異国の戦利品）<br>
+                        2. <strong>上流階級の特権と富</strong>（狩猟の記念品や大陸旅行の計画）<br>
+                        3. <strong>部屋の装飾と歴史的文書</strong>（香りを放つ器や額装された憲章）
+                    </div>
+                    <p>全ての物品の記録を解放し、ワトソン医師を陥れようとする罠の正体を暴くのだ。</p>
+                `
+            }
+        };
 
         // --- INITIALIZATION ---
         window.onload = function() {
@@ -833,8 +1237,7 @@
             const grid = document.getElementById('catalogue-grid');
             grid.innerHTML = '';
 
-            // Sort logic: Unlocked items first, followed by locked items
-            // To make recently unlocked appear at the top, we map their index in unlockedItems
+            // Sort logic: Unlocked items first (most recent at top), followed by locked items
             const sortedItems = [...catalogueItems].sort((a, b) => {
                 const aIdx = unlockedItems.indexOf(a.id);
                 const bIdx = unlockedItems.indexOf(b.id);
@@ -887,6 +1290,7 @@
             const item = catalogueItems.find(i => i.id === id);
             if (!item) return;
 
+            currentlyInspectingId = id;
             document.getElementById('inspect-title').innerText = item.title;
             document.getElementById('inspect-image').src = item.image;
             
@@ -918,6 +1322,39 @@
             audioEl.pause();
             audioEl.currentTime = 0;
             audioBtnIcon.className = 'fas fa-play';
+            currentlyInspectingId = null;
+        }
+
+        // --- SHERLOCK'S ENCODED HINTS SYSTEM ---
+        function openSherlockNote(type) {
+            const noteData = generalSherlockNotes[type];
+            if (!noteData) return;
+
+            document.getElementById('sherlock-note-title').innerText = noteData.title;
+            document.getElementById('sherlock-note-body').innerHTML = `
+                <span class="salutation">${noteData.salutation}</span>
+                ${noteData.content}
+                <div class="sherlock-signoff">— S.H.</div>
+            `;
+            document.getElementById('sherlock-modal').classList.add('active');
+        }
+
+        function openCurrentArtifactSherlockNote() {
+            if (!currentlyInspectingId) return;
+            const item = catalogueItems.find(i => i.id === currentlyInspectingId);
+            if (!item || !item.sherlockHint) return;
+
+            document.getElementById('sherlock-note-title').innerText = item.sherlockHint.title;
+            document.getElementById('sherlock-note-body').innerHTML = `
+                <span class="salutation">${item.sherlockHint.salutation}</span>
+                ${item.sherlockHint.content}
+                <div class="sherlock-signoff">— S.H.</div>
+            `;
+            document.getElementById('sherlock-modal').classList.add('active');
+        }
+
+        function closeSherlockModal() {
+            document.getElementById('sherlock-modal').classList.remove('active');
         }
 
         // --- TEACHABLE MACHINE SCANNER (iOS Compatible) ---
@@ -935,7 +1372,6 @@
             `;
 
             try {
-                // Ensure TM library is loaded
                 if (typeof tmImage === 'undefined') {
                     throw new Error("Teachable Machine library not loaded.");
                 }
@@ -946,7 +1382,7 @@
                 const container = document.getElementById("webcam-container");
                 container.innerHTML = ""; // Clear existing
 
-                // Setup Native Video Element for iOS compatibility
+                // Setup Native Video Element for iOS Safari compatibility
                 const videoElement = document.createElement('video');
                 videoElement.setAttribute('autoplay', '');
                 videoElement.setAttribute('playsinline', '');
@@ -957,7 +1393,7 @@
                 
                 container.appendChild(videoElement);
 
-                // Request camera (back camera preferred)
+                // Request camera stream (environment / back camera)
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: { facingMode: "environment" },
                     audio: false
@@ -965,7 +1401,6 @@
                 
                 videoElement.srcObject = stream;
                 
-                // Wait for video to be ready
                 await new Promise((resolve) => {
                     videoElement.onloadedmetadata = () => {
                         resolve();
@@ -985,7 +1420,7 @@
 
                 document.getElementById('scanner-message').innerText = "Camera Active. Point at an artifact.";
                 
-                // Setup Single Anonymous Progress Bar UI
+                // Anonymous mystery progress bar UI
                 const labelContainer = document.getElementById("label-container");
                 labelContainer.innerHTML = `
                     <div class="status-bar-container">
@@ -1012,7 +1447,7 @@
 
         async function loop() {
             if (!scannerActive) return;
-            webcam.play(); // Ensure playing
+            webcam.play();
             await predict();
             window.requestAnimationFrame(loop);
         }
@@ -1022,7 +1457,6 @@
 
             const prediction = await model.predict(webcam.canvas);
             
-            // Find highest non-background prediction
             let highestMatch = null;
             let highestVal = 0;
 
@@ -1030,7 +1464,7 @@
                 let className = prediction[i].className.toLowerCase();
                 let probability = prediction[i].probability;
 
-                // Ignore 'background' class if present
+                // Ignore background class
                 if (className !== 'background' && className !== 'none' && probability > highestVal) {
                     highestVal = probability;
                     highestMatch = prediction[i].className;
@@ -1043,7 +1477,6 @@
             if (fillEl && valEl) {
                 const displayVal = Math.round(highestVal * 100);
                 
-                // Only show bar if confidence is somewhat noticeable
                 if (displayVal > 15) {
                     fillEl.style.width = displayVal + "%";
                     valEl.innerText = displayVal + "%";
@@ -1059,14 +1492,12 @@
                 }
             }
 
-            // Check if threshold met to unlock
             if (highestMatch && highestVal >= UNLOCK_THRESHOLD) {
                 handleScanMatch(highestMatch);
             }
         }
 
         function handleScanMatch(className) {
-            // Find matching catalog item based on class name or aliases
             const cleanClass = className.toLowerCase().trim();
             const matchedItem = catalogueItems.find(item => 
                 item.modelLabel.toLowerCase() === cleanClass || 
@@ -1076,10 +1507,8 @@
             if (matchedItem && !unlockedItems.includes(matchedItem.id)) {
                 unlockCooldown = true;
                 
-                // Play sound
                 document.getElementById('success-sound').play().catch(e=>console.log(e));
 
-                // Add to unlocked list
                 unlockedItems.push(matchedItem.id);
                 saveProgress();
 
@@ -1098,7 +1527,6 @@
             unlockCooldown = false;
             document.getElementById('scanner-modal').classList.add('active');
             
-            // Wait for TFJS and Teachable Machine to load if not cached yet
             if (typeof tmImage === 'undefined') {
                 document.getElementById('scanner-message').innerHTML = `
                     <i class="fas fa-circle-notch fa-spin"></i> Preparing Investigative Camera...
