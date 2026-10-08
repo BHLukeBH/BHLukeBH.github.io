@@ -6,10 +6,10 @@
     <title>A Soldier's Final Retreat - Suspect Questioning Room</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Cinzel, Inter, Special Elite -->
+    <!-- Google Fonts: Cinzel, Inter, Special Elite, Caveat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -19,22 +19,23 @@
                 extend: {
                     colors: {
                         victorian: {
-                            900: '#0d0907',
-                            800: '#1a130f',
-                            700: '#2c211a',
-                            600: '#423328',
-                            brass: '#c59b27',
-                            brasslight: '#e5b842',
-                            paper: '#f3ebd9',
+                            900: '#122025',
+                            800: '#1c2f36',
+                            700: '#2b424b',
+                            600: '#48626b',
+                            brass: '#b88e28',
+                            brasslight: '#d9a832',
+                            paper: '#f5eedc',
                             paperdark: '#ded2b8',
-                            crimson: '#6b1d1d',
-                            crimsonlight: '#942929'
+                            crimson: '#8f1d1d',
+                            crimsonlight: '#b92929'
                         }
                     },
                     fontFamily: {
                         cinzel: ['Cinzel', 'serif'],
                         inter: ['Inter', 'sans-serif'],
-                        typewriter: ['Special Elite', 'monospace']
+                        typewriter: ['Special Elite', 'monospace'],
+                        handwriting: ['Caveat', 'cursive']
                     }
                 }
             }
@@ -42,114 +43,265 @@
     </script>
 
     <style>
+        /* Booklet Theme Core Styles */
         body {
-            background-color: #0d0907;
-            color: #f3ebd9;
+            background-color: #0b1417;
+            color: #2b1f14;
             font-family: 'Inter', sans-serif;
-            background-image: radial-gradient(circle at 50% 20%, #1c1410 0%, #0d0907 100%);
+            background-image: 
+                radial-gradient(circle at 50% 20%, #1a2c33 0%, #070e10 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 2px, transparent 2px, transparent 4px);
         }
 
         .cinzel { font-family: 'Cinzel', serif; }
         .typewriter { font-family: 'Special Elite', monospace; }
+        .handwriting { font-family: 'Caveat', cursive; }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a130f;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #423328;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #c59b27;
+        /* Desk Surface with Binder Ring Margins */
+        .dossier-wrapper {
+            background: #142328;
+            border-left: 14px solid #0a1215;
+            box-shadow: inset 2px 0 8px rgba(0,0,0,0.8), 0 20px 40px rgba(0,0,0,0.8);
+            position: relative;
         }
 
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        /* Binder Hole Ring Accents along Left Spine */
+        .binder-ring {
+            position: absolute;
+            left: -22px;
+            width: 28px;
+            height: 10px;
+            background: linear-gradient(180deg, #7a8a90 0%, #2a383e 50%, #152024 100%);
+            border-radius: 5px;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.7);
+            z-index: 25;
         }
 
-        /* Video container styling */
-        .video-container {
+        /* Main Page Aged Parchment Container with Coffee Ring Stain */
+        .dossier-paper {
+            background-color: #f6efe0;
+            background-image: 
+                radial-gradient(circle at 12% 15%, rgba(175, 135, 75, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 88% 82%, rgba(135, 95, 45, 0.15) 0%, transparent 50%),
+                repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(180, 160, 120, 0.12) 29px, rgba(180, 160, 120, 0.12) 30px);
+            box-shadow: 
+                0 0 0 1px #22353c,
+                0 0 30px rgba(0,0,0,0.7),
+                inset 0 0 60px rgba(120, 85, 35, 0.22);
+            border-radius: 6px;
             position: relative;
             overflow: hidden;
-            border: 2px solid #423328;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 10px 25px rgba(0,0,0,0.6);
         }
-        .video-container::before {
-            content: " ";
-            display: block;
+
+        /* Floor Plan Background Watermark Overlay */
+        .floorplan-watermark {
             position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            z-index: 10;
-            background-size: 100% 4px, 6px 100%;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(180,150,100,0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Translucent Coffee Stain Ring Accent */
+        .coffee-stain {
+            position: absolute;
+            top: 40px;
+            right: -30px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 8px solid rgba(130, 85, 35, 0.08);
+            box-shadow: inset 0 0 12px rgba(130, 85, 35, 0.06), 0 0 8px rgba(130, 85, 35, 0.05);
+            pointer-events: none;
+            transform: rotate(15deg);
+        }
+
+        /* Victorian Filigree Header Divider */
+        .filigree-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 4px 0 8px 0;
+            color: #8c6d37;
+            font-size: 13px;
+        }
+        .filigree-divider::before, .filigree-divider::after {
+            content: "";
+            height: 1px;
+            width: 90px;
+            background: linear-gradient(90deg, transparent, #a88544, transparent);
+        }
+
+        /* Distressed Rubber Stamp Badges */
+        .rubber-stamp {
+            display: inline-block;
+            padding: 2px 10px;
+            font-family: 'Special Elite', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 2px solid #8f1d1d;
+            color: #8f1d1d;
+            border-radius: 4px;
+            transform: rotate(-5deg);
+            box-shadow: 0 0 2px rgba(143, 29, 29, 0.2);
+            opacity: 0.88;
+            letter-spacing: 1px;
+        }
+
+        .rubber-stamp-brass {
+            border-color: #8c6d37;
+            color: #735728;
+            transform: rotate(3deg);
+        }
+
+        /* Metal Paper Clip Element */
+        .paperclip {
+            position: absolute;
+            top: -12px;
+            left: 18px;
+            width: 12px;
+            height: 32px;
+            border: 2px solid #8a969b;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+            background: transparent;
+            z-index: 20;
             pointer-events: none;
         }
 
-        /* Suspect Avatar Card (Horizontal Track) */
+        /* Metal Staple Element */
+        .staple {
+            position: absolute;
+            width: 18px;
+            height: 4px;
+            background: linear-gradient(180deg, #b0b8bc 0%, #586468 100%);
+            border-radius: 1px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        /* Translucent Masking Tape Strip */
+        .masking-tape {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 15px;
+            background: rgba(228, 215, 182, 0.82);
+            border-left: 1px dashed rgba(160, 140, 100, 0.4);
+            border-right: 1px dashed rgba(160, 140, 100, 0.4);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            backdrop-filter: blur(1px);
+            z-index: 12;
+        }
+
+        /* Suspect Photo Cards (Polaroids pinned with tape) */
         .suspect-chip {
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
-            border: 1.5px solid #423328;
-            background: rgba(26, 19, 15, 0.85);
+            background: #fdfbf7;
+            border: 1px solid #d8cdb8;
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.25);
             flex-shrink: 0;
+            position: relative;
+            transform: rotate(-1.5deg);
         }
+        .suspect-chip:nth-child(even) { transform: rotate(1.8deg); }
+        .suspect-chip:nth-child(3n) { transform: rotate(-0.8deg); }
+
         .suspect-chip:hover {
-            border-color: #c59b27;
-            background: rgba(44, 33, 26, 0.95);
-            transform: translateY(-2px);
+            border-color: #b88e28;
+            transform: translateY(-5px) rotate(0deg) scale(1.03);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+            z-index: 15;
         }
+
         .suspect-chip.active-chip {
-            border-color: #c59b27;
-            background: rgba(197, 155, 39, 0.18);
-            box-shadow: 0 0 14px rgba(197, 155, 39, 0.35);
+            border: 2px solid #8f1d1d !important;
+            background: #fffdf7;
+            transform: scale(1.06) rotate(0deg);
+            box-shadow: 0 12px 25px rgba(143, 29, 29, 0.3);
+            z-index: 15;
+        }
+
+        /* Red Circle Ink Highlight around Active Suspect */
+        .suspect-chip.active-chip::after {
+            content: "";
+            position: absolute;
+            inset: -5px;
+            border: 2px dashed #8f1d1d;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: pulse-red 2.2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { opacity: 0.75; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1.04); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #122025; }
+        ::-webkit-scrollbar-thumb { background: #48626b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b88e28; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Video Stage Antique Frame */
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            border: 4px solid #281b10;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.95), 0 12px 28px rgba(0,0,0,0.75);
+            background-color: #0b0806;
+        }
+
+        /* Torn Edge Paper Card for Transcript */
+        .torn-paper {
+            background: #fbf7ee;
+            border: 1px solid #d9cdb6;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            position: relative;
+        }
+        .torn-paper::before {
+            content: "";
+            position: absolute;
+            top: -4px; left: 0; right: 0;
+            height: 4px;
+            background: repeating-linear-gradient(-45deg, transparent, transparent 4px, #fbf7ee 4px, #fbf7ee 8px);
         }
 
         /* --- Sherlock Deerstalker Clue Buttons --- */
         .sherlock-btn {
-            background: linear-gradient(135deg, #2b1f14 0%, #150f0a 100%);
-            border: 1.5px solid #e5a93c;
-            color: #e5a93c;
+            background: linear-gradient(135deg, #382313 0%, #170d06 100%);
+            border: 1.5px solid #d9a832;
+            color: #d9a832;
             border-radius: 50%;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(229, 169, 60, 0.25);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
             flex-shrink: 0;
             padding: 0;
         }
 
         .sherlock-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 14px rgba(229, 169, 60, 0.55);
-            border-color: #ffd27d;
-            color: #ffd27d;
+            box-shadow: 0 0 12px rgba(217, 168, 50, 0.6);
+            border-color: #f1cf5b;
+            color: #f1cf5b;
         }
 
-        .sherlock-btn-xs {
-            width: 22px;
-            height: 22px;
-        }
-
-        .sherlock-btn-sm {
-            width: 28px;
-            height: 28px;
-        }
-
-        .sherlock-btn-md {
-            width: 34px;
-            height: 34px;
-        }
+        .sherlock-btn-xs { width: 22px; height: 22px; }
+        .sherlock-btn-sm { width: 28px; height: 28px; }
 
         .deerstalker-icon {
             width: 65%;
@@ -240,9 +392,7 @@
             display: block;
         }
 
-        .sherlock-body p {
-            margin-bottom: 0.75rem;
-        }
+        .sherlock-body p { margin-bottom: 0.75rem; }
 
         .sherlock-clue-box {
             background: rgba(139, 37, 37, 0.06);
@@ -264,9 +414,7 @@
             font-size: 0.88rem;
         }
 
-        .sherlock-vocab-list li {
-            margin-bottom: 0.35rem;
-        }
+        .sherlock-vocab-list li { margin-bottom: 0.35rem; }
 
         .sherlock-vocab-list code {
             background: #e8dcc4;
@@ -306,7 +454,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-victorian-brass selection:text-victorian-900">
+<body class="min-h-screen flex flex-col justify-between selection:bg-victorian-brass selection:text-white">
 
     <!-- SVG Icon Definition for Deerstalker Hat -->
     <svg style="display: none;">
@@ -319,193 +467,235 @@
         </symbol>
     </svg>
 
-    <!-- Header Bar -->
-    <header class="border-b border-victorian-600/60 bg-victorian-900/95 backdrop-blur sticky top-0 z-30 px-3 py-2.5 sm:px-4 sm:py-3">
+    <!-- Header Bar (Booklet Dark Leather Binding Title Header) -->
+    <header class="border-b-2 border-victorian-brass/50 bg-victorian-900 shadow-xl sticky top-0 z-30 px-3 py-2.5 sm:px-4 sm:py-3">
         <div class="max-w-4xl mx-auto flex justify-between items-center gap-2">
             <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-victorian-700 border border-victorian-brass flex items-center justify-center text-victorian-brass shadow-md shrink-0">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-victorian-800 border border-victorian-brass flex items-center justify-center text-victorian-brass shadow-md shrink-0">
                     <i class="fa-solid fa-magnifying-glass text-sm sm:text-base"></i>
                 </div>
                 <div class="flex items-center gap-2">
-                    <h1 class="text-base sm:text-xl font-bold cinzel text-victorian-paper tracking-wide">A Soldier's Final Retreat</h1>
+                    <div>
+                        <span class="text-[9px] sm:text-[10px] tracking-widest text-victorian-brass font-mono uppercase block -mb-1">BUCKSHOT HALL DOSSIER</span>
+                        <h1 class="text-base sm:text-xl font-bold cinzel text-victorian-paper tracking-wide">A Soldier's Final Retreat</h1>
+                    </div>
                     <!-- Header Sherlock Dispatch Button -->
-                    <button class="sherlock-btn sherlock-btn-sm" onclick="openSherlockNote('header')" title="Sherlock's Interrogation Strategy">
+                    <button class="sherlock-btn sherlock-btn-sm ml-1" onclick="openSherlockNote('header')" title="Sherlock's Interrogation Strategy">
                         <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
                     </button>
                 </div>
             </div>
 
             <div class="flex items-center gap-2">
-                <button onclick="toggleCaseNotes()" class="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-600 text-victorian-paper text-xs flex items-center gap-1.5 transition">
+                <button onclick="toggleCaseNotes()" class="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-brass/60 text-victorian-paper text-xs flex items-center gap-1.5 transition shadow">
                     <i class="fa-solid fa-book-bookmark text-victorian-brass text-xs"></i>
                     <span class="hidden xs:inline">Clues</span>
                     <span>(<span id="unlockedCount">0</span>/20)</span>
                 </button>
 
-                <button onclick="openConfigModal()" class="w-8 h-8 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-600 text-victorian-brass text-xs flex items-center justify-center transition shrink-0" title="Edit Video URLs">
+                <button onclick="openConfigModal()" class="w-8 h-8 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-brass/60 text-victorian-brass text-xs flex items-center justify-center transition shrink-0" title="Edit Video URLs">
                     <i class="fa-solid fa-gear"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Questioning Content (Single Column, Mobile-First Hierarchy) -->
-    <main class="max-w-4xl mx-auto w-full p-3 sm:p-5 flex-1 flex flex-col gap-3.5">
+    <!-- Main Questioning Content (Dossier Album Binding) -->
+    <main class="max-w-4xl mx-auto w-full p-2.5 sm:p-5 flex-1 flex flex-col gap-4">
 
-        <!-- 1. TOP HORIZONTAL SUSPECT SELECTOR RAIL -->
-        <section class="bg-victorian-800/85 border border-victorian-600/60 rounded-xl p-2.5 sm:p-3 shadow-md">
-            <div class="flex justify-between items-center mb-2 px-1">
-                <span class="text-[11px] font-bold cinzel text-victorian-brass tracking-wider uppercase flex items-center gap-1.5">
-                    <i class="fa-solid fa-users-viewfinder"></i> Select Suspect to Question
-                </span>
-                <span class="text-[10px] text-victorian-paperdark/70 italic">Tap avatar to switch</span>
-            </div>
+        <div class="dossier-wrapper rounded-xl p-2.5 sm:p-5 relative">
 
-            <!-- Horizontal Scroll Container -->
-            <div id="suspectList" class="flex items-center gap-2.5 overflow-x-auto pb-1.5 pt-0.5 no-scrollbar">
-                <!-- Populated dynamically via JS -->
-            </div>
-        </section>
+            <!-- Ring Binder Loops along Left Margin -->
+            <div class="binder-ring" style="top: 40px;"></div>
+            <div class="binder-ring" style="top: 180px;"></div>
+            <div class="binder-ring" style="top: 320px;"></div>
+            <div class="binder-ring" style="top: 460px;"></div>
 
-        <!-- 2. ACTIVE SUSPECT BANNER -->
-        <section class="bg-victorian-800/90 border border-victorian-600/70 rounded-xl p-3 flex items-center justify-between gap-3 shadow-md">
-            <div class="flex items-center gap-3 min-w-0">
-                <img id="activeSuspectAvatar" src="" alt="Suspect Portrait" class="w-12 h-12 rounded-full border-2 border-victorian-brass object-cover shadow shrink-0">
-                <div class="min-w-0">
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <h2 id="activeSuspectName" class="text-base sm:text-lg font-bold cinzel text-victorian-paper truncate">Suspect Name</h2>
-                        <span class="text-[10px] px-1.5 py-0.5 rounded bg-victorian-700 text-victorian-brass border border-victorian-600 shrink-0">Suspect</span>
-                        <!-- Active Suspect Sherlock Profile Button -->
-                        <button class="sherlock-btn sherlock-btn-xs" onclick="openCurrentSuspectSherlockNote()" title="Sherlock's Profile of this Suspect">
-                            <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
+            <!-- Aged Paper Portfolio Sheet -->
+            <div class="dossier-paper p-3.5 sm:p-6 border border-amber-900/30">
+
+                <div class="coffee-stain"></div>
+                <div class="floorplan-watermark"></div>
+
+                <!-- Booklet Header Section with Evidence Rubber Stamps -->
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-2 mb-3 relative z-10 border-b border-amber-900/20 pb-2">
+                    <div class="text-center sm:text-left">
+                        <h2 class="cinzel text-lg sm:text-2xl font-black text-amber-950 tracking-wider">SUSPECT QUESTIONING ROOM</h2>
+                        <div class="filigree-divider sm:justify-start">
+                            <i class="fa-solid fa-circle text-[5px]"></i>
+                            <i class="fa-solid fa-feather-pointed text-xs"></i>
+                            <i class="fa-solid fa-circle text-[5px]"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <span class="rubber-stamp">CONFIDENTIAL</span>
+                        <span class="rubber-stamp rubber-stamp-brass hidden xs:inline-block">EVIDENCE FILE</span>
+                    </div>
+                </div>
+
+                <!-- 1. TOP HORIZONTAL SUSPECT SELECTOR RAIL (Polaroids Pinned to Board) -->
+                <section class="bg-[#f2e7d3]/80 border border-amber-900/25 rounded-xl p-3 mb-4 shadow-inner relative z-10">
+                    <div class="staple" style="top: 6px; left: 12px; transform: rotate(-5deg);"></div>
+                    <div class="staple" style="top: 6px; right: 12px; transform: rotate(8deg);"></div>
+
+                    <div class="flex justify-between items-center mb-2 px-1">
+                        <span class="text-[11px] font-bold cinzel text-amber-950 tracking-wider uppercase flex items-center gap-1.5">
+                            <i class="fa-solid fa-users-viewfinder text-amber-800"></i> Select Suspect Photo to Interrogate
+                        </span>
+                        <span class="handwriting text-sm text-red-900 font-bold">"Witnesses separated for questioning"</span>
+                    </div>
+
+                    <!-- Horizontal Scroll Container for Polaroids -->
+                    <div id="suspectList" class="flex items-center gap-3.5 overflow-x-auto pb-2.5 pt-2 px-1 no-scrollbar">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </section>
+
+                <!-- 2. ACTIVE SUSPECT BANNER (Pinned File Card with Scrawling) -->
+                <section class="bg-[#fdfbf7] border-2 border-amber-900/30 rounded-lg p-3 flex items-center justify-between gap-3 shadow mb-4 relative z-10">
+                    <div class="paperclip"></div>
+                    <div class="masking-tape"></div>
+
+                    <div class="flex items-center gap-3 min-w-0 pl-4 sm:pl-6">
+                        <img id="activeSuspectAvatar" src="" alt="Suspect Portrait" class="w-12 h-12 rounded-full border-2 border-amber-900 object-cover shadow shrink-0">
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h2 id="activeSuspectName" class="text-base sm:text-lg font-bold cinzel text-amber-950 truncate">Suspect Name</h2>
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-amber-900 text-amber-100 font-mono shrink-0">SUSPECT</span>
+                                <!-- Active Suspect Sherlock Profile Button -->
+                                <button class="sherlock-btn sherlock-btn-xs" onclick="openCurrentSuspectSherlockNote()" title="Sherlock's Profile of this Suspect">
+                                    <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right shrink-0">
+                        <span class="rubber-stamp text-[10px] py-0.5 px-2">IN CUSTODY</span>
+                    </div>
+                </section>
+
+                <!-- 3. VIDEO STAGE (Framed Antique Viewing Apparatus) -->
+                <section class="bg-amber-950 border-2 border-amber-900/80 rounded-xl p-2.5 sm:p-3 shadow-2xl flex flex-col mb-4 relative z-10">
+                    <div class="video-container rounded-lg aspect-video flex items-center justify-center relative">
+                        
+                        <!-- HTML5 Video Player -->
+                        <video id="videoPlayer" class="w-full h-full object-contain hidden" controls playsinline>
+                            <source id="videoSource" src="" type="video/mp4">
+                            Your browser does not support HTML5 video.
+                        </video>
+
+                        <!-- Video Placeholder State -->
+                        <div id="videoPlaceholder" class="flex flex-col items-center justify-center text-center p-4 bg-victorian-900/90 w-full h-full">
+                            <div class="w-14 h-14 rounded-full border-2 border-victorian-brass/60 flex items-center justify-center mb-2 bg-victorian-800 shadow-inner">
+                                <i id="placeholderIcon" class="fa-solid fa-film text-xl text-victorian-brass"></i>
+                            </div>
+                            <h3 id="placeholderTitle" class="cinzel text-base text-victorian-paper font-semibold">Ready for Questioning</h3>
+                            <p id="placeholderSubtitle" class="text-xs text-victorian-paperdark/80 max-w-sm mt-1">
+                                Enter a question below to interrogate <span id="placeholderSuspectName" class="text-victorian-brass font-semibold">this suspect</span>.
+                            </p>
+                        </div>
+
+                        <!-- Video Badge Overlay -->
+                        <div class="absolute top-2.5 left-2.5 z-20 bg-victorian-900/90 backdrop-blur px-2.5 py-1 rounded border border-victorian-brass/50 text-[10px] text-victorian-paper font-mono flex items-center gap-1.5 shadow">
+                            <i class="fa-solid fa-circle text-red-500 text-[7px] animate-pulse"></i>
+                            <span id="videoBadgeState">STANDBY</span>
+                        </div>
+                    </div>
+
+                    <!-- Video Topic Indicator & Replay Button -->
+                    <div class="mt-2.5 flex flex-wrap justify-between items-center gap-2 px-1">
+                        <div class="text-xs text-amber-200/80 flex items-center gap-1.5">
+                            <i class="fa-solid fa-comment-dots text-victorian-brass text-xs"></i>
+                            <span>Topic:</span>
+                            <span id="currentTopicDisplay" class="text-victorian-paper font-mono bg-victorian-800 px-2 py-0.5 rounded border border-victorian-700 text-xs">None</span>
+                        </div>
+
+                        <button onclick="replayCurrentVideo()" class="text-xs text-victorian-brass hover:text-victorian-brasslight flex items-center gap-1.5 transition font-semibold">
+                            <i class="fa-solid fa-rotate-right text-xs"></i> Replay Recording
                         </button>
                     </div>
-                </div>
-            </div>
+                </section>
 
-            <div class="text-right shrink-0">
-                <span class="text-emerald-400 text-xs font-medium flex items-center gap-1.5 justify-end">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Present
-                </span>
-            </div>
-        </section>
-
-        <!-- 3. VIDEO STAGE -->
-        <section class="bg-victorian-900 border border-victorian-700 rounded-xl p-2.5 sm:p-3 shadow-2xl flex flex-col">
-            <div class="video-container rounded-lg bg-black aspect-video flex items-center justify-center relative">
-                
-                <!-- HTML5 Video Player -->
-                <video id="videoPlayer" class="w-full h-full object-contain hidden" controls playsinline>
-                    <source id="videoSource" src="" type="video/mp4">
-                    Your browser does not support HTML5 video.
-                </video>
-
-                <!-- Video Placeholder State -->
-                <div id="videoPlaceholder" class="flex flex-col items-center justify-center text-center p-4 bg-victorian-800/90 w-full h-full">
-                    <div class="w-14 h-14 rounded-full border-2 border-victorian-brass/50 flex items-center justify-center mb-2 bg-victorian-900/60 shadow-inner">
-                        <i id="placeholderIcon" class="fa-solid fa-film text-xl text-victorian-brass"></i>
-                    </div>
-                    <h3 id="placeholderTitle" class="cinzel text-base text-victorian-paper font-semibold">Ready for Questioning</h3>
-                    <p id="placeholderSubtitle" class="text-xs text-victorian-paperdark max-w-sm mt-1">
-                        Enter a question below to interrogate <span id="placeholderSuspectName" class="text-victorian-brass font-semibold">this suspect</span>.
-                    </p>
-                </div>
-
-                <!-- Video Badge Overlay -->
-                <div class="absolute top-2.5 left-2.5 z-20 bg-victorian-900/80 backdrop-blur px-2 py-0.5 rounded border border-victorian-600/50 text-[10px] text-victorian-paper font-mono flex items-center gap-1.5">
-                    <i class="fa-solid fa-circle text-red-500 text-[7px] animate-pulse"></i>
-                    <span id="videoBadgeState">STANDBY</span>
-                </div>
-            </div>
-
-            <!-- Video Topic Indicator & Replay Button -->
-            <div class="mt-2.5 flex flex-wrap justify-between items-center gap-2 px-1">
-                <div class="text-xs text-victorian-paperdark flex items-center gap-1.5">
-                    <i class="fa-solid fa-comment-dots text-victorian-brass text-xs"></i>
-                    <span>Topic:</span>
-                    <span id="currentTopicDisplay" class="text-victorian-paper font-mono bg-victorian-800 px-2 py-0.5 rounded border border-victorian-700 text-xs">None</span>
-                </div>
-
-                <button onclick="replayCurrentVideo()" class="text-xs text-victorian-brass hover:text-victorian-brasslight flex items-center gap-1.5 transition">
-                    <i class="fa-solid fa-rotate-right text-xs"></i> Replay Recording
-                </button>
-            </div>
-        </section>
-
-        <!-- 4. INTERROGATION INPUT BOX & DISCOVERED TOPIC TAGS -->
-        <section class="bg-victorian-800/90 border border-victorian-600/60 rounded-xl p-3 sm:p-4 shadow-lg">
-            <form id="questionForm" onsubmit="handleQuestionSubmit(event)" class="flex flex-col sm:flex-row gap-2">
-                <div class="relative flex-1">
-                    <input type="text" id="questionInput" 
-                        placeholder="Ask about a clue, person, date, or event (e.g. Paris, Gun, Maiwand)..." 
-                        class="w-full bg-victorian-900/90 border border-victorian-600/80 rounded-lg px-3.5 py-2.5 text-sm text-victorian-paper placeholder-victorian-paperdark/60 focus:outline-none focus:border-victorian-brass transition pr-9">
-                    <button type="button" onclick="clearInput()" class="absolute right-3 top-1/2 -translate-y-1/2 text-victorian-paperdark hover:text-victorian-paper text-sm">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-                <button type="submit" class="px-5 py-2.5 bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow-md shrink-0 text-sm">
-                    <i class="fa-solid fa-paper-plane text-xs"></i>
-                    <span>Interrogate</span>
-                </button>
-            </form>
-
-            <!-- Discovered Topics Cloud -->
-            <div class="mt-2.5 pt-2.5 border-t border-victorian-700/60 flex flex-wrap items-center gap-1.5">
-                <span class="text-[11px] text-victorian-paperdark/80 mr-1 flex items-center gap-1">
-                    <i class="fa-solid fa-tags text-[10px] text-victorian-brass"></i> Discovered Topics:
-                </span>
-                <div id="quickTopicTags" class="flex flex-wrap gap-1.5">
-                    <!-- Populated dynamically as topics are discovered -->
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. STATEMENT TRANSCRIPT -->
-        <section class="bg-victorian-800/80 border border-victorian-600/50 rounded-xl p-3 sm:p-4">
-            <h3 class="text-xs sm:text-sm font-bold cinzel text-victorian-brass mb-2 flex items-center justify-between">
-                <span class="flex items-center gap-1.5">
-                    <i class="fa-solid fa-file-lines text-xs"></i> Statement Transcript
-                </span>
-                <span id="transcriptStatusBadge" class="text-[10px] font-sans font-normal text-victorian-paperdark bg-victorian-900 px-2 py-0.5 rounded border border-victorian-700">Awaiting Query</span>
-            </h3>
-            
-            <div class="bg-victorian-900/90 rounded-lg p-3.5 border border-victorian-700/80 min-h-[85px] text-xs sm:text-sm leading-relaxed font-mono text-victorian-paper">
-                <p id="transcriptText" class="typewriter text-victorian-paper/90">
-                    Select a suspect and submit an inquiry to record their official statement...
-                </p>
-            </div>
-        </section>
-
-        <!-- 6. COLLAPSIBLE INTERROGATION TIPS DRAWER -->
-        <section class="bg-victorian-800/60 rounded-xl border border-victorian-600/40 overflow-hidden">
-            <details class="group">
-                <summary class="flex justify-between items-center p-3 cursor-pointer list-none select-none hover:bg-victorian-700/30 transition">
-                    <div class="flex items-center gap-2 text-xs font-semibold text-victorian-paper">
-                        <i class="fa-solid fa-lightbulb text-victorian-brass"></i>
-                        <span>Interrogation Tips & Phrasing</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <!-- Phrasing Sherlock Button -->
-                        <button type="button" class="sherlock-btn sherlock-btn-xs" onclick="event.stopPropagation(); openSherlockNote('phrasing')" title="Sherlock's Phrasing & Keyword Advice">
-                            <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
+                <!-- 4. INTERROGATION INPUT BOX & DISCOVERED TOPIC TAGS -->
+                <section class="bg-[#fcf8f0] border border-amber-900/30 rounded-xl p-3 sm:p-4 shadow mb-4 relative z-10">
+                    <form id="questionForm" onsubmit="handleQuestionSubmit(event)" class="flex flex-col sm:flex-row gap-2">
+                        <div class="relative flex-1">
+                            <input type="text" id="questionInput" 
+                                placeholder="Ask about a clue, person, date, or event (e.g. Paris, Gun, Maiwand)..." 
+                                class="w-full bg-white border-2 border-amber-900/30 rounded-lg px-3.5 py-2.5 text-sm text-amber-950 placeholder-amber-900/50 focus:outline-none focus:border-amber-800 transition pr-9 font-serif">
+                            <button type="button" onclick="clearInput()" class="absolute right-3 top-1/2 -translate-y-1/2 text-amber-800/60 hover:text-amber-950 text-sm">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <button type="submit" class="px-5 py-2.5 bg-amber-900 hover:bg-amber-950 text-amber-100 font-bold rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow shrink-0 text-sm cinzel">
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                            <span>Interrogate</span>
                         </button>
-                        <i class="fa-solid fa-chevron-down text-xs text-victorian-paperdark group-open:rotate-180 transition-transform"></i>
+                    </form>
+
+                    <!-- Discovered Topics Cloud -->
+                    <div class="mt-2.5 pt-2.5 border-t border-amber-900/20 flex flex-wrap items-center gap-1.5">
+                        <span class="text-[11px] font-bold text-amber-900 mr-1 flex items-center gap-1">
+                            <i class="fa-solid fa-tags text-[10px] text-amber-800"></i> Discovered Topics:
+                        </span>
+                        <div id="quickTopicTags" class="flex flex-wrap gap-1.5">
+                            <!-- Populated dynamically as topics are discovered -->
+                        </div>
                     </div>
-                </summary>
-                <div class="p-3 pt-0 text-xs text-victorian-paperdark space-y-1.5 border-t border-victorian-700/40 mt-1">
-                    <ul class="list-disc list-inside space-y-1">
-                        <li>Type inquiries like <span class="text-victorian-brass font-mono">"Tell me about the gun"</span> or <span class="text-victorian-brass font-mono">"What do you know of Paris?"</span>.</li>
-                        <li>Single key nouns (e.g. <span class="text-victorian-brass font-mono">gun</span>, <span class="text-victorian-brass font-mono">Paris</span>, <span class="text-victorian-brass font-mono">Maiwand</span>) will also trigger responses.</li>
-                        <li>If a topic is irrelevant to this suspect, they will offer a polite denial.</li>
-                    </ul>
-                </div>
-            </details>
-        </section>
+                </section>
+
+                <!-- 5. STATEMENT TRANSCRIPT (Torn Evidence Record Sheet) -->
+                <section class="torn-paper rounded-lg p-3.5 sm:p-4 shadow-md mb-4 relative z-10">
+                    <div class="staple" style="top: -2px; left: 20px; transform: rotate(-3deg);"></div>
+                    
+                    <h3 class="text-xs sm:text-sm font-bold cinzel text-amber-950 mb-2 flex items-center justify-between border-b border-amber-900/20 pb-1.5">
+                        <span class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-lines text-amber-800 text-xs"></i> Official Statement Transcript
+                        </span>
+                        <span id="transcriptStatusBadge" class="text-[10px] font-mono font-normal text-amber-900 bg-amber-200/60 px-2 py-0.5 rounded border border-amber-300">Awaiting Query</span>
+                    </h3>
+                    
+                    <div class="bg-white/80 rounded-lg p-3.5 border border-amber-200 min-h-[85px] text-xs sm:text-sm leading-relaxed text-amber-950 shadow-inner">
+                        <p id="transcriptText" class="typewriter text-amber-950/90">
+                            Select a suspect and submit an inquiry to record their official statement...
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 6. COLLAPSIBLE INTERROGATION TIPS DRAWER -->
+                <section class="bg-[#f2e7d3]/80 rounded-xl border border-amber-900/20 overflow-hidden mb-2 relative z-10">
+                    <details class="group">
+                        <summary class="flex justify-between items-center p-3 cursor-pointer list-none select-none hover:bg-amber-200/40 transition">
+                            <div class="flex items-center gap-2 text-xs font-semibold text-amber-950">
+                                <i class="fa-solid fa-lightbulb text-amber-700"></i>
+                                <span>Interrogation Tips & Phrasing</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <!-- Phrasing Sherlock Button -->
+                                <button type="button" class="sherlock-btn sherlock-btn-xs" onclick="event.stopPropagation(); openSherlockNote('phrasing')" title="Sherlock's Phrasing & Keyword Advice">
+                                    <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
+                                </button>
+                                <i class="fa-solid fa-chevron-down text-xs text-amber-800 group-open:rotate-180 transition-transform"></i>
+                            </div>
+                        </summary>
+                        <div class="p-3 pt-0 text-xs text-amber-900 space-y-1.5 border-t border-amber-900/10 mt-1">
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Type inquiries like <span class="text-amber-950 font-mono font-bold">"Tell me about the gun"</span> or <span class="text-amber-950 font-mono font-bold">"What do you know of Paris?"</span>.</li>
+                                <li>Single key nouns (e.g. <span class="text-amber-950 font-mono font-bold">gun</span>, <span class="text-amber-950 font-mono font-bold">Paris</span>, <span class="text-amber-950 font-mono font-bold">Maiwand</span>) will also trigger responses.</li>
+                                <li>If a topic is irrelevant to this suspect, they will offer a polite denial.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </section>
+
+            </div>
+        </div>
 
         <!-- 7. NAVIGATION TO HISTORIAN'S CATALOGUE -->
-        <div class="flex justify-center pt-1 pb-3">
+        <div class="flex justify-center pt-2 pb-2">
             <a href="https://invitation.visitbritishhills.com/event2/historians_catalogue.html" 
-               class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-xs sm:text-sm cinzel tracking-wider shadow-lg border border-victorian-brasslight/40 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
+               class="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-xs sm:text-sm cinzel tracking-wider shadow-lg border border-victorian-brasslight/40 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
                 <i class="fa-solid fa-scroll text-sm"></i>
                 <span>Historian's Catalogue</span>
                 <i class="fa-solid fa-arrow-right text-[10px]"></i>
@@ -535,10 +725,10 @@
         </div>
     </div>
 
-    <!-- Case Notes Modal -->
+    <!-- Case Notes Modal (Taped Ledger Note Style) -->
     <div id="caseNotesModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-victorian-800 border border-victorian-brass rounded-xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-3.5 bg-victorian-900 border-b border-victorian-700 flex justify-between items-center">
+        <div class="bg-[#f6efe1] border-2 border-amber-900/60 rounded-xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden relative">
+            <div class="p-3.5 bg-victorian-900 border-b border-victorian-brass flex justify-between items-center text-victorian-paper">
                 <h3 class="cinzel text-base sm:text-lg font-bold text-victorian-brass flex items-center gap-2">
                     <i class="fa-solid fa-book-open"></i> Discovered Suspect Statements
                 </h3>
@@ -551,9 +741,9 @@
                 <!-- Log entries inserted dynamically -->
             </div>
 
-            <div class="p-3 bg-victorian-900 border-t border-victorian-700 flex justify-between items-center text-xs text-victorian-paperdark">
-                <span>Total Clues Discovered: <strong id="modalUnlockedCount" class="text-victorian-brass">0</strong></span>
-                <button onclick="toggleCaseNotes()" class="px-3.5 py-1.5 bg-victorian-700 hover:bg-victorian-600 text-victorian-paper rounded">Close</button>
+            <div class="p-3 bg-amber-100/80 border-t border-amber-900/30 flex justify-between items-center text-xs text-amber-950 font-bold">
+                <span>Total Clues Discovered: <strong id="modalUnlockedCount" class="text-amber-800">0</strong></span>
+                <button onclick="toggleCaseNotes()" class="px-3.5 py-1.5 bg-amber-900 hover:bg-amber-950 text-amber-100 rounded">Close</button>
             </div>
         </div>
     </div>
@@ -592,7 +782,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="border-t border-victorian-700/60 bg-victorian-900/90 py-2.5 px-3 text-center text-[11px] text-victorian-paperdark mt-4">
+    <footer class="border-t border-victorian-brass/30 bg-victorian-900 py-3 px-3 text-center text-[11px] text-victorian-paperdark/80 mt-4">
         <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1.5">
             <p>Event 2: A Soldier's Final Retreat — Interrogation Records</p>
             <p class="text-victorian-paperdark/60">Inspect all evidence thoroughly to uncover the truth.</p>
@@ -948,7 +1138,7 @@
             Object.values(suspectsData).forEach(suspect => {
                 const isSelected = suspect.id === activeSuspectId;
                 const chip = document.createElement('div');
-                chip.className = `suspect-chip flex flex-col items-center p-2 rounded-xl text-center w-[76px] sm:w-[88px] ${
+                chip.className = `suspect-chip flex flex-col items-center p-2 rounded-lg text-center w-[84px] sm:w-[96px] ${
                     isSelected ? 'active-chip' : ''
                 }`;
                 chip.onclick = () => {
@@ -956,12 +1146,11 @@
                 };
 
                 chip.innerHTML = `
-                    <div class="relative mb-1">
-                        <img src="${suspect.avatar}" alt="${suspect.name}" class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 ${
-                            isSelected ? 'border-victorian-brass shadow-md' : 'border-victorian-700'
-                        } object-cover shrink-0">
+                    <div class="masking-tape"></div>
+                    <div class="relative mb-1 mt-1">
+                        <img src="${suspect.avatar}" alt="${suspect.name}" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-amber-900/40 object-cover shrink-0 grayscale hover:grayscale-0 transition">
                     </div>
-                    <span class="text-[10px] sm:text-[11px] font-bold text-victorian-paper cinzel leading-tight line-clamp-1 w-full">${suspect.shortName || suspect.name.split(' ')[0]}</span>
+                    <span class="text-[10px] sm:text-[11px] font-bold text-amber-950 cinzel leading-tight line-clamp-1 w-full">${suspect.shortName || suspect.name.split(' ')[0]}</span>
                 `;
                 listContainer.appendChild(chip);
             });
@@ -1039,14 +1228,14 @@
             container.innerHTML = '';
 
             if (discoveredTopics.length === 0) {
-                container.innerHTML = `<span class="text-xs text-victorian-paperdark/50 italic">None yet — ask questions to reveal topics.</span>`;
+                container.innerHTML = `<span class="text-xs text-amber-900/60 italic">None yet — ask questions to reveal topics.</span>`;
                 return;
             }
 
             discoveredTopics.forEach(topic => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
-                btn.className = 'text-[11px] px-2 py-0.5 rounded bg-victorian-700/70 hover:bg-victorian-brass hover:text-victorian-900 text-victorian-paper border border-victorian-600 transition';
+                btn.className = 'text-[11px] px-2.5 py-0.5 rounded bg-amber-200/80 hover:bg-amber-900 hover:text-amber-100 text-amber-950 border border-amber-900/30 font-medium transition shadow-sm';
                 btn.innerText = topic;
                 btn.onclick = () => {
                     document.getElementById('questionInput').value = topic;
@@ -1154,8 +1343,8 @@
 
                 if (discoveredClues.length === 0) {
                     list.innerHTML = `
-                        <div class="text-center py-8 text-victorian-paperdark">
-                            <i class="fa-solid fa-folder-open text-3xl mb-2 text-victorian-600"></i>
+                        <div class="text-center py-8 text-amber-900/70">
+                            <i class="fa-solid fa-folder-open text-3xl mb-2 text-amber-800/40"></i>
                             <p class="text-sm">No statements recorded yet. Interrogate suspects to uncover clues!</p>
                         </div>
                     `;
@@ -1167,13 +1356,13 @@
                             const stmt = s.statements.find(item => item.id === stmtId);
                             if (stmt) {
                                 const itemEl = document.createElement('div');
-                                itemEl.className = 'p-3 bg-victorian-900 border border-victorian-700 rounded-lg text-xs';
+                                itemEl.className = 'p-3 bg-amber-50 border border-amber-900/20 rounded-lg text-xs shadow-sm';
                                 itemEl.innerHTML = `
-                                    <div class="flex justify-between items-center text-victorian-brass font-bold mb-1">
+                                    <div class="flex justify-between items-center text-amber-950 font-bold mb-1">
                                         <span class="cinzel">${s.name}</span>
-                                        <span class="text-[10px] bg-victorian-800 text-victorian-paperdark px-2 py-0.5 rounded border border-victorian-700">${stmt.title}</span>
+                                        <span class="text-[10px] bg-amber-200/80 text-amber-900 px-2 py-0.5 rounded border border-amber-300 font-mono">${stmt.title}</span>
                                     </div>
-                                    <p class="text-victorian-paper typewriter italic">"${stmt.transcript}"</p>
+                                    <p class="text-amber-950 typewriter italic">"${stmt.transcript}"</p>
                                 `;
                                 list.appendChild(itemEl);
                             }
