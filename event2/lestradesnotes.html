@@ -172,35 +172,7 @@
             pointer-events: none;
         }
 
-        /* Translucent Masking Tape Strip */
-        .masking-tape {
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 42px;
-            height: 15px;
-            background: rgba(228, 215, 182, 0.82);
-            border-left: 1px dashed rgba(160, 140, 100, 0.4);
-            border-right: 1px dashed rgba(160, 140, 100, 0.4);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-            backdrop-filter: blur(1px);
-            z-index: 12;
-        }
-
-        /* Red Pencil Underline & Circle */
-        .scrawl-underline {
-            border-bottom: 2px dashed #b91c1c;
-            padding-bottom: 1px;
-        }
-
-        .scrawl-circle {
-            border: 2px solid #b91c1c;
-            border-radius: 45% 55% 40% 60% / 55% 45% 55% 45%;
-            padding: 2px 6px;
-        }
-
-        /* Statement Taped Card */
+        /* Statement Card Base */
         .statement-card {
             background: #fdfbf7;
             border: 1px solid #d9cdb6;
@@ -211,6 +183,38 @@
         .statement-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+        }
+
+        /* Witness Statement Video Placeholder Card */
+        .video-placeholder-container {
+            background: linear-gradient(135deg, #1b262c 0%, #0d161a 100%);
+            border: 1px solid #5a4627;
+            box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.8), 0 3px 10px rgba(0,0,0,0.25);
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .video-placeholder-container:hover {
+            border-color: #b88e28;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 0 6px 18px rgba(0,0,0,0.35);
+        }
+        .video-placeholder-container:hover .play-glyph-circle {
+            transform: scale(1.1);
+            background-color: #b88e28;
+            color: #122025;
+        }
+
+        /* Vintage film scanline effect */
+        .film-lines {
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
         }
 
         /* Custom Scrollbar */
@@ -239,7 +243,7 @@
             <div class="flex items-center gap-2">
                 <a href="https://invitation.visitbritishhills.com/event2/questioning_room.html" class="px-3 py-1.5 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-brass/60 text-victorian-paper text-xs flex items-center gap-1.5 transition shadow">
                     <i class="fa-solid fa-door-open text-victorian-brass"></i>
-                    <span>Questioning Room</span>
+                    <span>Witness Discussions</span>
                 </a>
                 <a href="https://invitation.visitbritishhills.com/event2/historians_catalogue.html" class="px-3 py-1.5 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-brass/60 text-victorian-paper text-xs flex items-center gap-1.5 transition shadow">
                     <i class="fa-solid fa-scroll text-victorian-brass"></i>
@@ -302,32 +306,40 @@
                     <section class="statement-card rounded-xl p-4 pl-4 sm:pl-6 border border-amber-900/20">
                         <div class="staple" style="top: 8px; left: 16px; transform: rotate(-5deg);"></div>
 
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 mb-3 border-b border-amber-900/20">
-                            <div>
-                                <span class="typewriter text-xs text-amber-800 font-semibold block">Witness 01 // Sterling Household</span>
-                                <h3 class="cinzel text-base sm:text-lg font-bold text-amber-950">Lady Persimma Sterling</h3>
-                            </div>
-                            <!-- Audio Control Button -->
-                            <div class="shrink-0 flex items-center gap-2">
-                                <button onclick="toggleStatementAudio('audio-lady-sterling', this)" class="audio-btn px-3.5 py-1.5 rounded-lg bg-amber-900 hover:bg-amber-950 text-amber-100 text-xs font-semibold flex items-center gap-2 shadow transition cinzel">
-                                    <i class="fa-solid fa-play text-amber-300"></i>
-                                    <span>Play Statement</span>
-                                </button>
-                                <audio id="audio-lady-sterling" preload="none" onended="resetAudioButton(this)">
-                                    <source src="audio/statement_lady_sterling.mp3" type="audio/mp3">
-                                </audio>
-                            </div>
+                        <div class="pb-2 mb-3 border-b border-amber-900/20">
+                            <span class="typewriter text-xs text-amber-800 font-semibold block">Witness 01 // Sterling Household</span>
+                            <h3 class="cinzel text-base sm:text-lg font-bold text-amber-950">Lady Persimma Sterling</h3>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
-                            <!-- Statement Text -->
-                            <div class="md:col-span-8 typewriter text-xs sm:text-sm text-amber-950 leading-relaxed bg-white/80 p-3.5 rounded-lg border border-amber-200 shadow-inner">
-                                “I was with Archie in the kitchen. Chef had left already so we were putting together some cold meats and cheese for the boys. It seemed like they had a lot to catch up on, and it was going to be a long night, so I thought they would appreciate some light refreshments.”
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-stretch">
+                            <!-- Witness Statement Video Placeholder -->
+                            <div class="md:col-span-8">
+                                <div class="video-placeholder-container rounded-lg p-5 flex flex-col items-center justify-center min-h-[140px] text-center relative group" 
+                                     onclick="openVideoModal('Witness 01 — Lady Persimma Sterling', '')" 
+                                     role="button" 
+                                     tabindex="0"
+                                     aria-label="Play video statement of Lady Persimma Sterling">
+                                    <div class="absolute inset-0 film-lines opacity-40"></div>
+                                    <div class="absolute top-2 left-2 flex items-center gap-1.5 text-[10px] text-amber-300/80 font-mono tracking-wider uppercase">
+                                        <i class="fa-solid fa-video text-xs text-amber-400"></i>
+                                        <span>Witness Statement</span>
+                                    </div>
+                                    <div class="absolute top-2 right-2 text-[10px] text-amber-200/60 font-mono">
+                                        DEP-01
+                                    </div>
+                                    <div class="play-glyph-circle w-11 h-11 rounded-full bg-amber-900/90 border-2 border-amber-300/80 text-amber-200 flex items-center justify-center shadow-lg transition-transform duration-200 my-2 z-10">
+                                        <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+                                    </div>
+                                    <span class="cinzel text-xs sm:text-sm font-bold text-amber-100 tracking-wide z-10">Click to Play Witness Statement</span>
+                                    <span class="text-[11px] text-amber-300/70 font-mono mt-0.5 z-10">[Video testimony awaiting media source]</span>
+                                </div>
                             </div>
-                            <!-- Lestrade Scrawled Margin Note -->
-                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/70 p-3 rounded-lg border border-red-200 transform rotate-1 shadow-sm">
-                                <i class="fa-solid fa-pen-nib text-xs text-red-700 mr-1"></i>
-                                <strong>Lestrade:</strong> <span class="scrawl-underline">Irrefutable alibi!</span> In kitchen alongside Archibald. Neither was in library when the trigger was pulled. Eliminates both!
+                            <!-- Lestrade Scrawled Margin Note (Clean: no underlines or circles) -->
+                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/70 p-3 rounded-lg border border-red-200 transform rotate-1 shadow-sm flex flex-col justify-center">
+                                <div>
+                                    <i class="fa-solid fa-pen-nib text-xs text-red-700 mr-1"></i>
+                                    <strong>Lestrade:</strong> Irrefutable alibi! In kitchen alongside Archibald. Neither was in library when the trigger was pulled. Eliminates both!
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -336,32 +348,40 @@
                     <section class="statement-card rounded-xl p-4 pl-4 sm:pl-6 border border-amber-900/20">
                         <div class="staple" style="top: 8px; left: 16px; transform: rotate(4deg);"></div>
 
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 mb-3 border-b border-amber-900/20">
-                            <div>
-                                <span class="typewriter text-xs text-amber-800 font-semibold block">Witness 02 // Son of the House</span>
-                                <h3 class="cinzel text-base sm:text-lg font-bold text-amber-950">Archibald Sterling</h3>
-                            </div>
-                            <!-- Audio Control Button -->
-                            <div class="shrink-0 flex items-center gap-2">
-                                <button onclick="toggleStatementAudio('audio-archibald', this)" class="audio-btn px-3.5 py-1.5 rounded-lg bg-amber-900 hover:bg-amber-950 text-amber-100 text-xs font-semibold flex items-center gap-2 shadow transition cinzel">
-                                    <i class="fa-solid fa-play text-amber-300"></i>
-                                    <span>Play Statement</span>
-                                </button>
-                                <audio id="audio-archibald" preload="none" onended="resetAudioButton(this)">
-                                    <source src="audio/statement_archibald.mp3" type="audio/mp3">
-                                </audio>
-                            </div>
+                        <div class="pb-2 mb-3 border-b border-amber-900/20">
+                            <span class="typewriter text-xs text-amber-800 font-semibold block">Witness 02 // Son of the House</span>
+                            <h3 class="cinzel text-base sm:text-lg font-bold text-amber-950">Archibald Sterling</h3>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
-                            <!-- Statement Text -->
-                            <div class="md:col-span-8 typewriter text-xs sm:text-sm text-amber-950 leading-relaxed bg-white/80 p-3.5 rounded-lg border border-amber-200 shadow-inner">
-                                “I was in the kitchen. Mother had asked me to help prepare some food for the guests. Not sure why Chef couldn’t have done it. Most of the preparation for tonight was already done, so making a small light supper wouldn’t have been too much trouble for him. All our staff seem a little lazy to me. I mean, mother even had to go and take the food to the library. We have a maid to do that. Where was she?”
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-stretch">
+                            <!-- Witness Statement Video Placeholder -->
+                            <div class="md:col-span-8">
+                                <div class="video-placeholder-container rounded-lg p-5 flex flex-col items-center justify-center min-h-[140px] text-center relative group" 
+                                     onclick="openVideoModal('Witness 02 — Archibald Sterling', '')" 
+                                     role="button" 
+                                     tabindex="0"
+                                     aria-label="Play video statement of Archibald Sterling">
+                                    <div class="absolute inset-0 film-lines opacity-40"></div>
+                                    <div class="absolute top-2 left-2 flex items-center gap-1.5 text-[10px] text-amber-300/80 font-mono tracking-wider uppercase">
+                                        <i class="fa-solid fa-video text-xs text-amber-400"></i>
+                                        <span>Witness Statement</span>
+                                    </div>
+                                    <div class="absolute top-2 right-2 text-[10px] text-amber-200/60 font-mono">
+                                        DEP-02
+                                    </div>
+                                    <div class="play-glyph-circle w-11 h-11 rounded-full bg-amber-900/90 border-2 border-amber-300/80 text-amber-200 flex items-center justify-center shadow-lg transition-transform duration-200 my-2 z-10">
+                                        <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+                                    </div>
+                                    <span class="cinzel text-xs sm:text-sm font-bold text-amber-100 tracking-wide z-10">Click to Play Witness Statement</span>
+                                    <span class="text-[11px] text-amber-300/70 font-mono mt-0.5 z-10">[Video testimony awaiting media source]</span>
+                                </div>
                             </div>
-                            <!-- Lestrade Scrawled Margin Note -->
-                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/70 p-3 rounded-lg border border-red-200 transform -rotate-1 shadow-sm">
-                                <i class="fa-solid fa-pen-nib text-xs text-red-700 mr-1"></i>
-                                <strong>Lestrade:</strong> Corroborates his mother completely. The staff being dismissed gave Watson the <span class="scrawl-circle">isolated wing</span> he required to carry out the deed undisturbed!
+                            <!-- Lestrade Scrawled Margin Note (Clean: no underlines or circles) -->
+                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/70 p-3 rounded-lg border border-red-200 transform -rotate-1 shadow-sm flex flex-col justify-center">
+                                <div>
+                                    <i class="fa-solid fa-pen-nib text-xs text-red-700 mr-1"></i>
+                                    <strong>Lestrade:</strong> Corroborates his mother completely. The staff being dismissed gave Watson the isolated wing he required to carry out the deed undisturbed!
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -370,32 +390,40 @@
                     <section class="statement-card rounded-xl p-4 pl-4 sm:pl-6 border border-amber-900/20">
                         <div class="staple" style="top: 8px; left: 16px; transform: rotate(-2deg);"></div>
 
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 mb-3 border-b border-amber-900/20">
-                            <div>
-                                <span class="typewriter text-xs text-amber-800 font-semibold block">Witness 03 // Veteran Officer</span>
-                                <h3 class="cinzel text-base sm:text-lg font-bold text-amber-950">Silas Thorne</h3>
-                            </div>
-                            <!-- Audio Control Button -->
-                            <div class="shrink-0 flex items-center gap-2">
-                                <button onclick="toggleStatementAudio('audio-thorne', this)" class="audio-btn px-3.5 py-1.5 rounded-lg bg-amber-900 hover:bg-amber-950 text-amber-100 text-xs font-semibold flex items-center gap-2 shadow transition cinzel">
-                                    <i class="fa-solid fa-play text-amber-300"></i>
-                                    <span>Play Statement</span>
-                                </button>
-                                <audio id="audio-thorne" preload="none" onended="resetAudioButton(this)">
-                                    <source src="audio/statement_thorne.mp3" type="audio/mp3">
-                                </audio>
-                            </div>
+                        <div class="pb-2 mb-3 border-b border-amber-900/20">
+                            <span class="typewriter text-xs text-amber-800 font-semibold block">Witness 03 // Veteran Officer</span>
+                            <h3 class="cinzel text-base sm:text-lg font-bold text-amber-950">Silas Thorne</h3>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
-                            <!-- Statement Text -->
-                            <div class="md:col-span-8 typewriter text-xs sm:text-sm text-amber-950 leading-relaxed bg-white/80 p-3.5 rounded-lg border border-amber-200 shadow-inner">
-                                “I used to have a lot of respect for that man. He was my commanding officer after all. But I don’t know, seeing that photo of us all together, happy, and then finding out that he knew the Afghans were coming, it all changed. It’s as if that happy memory ceased to exist. I’ve never seen Watson that angry. Even on the battlefield. But I think he was angry on my behalf. I had to take him outside to calm down. And he did. Once I’d explained that I’d accepted that Simon died doing a job he loved, he seemed to be able to accept that too.”
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-stretch">
+                            <!-- Witness Statement Video Placeholder -->
+                            <div class="md:col-span-8">
+                                <div class="video-placeholder-container rounded-lg p-5 flex flex-col items-center justify-center min-h-[140px] text-center relative group" 
+                                     onclick="openVideoModal('Witness 03 — Silas Thorne', '')" 
+                                     role="button" 
+                                     tabindex="0"
+                                     aria-label="Play video statement of Silas Thorne">
+                                    <div class="absolute inset-0 film-lines opacity-40"></div>
+                                    <div class="absolute top-2 left-2 flex items-center gap-1.5 text-[10px] text-amber-300/80 font-mono tracking-wider uppercase">
+                                        <i class="fa-solid fa-video text-xs text-amber-400"></i>
+                                        <span>Witness Statement</span>
+                                    </div>
+                                    <div class="absolute top-2 right-2 text-[10px] text-amber-200/60 font-mono">
+                                        DEP-03
+                                    </div>
+                                    <div class="play-glyph-circle w-11 h-11 rounded-full bg-amber-900/90 border-2 border-amber-300/80 text-amber-200 flex items-center justify-center shadow-lg transition-transform duration-200 my-2 z-10">
+                                        <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+                                    </div>
+                                    <span class="cinzel text-xs sm:text-sm font-bold text-amber-100 tracking-wide z-10">Click to Play Witness Statement</span>
+                                    <span class="text-[11px] text-amber-300/70 font-mono mt-0.5 z-10">[Video testimony awaiting media source]</span>
+                                </div>
                             </div>
-                            <!-- Lestrade Scrawled Margin Note -->
-                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/70 p-3 rounded-lg border border-red-200 transform rotate-1 shadow-sm">
-                                <i class="fa-solid fa-circle-exclamation text-xs text-red-700 mr-1"></i>
-                                <span class="font-bold underline uppercase">THE SMOKING GUN!</span> Thorne admits: <span class="scrawl-underline">"Never seen Watson that angry."</span> Motive: vengeful bloodlust over the Afghan ambush! Thorne claims he calmed down? Absurd! Watson circled back with his service revolver!
+                            <!-- Lestrade Scrawled Margin Note (Clean: no underlines or circles) -->
+                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/70 p-3 rounded-lg border border-red-200 transform rotate-1 shadow-sm flex flex-col justify-center">
+                                <div>
+                                    <i class="fa-solid fa-circle-exclamation text-xs text-red-700 mr-1"></i>
+                                    <strong class="uppercase">THE SMOKING GUN!</strong> Thorne admits: "Never seen Watson that angry." Motive: vengeful bloodlust over the Afghan ambush! Thorne claims he calmed down? Absurd! Watson circled back with his service revolver!
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -404,32 +432,40 @@
                     <section class="statement-card rounded-xl p-4 pl-4 sm:pl-6 border border-amber-900/20">
                         <div class="staple" style="top: 8px; left: 16px; transform: rotate(5deg);"></div>
 
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 mb-3 border-b border-amber-900/20">
-                            <div>
-                                <span class="typewriter text-xs text-amber-800 font-semibold block">Witness 04 // Manor Maid</span>
-                                <h3 class="cinzel text-base sm:text-lg font-bold text-amber-950">Maple Strand</h3>
-                            </div>
-                            <!-- Audio Control Button -->
-                            <div class="shrink-0 flex items-center gap-2">
-                                <button onclick="toggleStatementAudio('audio-maple', this)" class="audio-btn px-3.5 py-1.5 rounded-lg bg-amber-900 hover:bg-amber-950 text-amber-100 text-xs font-semibold flex items-center gap-2 shadow transition cinzel">
-                                    <i class="fa-solid fa-play text-amber-300"></i>
-                                    <span>Play Statement</span>
-                                </button>
-                                <audio id="audio-maple" preload="none" onended="resetAudioButton(this)">
-                                    <source src="audio/statement_maple.mp3" type="audio/mp3">
-                                </audio>
-                            </div>
+                        <div class="pb-2 mb-3 border-b border-amber-900/20">
+                            <span class="typewriter text-xs text-amber-800 font-semibold block">Witness 04 // Manor Maid</span>
+                            <h3 class="cinzel text-base sm:text-lg font-bold text-amber-950">Maple Strand</h3>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
-                            <!-- Statement Text -->
-                            <div class="md:col-span-8 typewriter text-xs sm:text-sm text-amber-950 leading-relaxed bg-white/80 p-3.5 rounded-lg border border-amber-200 shadow-inner">
-                                “I only got to meet the soldiers briefly. After dinner when they were all chatting in the library, her ladyship said that what with all the other guests arriving the next day, and how busy it was going to be, I could take the rest of the night off. Well, you don’t need to tell me twice. Not often I get a chance to put my feet up.”
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-stretch">
+                            <!-- Witness Statement Video Placeholder -->
+                            <div class="md:col-span-8">
+                                <div class="video-placeholder-container rounded-lg p-5 flex flex-col items-center justify-center min-h-[140px] text-center relative group" 
+                                     onclick="openVideoModal('Witness 04 — Maple Strand', '')" 
+                                     role="button" 
+                                     tabindex="0"
+                                     aria-label="Play video statement of Maple Strand">
+                                    <div class="absolute inset-0 film-lines opacity-40"></div>
+                                    <div class="absolute top-2 left-2 flex items-center gap-1.5 text-[10px] text-amber-300/80 font-mono tracking-wider uppercase">
+                                        <i class="fa-solid fa-video text-xs text-amber-400"></i>
+                                        <span>Witness Statement</span>
+                                    </div>
+                                    <div class="absolute top-2 right-2 text-[10px] text-amber-200/60 font-mono">
+                                        DEP-04
+                                    </div>
+                                    <div class="play-glyph-circle w-11 h-11 rounded-full bg-amber-900/90 border-2 border-amber-300/80 text-amber-200 flex items-center justify-center shadow-lg transition-transform duration-200 my-2 z-10">
+                                        <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+                                    </div>
+                                    <span class="cinzel text-xs sm:text-sm font-bold text-amber-100 tracking-wide z-10">Click to Play Witness Statement</span>
+                                    <span class="text-[11px] text-amber-300/70 font-mono mt-0.5 z-10">[Video testimony awaiting media source]</span>
+                                </div>
                             </div>
-                            <!-- Lestrade Scrawled Margin Note -->
-                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/70 p-3 rounded-lg border border-red-200 transform -rotate-1 shadow-sm">
-                                <i class="fa-solid fa-pen-nib text-xs text-red-700 mr-1"></i>
-                                <strong>Lestrade:</strong> Maid absent, retired to quarters. Explains Archie's confusion over missing servants. Watson knew the floor was deserted.
+                            <!-- Lestrade Scrawled Margin Note (Clean: no underlines or circles) -->
+                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/70 p-3 rounded-lg border border-red-200 transform -rotate-1 shadow-sm flex flex-col justify-center">
+                                <div>
+                                    <i class="fa-solid fa-pen-nib text-xs text-red-700 mr-1"></i>
+                                    <strong>Lestrade:</strong> Maid absent, retired to quarters. Explains Archie's confusion over missing servants. Watson knew the floor was deserted.
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -438,32 +474,40 @@
                     <section class="statement-card rounded-xl p-4 pl-4 sm:pl-6 border border-amber-900/20">
                         <div class="staple" style="top: 8px; left: 16px; transform: rotate(-3deg);"></div>
 
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 mb-3 border-b border-amber-900/20">
-                            <div>
-                                <span class="typewriter text-xs text-amber-800 font-semibold block">Witness 05 // Guest</span>
-                                <h3 class="cinzel text-base sm:text-lg font-bold text-amber-950">Evelyn Ashgrove</h3>
-                            </div>
-                            <!-- Audio Control Button -->
-                            <div class="shrink-0 flex items-center gap-2">
-                                <button onclick="toggleStatementAudio('audio-ashgrove', this)" class="audio-btn px-3.5 py-1.5 rounded-lg bg-amber-900 hover:bg-amber-950 text-amber-100 text-xs font-semibold flex items-center gap-2 shadow transition cinzel">
-                                    <i class="fa-solid fa-play text-amber-300"></i>
-                                    <span>Play Statement</span>
-                                </button>
-                                <audio id="audio-ashgrove" preload="none" onended="resetAudioButton(this)">
-                                    <source src="audio/statement_ashgrove.mp3" type="audio/mp3">
-                                </audio>
-                            </div>
+                        <div class="pb-2 mb-3 border-b border-amber-900/20">
+                            <span class="typewriter text-xs text-amber-800 font-semibold block">Witness 05 // Guest</span>
+                            <h3 class="cinzel text-base sm:text-lg font-bold text-amber-950">Evelyn Ashgrove</h3>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
-                            <!-- Statement Text -->
-                            <div class="md:col-span-8 typewriter text-xs sm:text-sm text-amber-950 leading-relaxed bg-white/80 p-3.5 rounded-lg border border-amber-200 shadow-inner">
-                                “I probably shouldn’t have left the room when all the arguing started. It must seem a little bit like I’d lit the blue touch paper and retired, but I didn’t know what else to do. They seemed like such gentlemen, so I thought if I left them together to talk it out, all would be resolved. I had no idea they would react the way they did.”
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-stretch">
+                            <!-- Witness Statement Video Placeholder -->
+                            <div class="md:col-span-8">
+                                <div class="video-placeholder-container rounded-lg p-5 flex flex-col items-center justify-center min-h-[140px] text-center relative group" 
+                                     onclick="openVideoModal('Witness 05 — Evelyn Ashgrove', '')" 
+                                     role="button" 
+                                     tabindex="0"
+                                     aria-label="Play video statement of Evelyn Ashgrove">
+                                    <div class="absolute inset-0 film-lines opacity-40"></div>
+                                    <div class="absolute top-2 left-2 flex items-center gap-1.5 text-[10px] text-amber-300/80 font-mono tracking-wider uppercase">
+                                        <i class="fa-solid fa-video text-xs text-amber-400"></i>
+                                        <span>Witness Statement</span>
+                                    </div>
+                                    <div class="absolute top-2 right-2 text-[10px] text-amber-200/60 font-mono">
+                                        DEP-05
+                                    </div>
+                                    <div class="play-glyph-circle w-11 h-11 rounded-full bg-amber-900/90 border-2 border-amber-300/80 text-amber-200 flex items-center justify-center shadow-lg transition-transform duration-200 my-2 z-10">
+                                        <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+                                    </div>
+                                    <span class="cinzel text-xs sm:text-sm font-bold text-amber-100 tracking-wide z-10">Click to Play Witness Statement</span>
+                                    <span class="text-[11px] text-amber-300/70 font-mono mt-0.5 z-10">[Video testimony awaiting media source]</span>
+                                </div>
                             </div>
-                            <!-- Lestrade Scrawled Margin Note -->
-                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/70 p-3 rounded-lg border border-red-200 transform rotate-1 shadow-sm">
-                                <i class="fa-solid fa-pen-nib text-xs text-red-700 mr-1"></i>
-                                <strong>Lestrade:</strong> Ashgrove fled because of Watson's terrifying quarrel! Leaving Watson as the <span class="scrawl-circle">last man in the room</span> before the fatal shot! Case closed!
+                            <!-- Lestrade Scrawled Margin Note (Clean: no underlines or circles) -->
+                            <div class="md:col-span-4 handwriting text-lg sm:text-xl text-red-900 leading-tight bg-red-50/70 p-3 rounded-lg border border-red-200 transform rotate-1 shadow-sm flex flex-col justify-center">
+                                <div>
+                                    <i class="fa-solid fa-pen-nib text-xs text-red-700 mr-1"></i>
+                                    <strong>Lestrade:</strong> Ashgrove fled because of Watson's terrifying quarrel! Leaving Watson as the last man in the room before the fatal shot! Case closed!
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -492,7 +536,7 @@
             <a href="https://invitation.visitbritishhills.com/event2/questioning_room.html" 
                class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 py-3 rounded-xl bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-sm sm:text-base cinzel tracking-wider shadow-lg border border-victorian-brasslight/40 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
                 <i class="fa-solid fa-door-open text-base sm:text-lg"></i>
-                <span>Questioning Room</span>
+                <span>Witness Discussions</span>
                 <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
 
@@ -514,67 +558,105 @@
         </div>
     </footer>
 
-    <!-- Audio Player Logic -->
+    <!-- Interactive Video Statement Modal -->
+    <div id="videoModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modalWitnessTitle">
+        <div class="relative w-full max-w-2xl bg-[#142328] border-2 border-victorian-brass rounded-xl shadow-2xl overflow-hidden flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-4 py-3 border-b border-victorian-brass/40 bg-victorian-900 text-victorian-paper">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-film text-victorian-brass"></i>
+                    <h3 id="modalWitnessTitle" class="cinzel text-sm sm:text-base font-bold text-victorian-paper tracking-wide">Witness Statement</h3>
+                </div>
+                <button onclick="closeVideoModal()" class="w-8 h-8 rounded-lg bg-victorian-800 hover:bg-victorian-700 text-victorian-paper/80 hover:text-white flex items-center justify-center transition border border-victorian-brass/30" aria-label="Close modal">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Video Display Stage -->
+            <div class="relative bg-black flex items-center justify-center aspect-video w-full overflow-hidden">
+                <!-- Video Element (Ready for your video sources) -->
+                <video id="modalVideoPlayer" class="w-full h-full object-contain hidden" controls preload="metadata">
+                    <source id="modalVideoSource" src="" type="video/mp4">
+                    Your browser does not support HTML video playback.
+                </video>
+
+                <!-- Unprepared Video Placeholder Screen -->
+                <div id="videoPlaceholderScreen" class="flex flex-col items-center justify-center p-6 text-center text-amber-100 max-w-md">
+                    <div class="w-16 h-16 rounded-full bg-victorian-800 border-2 border-victorian-brass/60 flex items-center justify-center mb-4 text-victorian-brass text-2xl shadow-inner">
+                        <i class="fa-solid fa-clapperboard"></i>
+                    </div>
+                    <h4 class="cinzel font-bold text-lg text-victorian-paper mb-1">Testimony Video In Production</h4>
+                    <p class="typewriter text-xs text-amber-200/80 leading-relaxed mb-4">
+                        This witness video testimony is currently being recorded and prepared for the Scotland Yard case archive.
+                    </p>
+                    <div class="px-3 py-1.5 rounded bg-victorian-900 border border-victorian-brass/40 text-[11px] font-mono text-victorian-brass">
+                        Status: Connected video pending file upload
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-4 py-2.5 bg-victorian-900 border-t border-victorian-brass/30 flex items-center justify-between text-xs font-mono text-amber-200/70">
+                <span>ARCHIVAL FILE: BH-SY-1895</span>
+                <button onclick="closeVideoModal()" class="px-3 py-1 rounded bg-victorian-800 hover:bg-victorian-700 text-victorian-paper text-xs transition border border-victorian-brass/40">
+                    Close File
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal Controller Scripts -->
     <script>
-        let currentlyPlayingAudio = null;
-        let currentlyActiveButton = null;
+        const videoModal = document.getElementById('videoModal');
+        const modalTitle = document.getElementById('modalWitnessTitle');
+        const modalVideo = document.getElementById('modalVideoPlayer');
+        const modalVideoSource = document.getElementById('modalVideoSource');
+        const videoPlaceholderScreen = document.getElementById('videoPlaceholderScreen');
 
-        function toggleStatementAudio(audioId, btnElement) {
-            const audio = document.getElementById(audioId);
-            if (!audio) return;
+        function openVideoModal(witnessTitle, videoUrl) {
+            modalTitle.textContent = witnessTitle || 'Witness Statement';
 
-            // If this audio is already playing, pause it
-            if (currentlyPlayingAudio === audio && !audio.paused) {
-                audio.pause();
-                resetButtonState(btnElement);
-                currentlyPlayingAudio = null;
-                currentlyActiveButton = null;
-                return;
+            if (videoUrl && videoUrl.trim() !== '') {
+                // If a real video source has been provided:
+                modalVideoSource.src = videoUrl;
+                modalVideo.load();
+                modalVideo.classList.remove('hidden');
+                videoPlaceholderScreen.classList.add('hidden');
+                modalVideo.play().catch(e => console.log('Autoplay blocked:', e));
+            } else {
+                // If video is not yet prepared, show the themed placeholder screen
+                modalVideo.pause();
+                modalVideoSource.src = '';
+                modalVideo.classList.add('hidden');
+                videoPlaceholderScreen.classList.remove('hidden');
             }
 
-            // If another audio was playing, pause and reset that button
-            if (currentlyPlayingAudio && currentlyPlayingAudio !== audio) {
-                currentlyPlayingAudio.pause();
-                currentlyPlayingAudio.currentTime = 0;
-                if (currentlyActiveButton) {
-                    resetButtonState(currentlyActiveButton);
-                }
+            videoModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoModal() {
+            if (modalVideo) {
+                modalVideo.pause();
+                modalVideo.currentTime = 0;
             }
-
-            // Play the requested audio
-            audio.play().then(() => {
-                currentlyPlayingAudio = audio;
-                currentlyActiveButton = btnElement;
-                btnElement.classList.remove('bg-amber-900');
-                btnElement.classList.add('bg-red-900');
-                btnElement.innerHTML = `
-                    <i class="fa-solid fa-pause text-amber-300 animate-pulse"></i>
-                    <span>Pause Statement</span>
-                `;
-            }).catch(err => {
-                console.warn("Audio playback issue (likely placeholder audio file):", err);
-                // Flash button to indicate click registered
-                btnElement.classList.add('bg-amber-800');
-                setTimeout(() => btnElement.classList.remove('bg-amber-800'), 500);
-            });
+            videoModal.classList.add('hidden');
+            document.body.style.overflow = '';
         }
 
-        function resetAudioButton(audioElement) {
-            if (currentlyActiveButton) {
-                resetButtonState(currentlyActiveButton);
+        // Close when clicking modal backdrop
+        videoModal.addEventListener('click', function(e) {
+            if (e.target === videoModal) {
+                closeVideoModal();
             }
-            currentlyPlayingAudio = null;
-            currentlyActiveButton = null;
-        }
+        });
 
-        function resetButtonState(btnElement) {
-            btnElement.classList.remove('bg-red-900');
-            btnElement.classList.add('bg-amber-900');
-            btnElement.innerHTML = `
-                <i class="fa-solid fa-play text-amber-300"></i>
-                <span>Play Statement</span>
-            `;
-        }
+        // Close on ESC key
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !videoModal.classList.contains('hidden')) {
+                closeVideoModal();
+            }
+        });
     </script>
 </body>
 </html>
