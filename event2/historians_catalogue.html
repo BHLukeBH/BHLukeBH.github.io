@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Historian's Catalogue - A Soldier's Final Retreat</title>
+    <title>Historian's Catalogue - The Soldier's Last Retreat</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,17 +17,19 @@
 
     <style>
         :root {
-            --bg-color: #0b1417;
-            --panel-bg: #142328;
-            --gold-primary: #b88e28;
-            --gold-dim: #94711e;
-            --gold-hover: #d9a832;
+            --bg-color: #eee3ce;
+            --panel-bg: #e2d3ba;
+            --gold-primary: #946d1b;
+            --gold-dim: #755513;
+            --gold-hover: #b88a24;
             --text-main: #2b1f14;
-            --text-dim: #735e4d;
-            --border-color: #3b2a1a;
-            --unlocked-color: #2ea869;
+            --text-dim: #6d5845;
+            --border-color: #bfad93;
+            --unlocked-color: #248854;
             --locked-color: #8f1d1d;
-            --sherlock-amber: #d9a832;
+            --sherlock-amber: #b88422;
+            --cream-bg: #f8f3e7;
+            --dark-cream: #dfd0b5;
         }
 
         * {
@@ -39,26 +41,30 @@
 
         body {
             background-color: var(--bg-color);
-            color: #e0d5c1;
+            color: #2b1f14;
             font-family: 'Courier Prime', monospace;
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             background-image: 
-                radial-gradient(circle at 50% 20%, #1a2c33 0%, #070e10 100%),
-                repeating-linear-gradient(45deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 2px, transparent 2px, transparent 4px);
+                radial-gradient(circle at 50% 15%, #faf4e8 0%, #eee1ca 60%, #e2d1b2 100%),
+                repeating-linear-gradient(45deg, rgba(120, 85, 35, 0.035) 0px, rgba(120, 85, 35, 0.035) 2px, transparent 2px, transparent 5px),
+                repeating-linear-gradient(-45deg, rgba(90, 60, 20, 0.02) 0px, rgba(90, 60, 20, 0.02) 1px, transparent 1px, transparent 4px);
         }
 
         /* --- Header --- */
         .main-header {
             background-color: var(--panel-bg);
-            border-bottom: 2px solid var(--gold-primary);
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.45) 0%, transparent 65%),
+                linear-gradient(180deg, #eae0cc 0%, #dbceb2 100%);
+            border-bottom: 2px solid #8e6822;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 18px rgba(70, 45, 15, 0.16);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -72,7 +78,7 @@
 
         .logo-icon {
             font-size: 2rem;
-            color: var(--gold-primary);
+            color: #7d5415;
         }
 
         .logo-text {
@@ -89,15 +95,17 @@
         .logo-title {
             font-family: 'Cinzel', serif;
             font-size: 1.4rem;
-            color: #f5eedc;
+            color: #291809;
             letter-spacing: 1px;
+            font-weight: 700;
         }
 
         .logo-subtitle {
             font-size: 0.75rem;
-            color: var(--gold-primary);
+            color: #7d551c;
             text-transform: uppercase;
             letter-spacing: 2px;
+            font-weight: bold;
         }
 
         .header-actions {
@@ -114,7 +122,7 @@
 
         .progress-counter {
             font-family: 'Special Elite', cursive;
-            color: var(--gold-hover);
+            color: #633f0d;
             font-size: 1.2rem;
             display: flex;
             align-items: center;
@@ -135,19 +143,19 @@
             align-items: center;
             gap: 0.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 2px 8px rgba(139, 109, 31, 0.25);
         }
 
         .scan-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
-            filter: brightness(1.1);
+            box-shadow: 0 4px 12px rgba(139, 109, 31, 0.4);
+            filter: brightness(1.08);
         }
 
         .settings-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(184, 142, 40, 0.4);
-            color: #c2b59b;
+            background: rgba(140, 100, 40, 0.1);
+            border: 1.5px solid rgba(130, 90, 30, 0.45);
+            color: #44301d;
             width: 38px;
             height: 38px;
             border-radius: 6px;
@@ -159,31 +167,31 @@
         }
 
         .settings-btn:hover {
-            color: var(--gold-hover);
-            border-color: var(--gold-primary);
-            background: rgba(212, 175, 55, 0.1);
+            color: #1a0f07;
+            border-color: #8c601b;
+            background: rgba(184, 142, 40, 0.22);
         }
 
         /* --- Sherlock Deerstalker Clue Buttons --- */
         .sherlock-btn {
-            background: linear-gradient(135deg, #382313 0%, #170d06 100%);
-            border: 1.5px solid var(--sherlock-amber);
-            color: var(--sherlock-amber);
+            background: linear-gradient(135deg, #442a17 0%, #241408 100%);
+            border: 1.5px solid #a87922;
+            color: #ffda85;
             border-radius: 50%;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             transition: all 0.25s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            box-shadow: 0 2px 6px rgba(60, 40, 15, 0.3);
             position: relative;
         }
 
         .sherlock-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 14px rgba(217, 168, 50, 0.6);
-            border-color: #ffd27d;
-            color: #ffd27d;
+            box-shadow: 0 0 12px rgba(184, 130, 30, 0.5);
+            border-color: #c99332;
+            color: #fff2c4;
         }
 
         .sherlock-btn-header { width: 32px; height: 32px; font-size: 1rem; }
@@ -207,30 +215,17 @@
         }
 
         .dossier-paper {
-            background-color: #f6efe0;
+            background-color: #fbf6ea;
             background-image: 
-                radial-gradient(circle at 12% 15%, rgba(175, 135, 75, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 88% 82%, rgba(135, 95, 45, 0.15) 0%, transparent 50%),
-                repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(180, 160, 120, 0.12) 29px, rgba(180, 160, 120, 0.12) 30px);
-            box-shadow: 0 0 30px rgba(0,0,0,0.7), inset 0 0 60px rgba(120, 85, 35, 0.22);
-            border: 1px solid #3b2a1a;
+                radial-gradient(circle at 12% 15%, rgba(175, 135, 75, 0.1) 0%, transparent 45%),
+                radial-gradient(circle at 88% 82%, rgba(135, 95, 45, 0.12) 0%, transparent 50%),
+                repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(180, 160, 120, 0.1) 29px, rgba(180, 160, 120, 0.1) 30px);
+            box-shadow: 0 8px 30px rgba(90, 60, 25, 0.15), inset 0 0 50px rgba(120, 85, 35, 0.14);
+            border: 1px solid #c2b197;
             border-radius: 8px;
-            padding: 1.5rem sm:2rem;
+            padding: 1.5rem 2rem;
             position: relative;
             color: #2b1f14;
-        }
-
-        .coffee-stain {
-            position: absolute;
-            top: 30px;
-            right: -20px;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 8px solid rgba(130, 85, 35, 0.08);
-            box-shadow: inset 0 0 12px rgba(130, 85, 35, 0.06), 0 0 8px rgba(130, 85, 35, 0.05);
-            pointer-events: none;
-            transform: rotate(15deg);
         }
 
         .filigree-divider {
@@ -851,6 +846,45 @@
             background: #b92929;
         }
 
+        .confirm-box {
+            display: none;
+            margin-top: 1rem;
+            padding: 0.85rem;
+            background: #fce4e4;
+            border: 1px solid #d99a9a;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #631212;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.6rem;
+        }
+
+        .confirm-btn-yes {
+            background: #8f1d1d;
+            color: #fff;
+            border: none;
+            padding: 0.4rem 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Courier Prime', monospace;
+            font-weight: bold;
+        }
+
+        .confirm-btn-no {
+            background: #baa287;
+            color: #1f1811;
+            border: none;
+            padding: 0.4rem 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Courier Prime', monospace;
+            font-weight: bold;
+        }
+
         /* --- Navigation Button --- */
         .nav-button-container {
             margin-top: 2rem;
@@ -919,9 +953,9 @@
         <div class="logo-container">
             <i class="fas fa-search logo-icon"></i>
             <div class="logo-text">
-                <span class="logo-subtitle">A SOLDIER'S FINAL RETREAT</span>
+                <span class="logo-subtitle">THE SOLDIER'S LAST RETREAT</span>
                 <div class="title-row">
-                    <h1 class="logo-title">Historical Artifact Scanner</h1>
+                    <h1 class="logo-title">Buckshot Hall Artefacts</h1>
                     <!-- Header Sherlock Dispatch Button -->
                     <button class="sherlock-btn sherlock-btn-header" onclick="openSherlockNote('header')" title="Sherlock's Encoded Dispatch">
                         <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
@@ -950,16 +984,14 @@
 
     <main class="main-content">
         <div class="dossier-paper">
-            <div class="coffee-stain"></div>
-            
-            <div class="text-center mb-2">
-                <h2 class="cinzel text-xl sm:text-2xl font-black text-amber-950 tracking-wider">BUCKSHOT HALL ARCHIVAL CATALOGUE</h2>
+            <div class="text-center mb-2" style="text-align: center;">
+                <h2 style="font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 900; color: #2e1d0c; letter-spacing: 1.5px;">BUCKSHOT HALL ARCHIVAL CATALOGUE</h2>
                 <div class="filigree-divider">
-                    <i class="fa-solid fa-circle text-[5px]"></i>
-                    <i class="fa-solid fa-feather-pointed text-xs"></i>
-                    <i class="fa-solid fa-circle text-[5px]"></i>
+                    <i class="fa-solid fa-circle" style="font-size: 5px;"></i>
+                    <i class="fa-solid fa-feather-pointed" style="font-size: 12px;"></i>
+                    <i class="fa-solid fa-circle" style="font-size: 5px;"></i>
                 </div>
-                <p class="handwriting text-base sm:text-lg text-amber-900 -mt-2">"Use the camera scanner to uncover evidence from the manor grounds."</p>
+                <p style="font-family: 'Special Elite', cursive; font-size: 1.05rem; color: #694a28; margin-top: -4px;">"Use the camera scanner to uncover evidence from the manor grounds."</p>
             </div>
 
             <div class="catalogue-grid" id="catalogue-grid">
@@ -978,10 +1010,10 @@
     <div class="modal-overlay" id="inspection-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="inspect-title">Artifact Title</h2>
+                <h2 class="modal-title" id="inspect-title">Artefact Title</h2>
                 <div class="modal-header-actions">
-                    <!-- Sherlock Clue inside Artifact Inspection -->
-                    <button class="sherlock-btn sherlock-btn-modal" id="modal-sherlock-btn" onclick="openCurrentArtifactSherlockNote()" title="Sherlock's Clue & Language Notes">
+                    <!-- Sherlock Clue inside Artefact Inspection -->
+                    <button class="sherlock-btn sherlock-btn-modal" id="modal-sherlock-btn" onclick="openCurrentArtefactSherlockNote()" title="Sherlock's Clue & Language Notes">
                         <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
                     </button>
                     <button class="close-modal" onclick="closeModals()"><i class="fas fa-times"></i></button>
@@ -1027,7 +1059,7 @@
     <div class="modal-overlay" id="scanner-modal">
         <div class="modal-content" style="max-width: 600px;">
             <div class="modal-header">
-                <h2 class="modal-title">Artifact Scanner</h2>
+                <h2 class="modal-title">Artefact Scanner</h2>
                 <button class="close-modal" onclick="closeScannerModal()"><i class="fas fa-times"></i></button>
             </div>
             <div class="scanner-body">
@@ -1060,10 +1092,17 @@
             <div class="settings-body">
                 <div class="settings-section">
                     <h3 class="settings-section-title">Reset Catalogue Progress</h3>
-                    <p class="settings-section-desc">Clear all unlocked artifacts and return the catalogue to its initial locked state. Useful for new student sessions or re-testing scans.</p>
-                    <button class="danger-btn" onclick="resetCatalogueProgress()">
+                    <p class="settings-section-desc">Clear all unlocked artefacts and return the catalogue to its initial locked state. Useful for new student sessions or re-testing scans.</p>
+                    <button class="danger-btn" id="start-reset-btn" onclick="askResetConfirmation()">
                         <i class="fas fa-rotate-left"></i> Reset All Progress
                     </button>
+                    <div class="confirm-box" id="reset-confirm-box">
+                        <p><strong>Are you sure?</strong> This will lock all artefacts back up.</p>
+                        <div class="confirm-actions">
+                            <button class="confirm-btn-yes" onclick="executeResetProgress()">Yes, Reset</button>
+                            <button class="confirm-btn-no" onclick="cancelResetConfirmation()">Cancel</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1077,7 +1116,7 @@
         const DEFAULT_MODEL_URL = 'https://teachablemachine.withgoogle.com/models/k78k70ASC/';
         const UNLOCK_THRESHOLD = 0.80; // 80% confidence required
         
-        // Artifacts data with local assets & Sherlock's encoded deduction notes
+        // Artefacts data with local assets & Sherlock's encoded deduction notes
         const catalogueItems = [
             {
                 id: 'jezail_plaque',
@@ -1362,7 +1401,7 @@
                         <img src="${item.image}" alt="${item.title}" class="item-image">
                     </div>
                     <div class="item-details">
-                        <h3 class="item-title">${isUnlocked ? item.title : 'UNKNOWN ARTIFACT'}</h3>
+                        <h3 class="item-title">${isUnlocked ? item.title : 'UNKNOWN ARTEFACT'}</h3>
                         <div class="item-action">
                             <span>Inspect & Listen</span>
                             <i class="fas fa-arrow-right"></i>
@@ -1430,7 +1469,7 @@
             document.getElementById('sherlock-modal').classList.add('active');
         }
 
-        function openCurrentArtifactSherlockNote() {
+        function openCurrentArtefactSherlockNote() {
             if (!currentlyInspectingId) return;
             const item = catalogueItems.find(i => i.id === currentlyInspectingId);
             if (!item || !item.sherlockHint) return;
@@ -1509,13 +1548,13 @@
                     }
                 };
 
-                document.getElementById('scanner-message').innerText = "Camera Active. Point at an artifact.";
+                document.getElementById('scanner-message').innerText = "Camera Active. Point at an artefact.";
                 
                 // Anonymous mystery progress bar UI
                 const labelContainer = document.getElementById("label-container");
                 labelContainer.innerHTML = `
                     <div class="status-bar-container">
-                        <div class="status-bar-label">Artifact Detected:</div>
+                        <div class="status-bar-label">Artefact Detected:</div>
                         <div class="status-bar-track">
                             <div class="status-bar-fill" id="mystery-bar-fill"></div>
                         </div>
@@ -1603,7 +1642,7 @@
                 unlockedItems.push(matchedItem.id);
                 saveProgress();
 
-                document.getElementById('scanner-message').innerHTML = `<span style="color: var(--unlocked-color); font-weight: bold;"><i class="fas fa-check-circle"></i> NEW ARTIFACT UNLOCKED!</span>`;
+                document.getElementById('scanner-message').innerHTML = `<span style="color: var(--unlocked-color); font-weight: bold;"><i class="fas fa-check-circle"></i> NEW ARTEFACT UNLOCKED!</span>`;
                 
                 setTimeout(() => {
                     closeScannerModal();
@@ -1636,23 +1675,38 @@
             }
         }
 
-        // --- SETTINGS MODAL ---
+        // --- SETTINGS MODAL & INLINE CONFIRMATION ---
         function openSettingsModal() {
+            cancelResetConfirmation();
             document.getElementById('settings-modal').classList.add('active');
         }
 
         function closeSettingsModal() {
+            cancelResetConfirmation();
             document.getElementById('settings-modal').classList.remove('active');
         }
 
-        function resetCatalogueProgress() {
-            if (confirm("Are you sure you want to reset all unlocked artifacts? This will lock all items back up.")) {
-                unlockedItems = [];
-                localStorage.removeItem('historianProgress');
-                updateCounter();
-                renderGrid();
-                closeSettingsModal();
+        function askResetConfirmation() {
+            document.getElementById('reset-confirm-box').style.display = 'block';
+            document.getElementById('start-reset-btn').style.display = 'none';
+        }
+
+        function cancelResetConfirmation() {
+            const box = document.getElementById('reset-confirm-box');
+            const btn = document.getElementById('start-reset-btn');
+            if (box && btn) {
+                box.style.display = 'none';
+                btn.style.display = 'inline-flex';
             }
+        }
+
+        function executeResetProgress() {
+            unlockedItems = [];
+            localStorage.removeItem('historianProgress');
+            updateCounter();
+            renderGrid();
+            cancelResetConfirmation();
+            closeSettingsModal();
         }
 
     </script>
