@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Soldier's Final Retreat - Suspect Questioning Room</title>
+    <title>The Soldier's Last Retreat - Discussions with Suspects</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Cinzel, Inter, Special Elite, Caveat -->
@@ -18,17 +18,21 @@
             theme: {
                 extend: {
                     colors: {
-                        victorian: {
-                            900: '#122025',
-                            800: '#1c2f36',
-                            700: '#2b424b',
-                            600: '#48626b',
-                            brass: '#b88e28',
-                            brasslight: '#d9a832',
-                            paper: '#f5eedc',
-                            paperdark: '#ded2b8',
-                            crimson: '#8f1d1d',
-                            crimsonlight: '#b92929'
+                        burgundy: {
+                            950: '#0d0205',
+                            900: '#1a040b',
+                            850: '#24060f',
+                            800: '#330815',
+                            750: '#420b1b',
+                            700: '#520e22',
+                            600: '#6a142c',
+                            500: '#891d3a',
+                            brass: '#cf9f38',
+                            brasslight: '#ebbe52',
+                            paper: '#f7eedf',
+                            paperdark: '#dfd2bc',
+                            crimson: '#9b1923',
+                            crimsonlight: '#c82835'
                         }
                     },
                     fontFamily: {
@@ -43,41 +47,46 @@
     </script>
 
     <style>
-        /* Booklet Theme Core Styles */
+        /* Base Page with Deep Burgundy Subtle Multi-Tier Shading */
         body {
-            background-color: #0b1417;
+            background-color: #0d0205;
             color: #2b1f14;
             font-family: 'Inter', sans-serif;
             background-image: 
-                radial-gradient(circle at 50% 20%, #1a2c33 0%, #070e10 100%),
-                repeating-linear-gradient(45deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 2px, transparent 2px, transparent 4px);
+                radial-gradient(circle at 50% 12%, #2d0713 0%, #17030a 45%, #090103 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 4px);
+            min-height: 100vh;
+            transition: background 0.6s ease;
         }
 
         .cinzel { font-family: 'Cinzel', serif; }
         .typewriter { font-family: 'Special Elite', monospace; }
         .handwriting { font-family: 'Caveat', cursive; }
 
-        /* Desk Surface with Binder Ring Margins */
+        /* Dossier Leather Binder in Rich Velvet Burgundy */
         .dossier-wrapper {
-            background: #142328;
-            border-left: 14px solid #0a1215;
-            box-shadow: inset 2px 0 8px rgba(0,0,0,0.8), 0 20px 40px rgba(0,0,0,0.8);
+            background: #1e050d;
+            background-image: 
+                radial-gradient(circle at 50% 0%, #350916 0%, #180309 100%),
+                repeating-linear-gradient(135deg, rgba(0,0,0,0.14) 0px, rgba(0,0,0,0.14) 3px, transparent 3px, transparent 6px);
+            border-left: 14px solid #0f0206;
+            box-shadow: inset 2px 0 12px rgba(0,0,0,0.95), 0 24px 48px rgba(0,0,0,0.85);
             position: relative;
         }
 
-        /* Binder Hole Ring Accents along Left Spine */
+        /* Binder Rings along Left Spine */
         .binder-ring {
             position: absolute;
             left: -22px;
             width: 28px;
             height: 10px;
-            background: linear-gradient(180deg, #7a8a90 0%, #2a383e 50%, #152024 100%);
+            background: linear-gradient(180deg, #967d60 0%, #4a3424 50%, #20140b 100%);
             border-radius: 5px;
-            box-shadow: 0 3px 5px rgba(0,0,0,0.7);
+            box-shadow: 0 3px 5px rgba(0,0,0,0.8);
             z-index: 25;
         }
 
-        /* Main Page Aged Parchment Container with Coffee Ring Stain */
+        /* Main Page Aged Parchment Container */
         .dossier-paper {
             background-color: #f6efe0;
             background-image: 
@@ -85,15 +94,15 @@
                 radial-gradient(circle at 88% 82%, rgba(135, 95, 45, 0.15) 0%, transparent 50%),
                 repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(180, 160, 120, 0.12) 29px, rgba(180, 160, 120, 0.12) 30px);
             box-shadow: 
-                0 0 0 1px #22353c,
-                0 0 30px rgba(0,0,0,0.7),
+                0 0 0 1px #3f0f1b,
+                0 0 32px rgba(0,0,0,0.7),
                 inset 0 0 60px rgba(120, 85, 35, 0.22);
             border-radius: 6px;
             position: relative;
             overflow: hidden;
         }
 
-        /* Floor Plan Background Watermark Overlay */
+        /* Floor Plan Background Watermark */
         .floorplan-watermark {
             position: absolute;
             inset: 0;
@@ -103,7 +112,7 @@
             opacity: 0.6;
         }
 
-        /* Translucent Coffee Stain Ring Accent */
+        /* Translucent Coffee Stain */
         .coffee-stain {
             position: absolute;
             top: 40px;
@@ -117,7 +126,7 @@
             transform: rotate(15deg);
         }
 
-        /* Victorian Filigree Header Divider */
+        /* Filigree Header Divider */
         .filigree-divider {
             display: flex;
             align-items: center;
@@ -134,7 +143,7 @@
             background: linear-gradient(90deg, transparent, #a88544, transparent);
         }
 
-        /* Distressed Rubber Stamp Badges */
+        /* Rubber Stamp Badges */
         .rubber-stamp {
             display: inline-block;
             padding: 2px 10px;
@@ -156,14 +165,14 @@
             transform: rotate(3deg);
         }
 
-        /* Metal Paper Clip Element */
+        /* Paperclip and Staple Accents */
         .paperclip {
             position: absolute;
             top: -12px;
             left: 18px;
             width: 12px;
             height: 32px;
-            border: 2px solid #8a969b;
+            border: 2px solid #9ea8ad;
             border-radius: 8px;
             box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
             background: transparent;
@@ -171,7 +180,6 @@
             pointer-events: none;
         }
 
-        /* Metal Staple Element */
         .staple {
             position: absolute;
             width: 18px;
@@ -183,7 +191,6 @@
             pointer-events: none;
         }
 
-        /* Translucent Masking Tape Strip */
         .masking-tape {
             position: absolute;
             top: -8px;
@@ -199,7 +206,7 @@
             z-index: 12;
         }
 
-        /* Suspect Photo Cards (Polaroids pinned with tape) */
+        /* Suspect Photo Cards */
         .suspect-chip {
             transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
@@ -214,7 +221,7 @@
         .suspect-chip:nth-child(3n) { transform: rotate(-0.8deg); }
 
         .suspect-chip:hover {
-            border-color: #b88e28;
+            border-color: #cf9f38;
             transform: translateY(-5px) rotate(0deg) scale(1.03);
             box-shadow: 0 10px 22px rgba(0,0,0,0.35);
             z-index: 15;
@@ -228,7 +235,6 @@
             z-index: 15;
         }
 
-        /* Red Circle Ink Highlight around Active Suspect */
         .suspect-chip.active-chip::after {
             content: "";
             position: absolute;
@@ -246,20 +252,21 @@
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #122025; }
-        ::-webkit-scrollbar-thumb { background: #48626b; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #b88e28; }
+        ::-webkit-scrollbar-track { background: #1a040b; }
+        ::-webkit-scrollbar-thumb { background: #4a0c1b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #cf9f38; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Video Stage Antique Frame */
+        /* Video Stage Frame with Dynamic Room Ambiance */
         .video-container {
             position: relative;
             overflow: hidden;
-            border: 4px solid #281b10;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.95), 0 12px 28px rgba(0,0,0,0.75);
-            background-color: #0b0806;
+            border: 4px solid #2d0712;
+            box-shadow: inset 0 0 35px rgba(0,0,0,0.95), 0 12px 28px rgba(0,0,0,0.75);
+            background-color: #0b0204;
+            transition: all 0.5s ease;
         }
 
         /* Torn Edge Paper Card for Transcript */
@@ -277,9 +284,9 @@
             background: repeating-linear-gradient(-45deg, transparent, transparent 4px, #fbf7ee 4px, #fbf7ee 8px);
         }
 
-        /* --- Sherlock Deerstalker Clue Buttons --- */
+        /* Sherlock Deerstalker Clue Buttons */
         .sherlock-btn {
-            background: linear-gradient(135deg, #382313 0%, #170d06 100%);
+            background: linear-gradient(135deg, #330815 0%, #150207 100%);
             border: 1.5px solid #d9a832;
             color: #d9a832;
             border-radius: 50%;
@@ -452,11 +459,75 @@
             color: #fff;
             border-color: #a83232;
         }
+
+        /* --- Room-Specific Atmospheric Shading (Burgundy Undertones) --- */
+        /* Kitchen: Hearth glow, copper pots, brick embers */
+        .room-stage-kitchen {
+            background-image: 
+                radial-gradient(circle at 50% 25%, rgba(195, 78, 22, 0.24) 0%, rgba(20, 3, 7, 0.96) 75%),
+                linear-gradient(180deg, rgba(38, 7, 15, 0.92) 0%, rgba(14, 2, 5, 0.98) 100%);
+            border-color: #4a1320;
+        }
+        /* Library: Deep polished mahogany bookshelves & green desk lamp reflections */
+        .room-stage-library {
+            background-image: 
+                radial-gradient(circle at 50% 25%, rgba(100, 65, 30, 0.28) 0%, rgba(18, 3, 8, 0.96) 75%),
+                linear-gradient(180deg, rgba(42, 10, 18, 0.92) 0%, rgba(13, 2, 4, 0.98) 100%);
+            border-color: #551624;
+        }
+        /* Trophy / Billiard / Gun Room: Green baize shadows, polished walnut, brass cartridges */
+        .room-stage-trophy {
+            background-image: 
+                radial-gradient(circle at 50% 25%, rgba(140, 75, 25, 0.26) 0%, rgba(18, 3, 7, 0.96) 75%),
+                linear-gradient(180deg, rgba(35, 8, 14, 0.92) 0%, rgba(12, 1, 4, 0.98) 100%);
+            border-color: #46111f;
+        }
+        /* Servants' Hall: Stone flagstones, bell wires, cool dim lantern lights */
+        .room-stage-servants {
+            background-image: 
+                radial-gradient(circle at 50% 25%, rgba(125, 95, 65, 0.22) 0%, rgba(17, 3, 6, 0.96) 75%),
+                linear-gradient(180deg, rgba(30, 6, 12, 0.92) 0%, rgba(11, 1, 3, 0.98) 100%);
+            border-color: #3e0c18;
+        }
+        /* Drawing & Dining Room: Crimson silk damask wallpaper, crystal chandelier reflections */
+        .room-stage-drawing {
+            background-image: 
+                radial-gradient(circle at 50% 25%, rgba(185, 35, 60, 0.28) 0%, rgba(22, 3, 8, 0.96) 75%),
+                linear-gradient(180deg, rgba(48, 10, 20, 0.92) 0%, rgba(15, 2, 5, 0.98) 100%);
+            border-color: #5c1426;
+        }
+
+        /* Ambient Dynamic Body Tint per Room */
+        body.theme-kitchen {
+            background-image: 
+                radial-gradient(circle at 50% 12%, #340c16 0%, #1a040b 45%, #0a0104 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 4px);
+        }
+        body.theme-library {
+            background-image: 
+                radial-gradient(circle at 50% 12%, #2c0914 0%, #160309 45%, #080103 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 4px);
+        }
+        body.theme-trophy {
+            background-image: 
+                radial-gradient(circle at 50% 12%, #320a15 0%, #19030a 45%, #090103 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 4px);
+        }
+        body.theme-servants {
+            background-image: 
+                radial-gradient(circle at 50% 12%, #25060f 0%, #130207 45%, #070102 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 4px);
+        }
+        body.theme-drawing {
+            background-image: 
+                radial-gradient(circle at 50% 12%, #3b0d1a 0%, #1e040d 45%, #0b0104 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 4px);
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-victorian-brass selection:text-white">
+<body id="pageBody" class="min-h-screen flex flex-col justify-between selection:bg-burgundy-brass selection:text-white theme-kitchen">
 
-    <!-- SVG Icon Definition for Deerstalker Hat -->
+    <!-- SVG Icon Definition for Sherlock's Deerstalker Hat -->
     <svg style="display: none;">
         <symbol id="icon-deerstalker" viewBox="0 0 64 64">
             <path d="M32 10 C20 10 12 18 10 26 C6 28 2 32 2 36 C2 38 4 40 8 40 C10 40 12 39 14 37 C16 41 23 44 32 44 C41 44 48 41 50 37 C52 39 54 40 56 40 C60 40 62 38 62 36 C62 32 58 28 54 26 C52 18 44 10 32 10 Z" />
@@ -467,40 +538,35 @@
         </symbol>
     </svg>
 
-    <!-- Header Bar (Booklet Dark Leather Binding Title Header) -->
-    <header class="border-b-2 border-victorian-brass/50 bg-victorian-900 shadow-xl sticky top-0 z-30 px-3 py-2.5 sm:px-4 sm:py-3">
+    <!-- Header Bar with Deep Burgundy Velvet Finish -->
+    <header class="border-b-2 border-burgundy-brass/50 bg-burgundy-900 shadow-xl sticky top-0 z-30 px-3 py-2.5 sm:px-4 sm:py-3">
         <div class="max-w-4xl mx-auto flex justify-between items-center gap-2">
             <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-victorian-800 border border-victorian-brass flex items-center justify-center text-victorian-brass shadow-md shrink-0">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-burgundy-800 border border-burgundy-brass flex items-center justify-center text-burgundy-brass shadow-md shrink-0">
                     <i class="fa-solid fa-magnifying-glass text-sm sm:text-base"></i>
                 </div>
                 <div class="flex items-center gap-2">
                     <div>
-                        <span class="text-[9px] sm:text-[10px] tracking-widest text-victorian-brass font-mono uppercase block -mb-1">BUCKSHOT HALL DOSSIER</span>
-                        <h1 class="text-base sm:text-xl font-bold cinzel text-victorian-paper tracking-wide">A Soldier's Final Retreat</h1>
+                        <span class="text-[9px] sm:text-[10px] tracking-widest text-burgundy-brass font-mono uppercase block -mb-1">BUCKSHOT HALL DOSSIER</span>
+                        <h1 class="text-base sm:text-xl font-bold cinzel text-burgundy-paper tracking-wide">The Soldier's Last Retreat</h1>
                     </div>
                     <!-- Header Sherlock Dispatch Button -->
-                    <button class="sherlock-btn sherlock-btn-sm ml-1" onclick="openSherlockNote('header')" title="Sherlock's Interrogation Strategy">
+                    <button class="sherlock-btn sherlock-btn-sm ml-1" onclick="openSherlockNote('header')" title="Sherlock's Investigation Strategy">
                         <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
                     </button>
                 </div>
             </div>
 
             <div class="flex items-center gap-2">
-                <button onclick="toggleCaseNotes()" class="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-brass/60 text-victorian-paper text-xs flex items-center gap-1.5 transition shadow">
-                    <i class="fa-solid fa-book-bookmark text-victorian-brass text-xs"></i>
+                <button onclick="toggleCaseNotes()" class="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-burgundy-800 hover:bg-burgundy-750 border border-burgundy-brass/60 text-burgundy-paper text-xs flex items-center gap-1.5 transition shadow">
+                    <i class="fa-solid fa-book-bookmark text-burgundy-brass text-xs"></i>
                     <span class="hidden xs:inline">Clues</span>
                     <span>(<span id="unlockedCount">0</span>/20)</span>
-                </button>
-
-                <button onclick="openConfigModal()" class="w-8 h-8 rounded-lg bg-victorian-800 hover:bg-victorian-700 border border-victorian-brass/60 text-victorian-brass text-xs flex items-center justify-center transition shrink-0" title="Edit Video URLs">
-                    <i class="fa-solid fa-gear"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Questioning Content (Dossier Album Binding) -->
     <main class="max-w-4xl mx-auto w-full p-2.5 sm:p-5 flex-1 flex flex-col gap-4">
 
         <div class="dossier-wrapper rounded-xl p-2.5 sm:p-5 relative">
@@ -517,10 +583,10 @@
                 <div class="coffee-stain"></div>
                 <div class="floorplan-watermark"></div>
 
-                <!-- Booklet Header Section with Evidence Rubber Stamps -->
+                <!-- Booklet Header Section -->
                 <div class="flex flex-col sm:flex-row justify-between items-center gap-2 mb-3 relative z-10 border-b border-amber-900/20 pb-2">
                     <div class="text-center sm:text-left">
-                        <h2 class="cinzel text-lg sm:text-2xl font-black text-amber-950 tracking-wider">SUSPECT QUESTIONING ROOM</h2>
+                        <h2 class="cinzel text-lg sm:text-2xl font-black text-amber-950 tracking-wider">DISCUSSIONS WITH SUSPECTS</h2>
                         <div class="filigree-divider sm:justify-start">
                             <i class="fa-solid fa-circle text-[5px]"></i>
                             <i class="fa-solid fa-feather-pointed text-xs"></i>
@@ -533,16 +599,16 @@
                     </div>
                 </div>
 
-                <!-- 1. TOP HORIZONTAL SUSPECT SELECTOR RAIL (Polaroids Pinned to Board) -->
+                <!-- Suspect Photo Selector Rail -->
                 <section class="bg-[#f2e7d3]/80 border border-amber-900/25 rounded-xl p-3 mb-4 shadow-inner relative z-10">
                     <div class="staple" style="top: 6px; left: 12px; transform: rotate(-5deg);"></div>
                     <div class="staple" style="top: 6px; right: 12px; transform: rotate(8deg);"></div>
 
                     <div class="flex justify-between items-center mb-2 px-1">
                         <span class="text-[11px] font-bold cinzel text-amber-950 tracking-wider uppercase flex items-center gap-1.5">
-                            <i class="fa-solid fa-users-viewfinder text-amber-800"></i> Select Suspect Photo to Interrogate
+                            <i class="fa-solid fa-users-viewfinder text-amber-800"></i> Select Suspect Photo to Discuss
                         </span>
-                        <span class="handwriting text-sm text-red-900 font-bold">"Witnesses separated for questioning"</span>
+                        <span class="handwriting text-sm text-red-900 font-bold">"Witnesses sequestered in designated rooms"</span>
                     </div>
 
                     <!-- Horizontal Scroll Container for Polaroids -->
@@ -551,8 +617,7 @@
                     </div>
                 </section>
 
-                <!-- 2. ACTIVE SUSPECT BANNER (Pinned File Card with Scrawling) -->
-                <section class="bg-[#fdfbf7] border-2 border-amber-900/30 rounded-lg p-3 flex items-center justify-between gap-3 shadow mb-4 relative z-10">
+                <section class="bg-[#fdfbf7] border-2 border-amber-900/30 rounded-lg p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow mb-4 relative z-10">
                     <div class="paperclip"></div>
                     <div class="masking-tape"></div>
 
@@ -561,43 +626,56 @@
                         <div class="min-w-0">
                             <div class="flex items-center gap-2 flex-wrap">
                                 <h2 id="activeSuspectName" class="text-base sm:text-lg font-bold cinzel text-amber-950 truncate">Suspect Name</h2>
-                                <span class="text-[10px] px-2 py-0.5 rounded bg-amber-900 text-amber-100 font-mono shrink-0">SUSPECT</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-burgundy-800 text-amber-100 font-mono shrink-0">SUSPECT</span>
                                 <!-- Active Suspect Sherlock Profile Button -->
                                 <button class="sherlock-btn sherlock-btn-xs" onclick="openCurrentSuspectSherlockNote()" title="Sherlock's Profile of this Suspect">
                                     <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
                                 </button>
                             </div>
+                            <!-- Current Room Location Tag -->
+                            <div class="flex items-center gap-1.5 mt-0.5 text-xs text-amber-900 font-serif">
+                                <i class="fa-solid fa-door-open text-[11px] text-amber-800"></i>
+                                <span>Room: <strong id="activeSuspectRoom" class="text-burgundy-700 font-semibold font-sans">The Kitchen & Scullery</strong></span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="text-right shrink-0">
+                    <div class="text-right shrink-0 flex items-center gap-2 self-end sm:self-center">
+                        <span id="roomTypeBadge" class="text-[10px] font-mono py-0.5 px-2 rounded bg-amber-100 border border-amber-300 text-amber-900 uppercase">
+                            Room Location
+                        </span>
                         <span class="rubber-stamp text-[10px] py-0.5 px-2">IN CUSTODY</span>
                     </div>
                 </section>
 
-                <!-- 3. VIDEO STAGE (Framed Antique Viewing Apparatus) -->
-                <section class="bg-amber-950 border-2 border-amber-900/80 rounded-xl p-2.5 sm:p-3 shadow-2xl flex flex-col mb-4 relative z-10">
-                    <div class="video-container rounded-lg aspect-video flex items-center justify-center relative">
+                <section class="bg-burgundy-950 border-2 border-burgundy-800 rounded-xl p-2.5 sm:p-3 shadow-2xl flex flex-col mb-4 relative z-10">
+                    <div id="videoContainer" class="video-container rounded-lg aspect-video flex items-center justify-center relative room-stage-kitchen">
                         
+                        <!-- Room Watermark Banner in Video Stage -->
+                        <div class="absolute bottom-2.5 left-2.5 z-20 bg-burgundy-950/85 backdrop-blur px-2.5 py-1 rounded border border-burgundy-brass/40 text-[10px] text-burgundy-paper font-mono flex items-center gap-1.5 shadow">
+                            <i id="roomIcon" class="fa-solid fa-utensils text-burgundy-brass text-xs"></i>
+                            <span id="videoRoomBadge">LOCATION: THE KITCHEN & SCULLERY</span>
+                        </div>
+
                         <!-- HTML5 Video Player -->
                         <video id="videoPlayer" class="w-full h-full object-contain hidden" controls playsinline>
                             <source id="videoSource" src="" type="video/mp4">
                             Your browser does not support HTML5 video.
                         </video>
 
-                        <!-- Video Placeholder State -->
-                        <div id="videoPlaceholder" class="flex flex-col items-center justify-center text-center p-4 bg-victorian-900/90 w-full h-full">
-                            <div class="w-14 h-14 rounded-full border-2 border-victorian-brass/60 flex items-center justify-center mb-2 bg-victorian-800 shadow-inner">
-                                <i id="placeholderIcon" class="fa-solid fa-film text-xl text-victorian-brass"></i>
+                        <!-- Video Placeholder State with Room Ambiance -->
+                        <div id="videoPlaceholder" class="flex flex-col items-center justify-center text-center p-4 bg-burgundy-950/80 backdrop-blur-[2px] w-full h-full">
+                            <div class="w-14 h-14 rounded-full border-2 border-burgundy-brass/60 flex items-center justify-center mb-2 bg-burgundy-900 shadow-inner">
+                                <i id="placeholderIcon" class="fa-solid fa-film text-xl text-burgundy-brass"></i>
                             </div>
-                            <h3 id="placeholderTitle" class="cinzel text-base text-victorian-paper font-semibold">Ready for Questioning</h3>
-                            <p id="placeholderSubtitle" class="text-xs text-victorian-paperdark/80 max-w-sm mt-1">
-                                Enter a question below to interrogate <span id="placeholderSuspectName" class="text-victorian-brass font-semibold">this suspect</span>.
+                            <h3 id="placeholderTitle" class="cinzel text-base text-burgundy-paper font-semibold">Ready for Discussion</h3>
+                            <p id="placeholderSubtitle" class="text-xs text-burgundy-paperdark/90 max-w-sm mt-1">
+                                Enter a question below to speak with <span id="placeholderSuspectName" class="text-burgundy-brass font-semibold">Lady Persimma Sterling</span> in <span id="placeholderRoomName" class="text-burgundy-paper underline font-semibold">The Kitchen & Scullery</span>.
                             </p>
                         </div>
 
                         <!-- Video Badge Overlay -->
-                        <div class="absolute top-2.5 left-2.5 z-20 bg-victorian-900/90 backdrop-blur px-2.5 py-1 rounded border border-victorian-brass/50 text-[10px] text-victorian-paper font-mono flex items-center gap-1.5 shadow">
+                        <div class="absolute top-2.5 left-2.5 z-20 bg-burgundy-950/90 backdrop-blur px-2.5 py-1 rounded border border-burgundy-brass/50 text-[10px] text-burgundy-paper font-mono flex items-center gap-1.5 shadow">
                             <i class="fa-solid fa-circle text-red-500 text-[7px] animate-pulse"></i>
                             <span id="videoBadgeState">STANDBY</span>
                         </div>
@@ -606,29 +684,28 @@
                     <!-- Video Topic Indicator & Replay Button -->
                     <div class="mt-2.5 flex flex-wrap justify-between items-center gap-2 px-1">
                         <div class="text-xs text-amber-200/80 flex items-center gap-1.5">
-                            <i class="fa-solid fa-comment-dots text-victorian-brass text-xs"></i>
+                            <i class="fa-solid fa-comment-dots text-burgundy-brass text-xs"></i>
                             <span>Topic:</span>
-                            <span id="currentTopicDisplay" class="text-victorian-paper font-mono bg-victorian-800 px-2 py-0.5 rounded border border-victorian-700 text-xs">None</span>
+                            <span id="currentTopicDisplay" class="text-burgundy-paper font-mono bg-burgundy-900 px-2 py-0.5 rounded border border-burgundy-700 text-xs">None</span>
                         </div>
 
-                        <button onclick="replayCurrentVideo()" class="text-xs text-victorian-brass hover:text-victorian-brasslight flex items-center gap-1.5 transition font-semibold">
+                        <button onclick="replayCurrentVideo()" class="text-xs text-burgundy-brass hover:text-burgundy-brasslight flex items-center gap-1.5 transition font-semibold">
                             <i class="fa-solid fa-rotate-right text-xs"></i> Replay Recording
                         </button>
                     </div>
                 </section>
 
-                <!-- 4. INTERROGATION INPUT BOX & DISCOVERED TOPIC TAGS -->
                 <section class="bg-[#fcf8f0] border border-amber-900/30 rounded-xl p-3 sm:p-4 shadow mb-4 relative z-10">
                     <form id="questionForm" onsubmit="handleQuestionSubmit(event)" class="flex flex-col sm:flex-row gap-2">
                         <div class="relative flex-1">
                             <input type="text" id="questionInput" 
                                 placeholder="Ask about a clue, person, date, or event (e.g. Paris, Gun, Maiwand)..." 
-                                class="w-full bg-white border-2 border-amber-900/30 rounded-lg px-3.5 py-2.5 text-sm text-amber-950 placeholder-amber-900/50 focus:outline-none focus:border-amber-800 transition pr-9 font-serif">
+                                class="w-full bg-white border-2 border-amber-900/30 rounded-lg px-3.5 py-2.5 text-sm text-amber-950 placeholder-amber-900/50 focus:outline-none focus:border-burgundy-700 transition pr-9 font-serif">
                             <button type="button" onclick="clearInput()" class="absolute right-3 top-1/2 -translate-y-1/2 text-amber-800/60 hover:text-amber-950 text-sm">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
                         </div>
-                        <button type="submit" class="px-5 py-2.5 bg-amber-900 hover:bg-amber-950 text-amber-100 font-bold rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow shrink-0 text-sm cinzel">
+                        <button type="submit" class="px-5 py-2.5 bg-burgundy-800 hover:bg-burgundy-900 text-burgundy-paper font-bold rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow shrink-0 text-sm cinzel border border-burgundy-brass/30">
                             <i class="fa-solid fa-paper-plane text-xs"></i>
                             <span>Interrogate</span>
                         </button>
@@ -645,7 +722,6 @@
                     </div>
                 </section>
 
-                <!-- 5. STATEMENT TRANSCRIPT (Torn Evidence Record Sheet) -->
                 <section class="torn-paper rounded-lg p-3.5 sm:p-4 shadow-md mb-4 relative z-10">
                     <div class="staple" style="top: -2px; left: 20px; transform: rotate(-3deg);"></div>
                     
@@ -663,7 +739,7 @@
                     </div>
                 </section>
 
-                <!-- 6. COLLAPSIBLE INTERROGATION TIPS DRAWER -->
+                <!-- Collapsible Interrogation Tips Drawer -->
                 <section class="bg-[#f2e7d3]/80 rounded-xl border border-amber-900/20 overflow-hidden mb-2 relative z-10">
                     <details class="group">
                         <summary class="flex justify-between items-center p-3 cursor-pointer list-none select-none hover:bg-amber-200/40 transition">
@@ -692,10 +768,9 @@
             </div>
         </div>
 
-        <!-- 7. NAVIGATION TO HISTORIAN'S CATALOGUE -->
         <div class="flex justify-center pt-2 pb-2">
             <a href="https://invitation.visitbritishhills.com/event2/historians_catalogue.html" 
-               class="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-xs sm:text-sm cinzel tracking-wider shadow-lg border border-victorian-brasslight/40 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
+               class="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-burgundy-brass hover:bg-burgundy-brasslight text-burgundy-950 font-bold text-xs sm:text-sm cinzel tracking-wider shadow-lg border border-burgundy-brasslight/40 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
                 <i class="fa-solid fa-scroll text-sm"></i>
                 <span>Historian's Catalogue</span>
                 <i class="fa-solid fa-arrow-right text-[10px]"></i>
@@ -725,14 +800,14 @@
         </div>
     </div>
 
-    <!-- Case Notes Modal (Taped Ledger Note Style) -->
+    <!-- Case Notes Modal -->
     <div id="caseNotesModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#f6efe1] border-2 border-amber-900/60 rounded-xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden relative">
-            <div class="p-3.5 bg-victorian-900 border-b border-victorian-brass flex justify-between items-center text-victorian-paper">
-                <h3 class="cinzel text-base sm:text-lg font-bold text-victorian-brass flex items-center gap-2">
+            <div class="p-3.5 bg-burgundy-900 border-b border-burgundy-brass flex justify-between items-center text-burgundy-paper">
+                <h3 class="cinzel text-base sm:text-lg font-bold text-burgundy-brass flex items-center gap-2">
                     <i class="fa-solid fa-book-open"></i> Discovered Suspect Statements
                 </h3>
-                <button onclick="toggleCaseNotes()" class="text-victorian-paperdark hover:text-victorian-paper text-lg">
+                <button onclick="toggleCaseNotes()" class="text-burgundy-paperdark hover:text-burgundy-paper text-lg">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -743,60 +818,31 @@
 
             <div class="p-3 bg-amber-100/80 border-t border-amber-900/30 flex justify-between items-center text-xs text-amber-950 font-bold">
                 <span>Total Clues Discovered: <strong id="modalUnlockedCount" class="text-amber-800">0</strong></span>
-                <button onclick="toggleCaseNotes()" class="px-3.5 py-1.5 bg-amber-900 hover:bg-amber-950 text-amber-100 rounded">Close</button>
+                <button onclick="toggleCaseNotes()" class="px-3.5 py-1.5 bg-burgundy-800 hover:bg-burgundy-900 text-amber-100 rounded">Close</button>
             </div>
         </div>
     </div>
 
-    <!-- Config Modal -->
-    <div id="configModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-victorian-800 border border-victorian-brass rounded-xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-3.5 bg-victorian-900 border-b border-victorian-700 flex justify-between items-center">
-                <div>
-                    <h3 class="cinzel text-base sm:text-lg font-bold text-victorian-brass flex items-center gap-2">
-                        <i class="fa-solid fa-link"></i> Video URL Configurator
-                    </h3>
-                    <p class="text-xs text-victorian-paperdark">Update response video paths/URLs for each suspect and statement keyword.</p>
-                </div>
-                <button onclick="closeConfigModal()" class="text-victorian-paperdark hover:text-victorian-paper text-lg">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <div class="p-3.5 overflow-y-auto flex-1 space-y-5" id="configListContainer">
-                <!-- Editable fields generated by JS -->
-            </div>
-
-            <div class="p-3.5 bg-victorian-900 border-t border-victorian-700 flex justify-between items-center">
-                <button onclick="resetDefaultUrls()" class="text-xs text-red-400 hover:underline">
-                    Reset to Default Placeholders
-                </button>
-                <div class="flex gap-2">
-                    <button onclick="closeConfigModal()" class="px-3 py-1.5 bg-victorian-700 hover:bg-victorian-600 text-victorian-paper text-xs rounded">Cancel</button>
-                    <button onclick="saveVideoUrls()" class="px-3.5 py-1.5 bg-victorian-brass hover:bg-victorian-brasslight text-victorian-900 font-bold text-xs rounded">
-                        Save Configurations
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="border-t border-victorian-brass/30 bg-victorian-900 py-3 px-3 text-center text-[11px] text-victorian-paperdark/80 mt-4">
+    <!-- Footer in Burgundy Finish -->
+    <footer class="border-t border-burgundy-brass/30 bg-burgundy-900 py-3 px-3 text-center text-[11px] text-burgundy-paperdark/80 mt-4">
         <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1.5">
-            <p>Event 2: A Soldier's Final Retreat — Interrogation Records</p>
-            <p class="text-victorian-paperdark/60">Inspect all evidence thoroughly to uncover the truth.</p>
+            <p>Event 2: The Soldier's Last Retreat — Discussions with Suspects</p>
+            <p class="text-burgundy-paperdark/60">Inspect all evidence thoroughly to uncover the truth.</p>
         </div>
     </footer>
 
     <script>
-        // Master suspect dataset
-        const initialSuspectsData = {
+        // Master suspect dataset with dedicated rooms and themes
+        const suspectsData = {
             persimma: {
                 id: 'persimma',
                 name: 'Lady Persimma Sterling',
                 shortName: 'Lady Persimma',
-                avatar: 'https://placehold.co/150x150/2c211a/c59b27?text=Persimma',
+                room: 'The Kitchen & Scullery',
+                roomClass: 'room-stage-kitchen',
+                bodyTheme: 'theme-kitchen',
+                roomIcon: 'fa-utensils',
+                avatar: 'https://placehold.co/150x150/260710/cf9f38?text=Persimma',
                 genericVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
                 genericTranscript: "I have no knowledge of what you are referring to, Inspector.",
                 statements: [
@@ -834,7 +880,11 @@
                 id: 'archibald',
                 name: 'Archibald Sterling',
                 shortName: 'Archibald',
-                avatar: 'https://placehold.co/150x150/2c211a/c59b27?text=Archibald',
+                room: 'The Library & Study',
+                roomClass: 'room-stage-library',
+                bodyTheme: 'theme-library',
+                roomIcon: 'fa-book-atlas',
+                avatar: 'https://placehold.co/150x150/260710/cf9f38?text=Archibald',
                 genericVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
                 genericTranscript: "I haven't the faintest idea what you're talking about.",
                 statements: [
@@ -886,7 +936,11 @@
                 id: 'silas',
                 name: 'Silas Thorne',
                 shortName: 'Silas',
-                avatar: 'https://placehold.co/150x150/2c211a/c59b27?text=Silas',
+                room: 'The Billiard & Gun Room',
+                roomClass: 'room-stage-trophy',
+                bodyTheme: 'theme-trophy',
+                roomIcon: 'fa-shield-halved',
+                avatar: 'https://placehold.co/150x150/260710/cf9f38?text=Silas',
                 genericVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
                 genericTranscript: "I know nothing of that matter, Inspector.",
                 statements: [
@@ -924,7 +978,11 @@
                 id: 'maple',
                 name: 'Maple Strand',
                 shortName: 'Maple',
-                avatar: 'https://placehold.co/150x150/2c211a/c59b27?text=Maple',
+                room: 'The Servants\' Hall & Gallery',
+                roomClass: 'room-stage-servants',
+                bodyTheme: 'theme-servants',
+                roomIcon: 'fa-bell-concierge',
+                avatar: 'https://placehold.co/150x150/260710/cf9f38?text=Maple',
                 genericVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
                 genericTranscript: "That doesn't mean anything to me.",
                 statements: [
@@ -955,7 +1013,11 @@
                 id: 'evelyn',
                 name: 'Evelyn Ashgrove',
                 shortName: 'Evelyn',
-                avatar: 'https://placehold.co/150x150/2c211a/c59b27?text=Evelyn',
+                room: 'The Drawing & Dining Room',
+                roomClass: 'room-stage-drawing',
+                bodyTheme: 'theme-drawing',
+                roomIcon: 'fa-couch',
+                avatar: 'https://placehold.co/150x150/260710/cf9f38?text=Evelyn',
                 genericVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
                 genericTranscript: "I have no information regarding that subject.",
                 statements: [
@@ -992,7 +1054,6 @@
         };
 
         // State Management
-        let suspectsData = JSON.parse(localStorage.getItem('event2_suspects_data')) || JSON.parse(JSON.stringify(initialSuspectsData));
         let activeSuspectId = 'persimma';
         let discoveredClues = JSON.parse(localStorage.getItem('event2_discovered_clues')) || [];
         let discoveredTopics = JSON.parse(localStorage.getItem('event2_discovered_topics')) || [];
@@ -1005,8 +1066,8 @@
                 content: `
                     <p>スターリング家の誇り高き当主夫人だ。彼女のような身分の高い婦人は、家族の秘密や不名誉を何よりも覆い隠そうとするものだ。</p>
                     <div class="sherlock-clue-box">
-                        <strong>【観察のポイント】</strong>
-                        彼女は料理室にいたと主張している。貴族としての体面を保とうとする彼女の言葉の端々に耳を澄ませたまえ。
+                        <strong>【観察のポイント — 料理室 (The Kitchen & Scullery)】</strong>
+                        彼女は料理室に退避している。貴族としての体面を保とうとする彼女の言葉の端々に耳を澄ませたまえ。
                     </div>
                     <p><strong>英語表現の手がかり:</strong></p>
                     <ul class="sherlock-vocab-list">
@@ -1023,7 +1084,7 @@
                 content: `
                     <p>屋敷の若き後継者アーチボルドだ。自信ありげに振る舞っているが、家の財政事情や父親の遺産については強いプレッシャーを抱えているようだ。</p>
                     <div class="sherlock-clue-box">
-                        <strong>【観察のポイント】</strong>
+                        <strong>【観察のポイント — 書斎・図書室 (The Library & Study)】</strong>
                         彼は書斎や屋敷内の美術品、調度品の変化に敏感だ。彼が何に気付き、何を隠そうとしているかを探りたまえ。
                     </div>
                     <p><strong>英語表現の手がかり:</strong></p>
@@ -1041,8 +1102,8 @@
                 content: `
                     <p>かつて我が友ワトソンと共にアフガニスタンの激戦を生き延びた退役軍人だ。その胸には癒えぬ傷と、戦場で失った仲間への強い情念が渦巻いている。</p>
                     <div class="sherlock-clue-box">
-                        <strong>【観察のポイント】</strong>
-                        戦場での出来事について語る彼の言葉には、今なお癒えぬ痛みが滲み出ている。軍務の記憶を丁寧に紐解くのだ。
+                        <strong>【観察のポイント — 銃器室・撞球室 (The Billiard & Gun Room)】</strong>
+                        銃器が並ぶこの部屋で、戦場での記憶を語る彼の言葉には深い痛みが滲み出ている。軍務の記憶を丁寧に紐解くのだ。
                     </div>
                     <p><strong>英語表現の手がかり:</strong></p>
                     <ul class="sherlock-vocab-list">
@@ -1059,7 +1120,7 @@
                 content: `
                     <p>屋敷に仕える女中メイプルだ。貴族たちは使用人の存在を意識せずに行動するため、彼女は館内で起きた奇妙な物音や人の動きを最もよく見聞きしている。</p>
                     <div class="sherlock-clue-box">
-                        <strong>【観察のポイント】</strong>
+                        <strong>【観察のポイント — 使用人室・回廊 (The Servants\' Hall & Gallery)】</strong>
                         使用人としての彼女の視線は、住人たちが気付かない細かな変化を捉えている。屋敷内での日常の観察に注目せよ。
                     </div>
                     <p><strong>英語表現の手がかり:</strong></p>
@@ -1077,8 +1138,8 @@
                 content: `
                     <p>事件の夜に晩餐へ招かれていた客人のエヴリンだ。彼女は軍人たちの間で起きた激しい口論を目撃した最後の人物の一人である。</p>
                     <div class="sherlock-clue-box">
-                        <strong>【観察のポイント】</strong>
-                        客人の立場でありながら、彼女はこの館の過去と人間関係について驚くほど深く通じているようだ。
+                        <strong>【観察のポイント — 客間・食堂 (The Drawing & Dining Room)】</strong>
+                        華やかな客間に座りながらも、彼女はこの館の過去と人間関係について驚くほど深く通じているようだ。
                     </div>
                     <p><strong>英語表現の手がかり:</strong></p>
                     <ul class="sherlock-vocab-list">
@@ -1092,17 +1153,17 @@
 
         const generalSherlockNotes = {
             header: {
-                title: "尋問室の進め方について",
+                title: "容疑者たちとの対話の進め方について",
                 salutation: "My Fellow Detectives,",
                 content: `
-                    <p>事件の真相を解き明かすためには、容疑者たちの言葉に潜む「鍵」を見つけ出さねばならない。</p>
+                    <p>事件の真相を解き明かすためには、各部屋に控える容疑者たちの言葉に潜む「鍵」を見つけ出さねばならない。</p>
                     <div class="sherlock-clue-box">
-                        <strong>【尋問の手順】</strong>
-                        1. 上のバーから尋問したい人物を選ぶ。<br>
+                        <strong>【対話の手順】</strong>
+                        1. 上のポートレート一覧から対話したい容疑者を選択する。<br>
                         2. 下の入力欄に、歴史編纂官の目録や現場で目にした<strong>物・人名・地名・日付</strong>を入力して質問する。<br>
                         3. 容疑者がその話題に心当たりを持っていれば、録画された証言が再生される。
                     </div>
-                    <p>もし容疑者が「心当たりがない」と答えたとしても、失望してはならない。それはその話題が別の容疑者にとっての急所であることを意味しているのだ。</p>
+                    <p>もし容疑者が「心当たりがない」と答えたとしても、失望してはならない。それはその話題が別の部屋の容疑者にとっての急所であることを意味しているのだ。</p>
                 `
             },
             phrasing: {
@@ -1117,7 +1178,7 @@
                     </ul>
                     <div class="sherlock-clue-box">
                         <strong>【手短な入力でも反応する】</strong>
-                        長文を組み立てずとも、気になる名詞や地名、日付などの単語をひとつ投げかけるだけで尋問は成立する。現場や目録で見つけた言葉を次々とぶつけてみたまえ。
+                        長文を組み立てずとも、気になる名詞や地名、日付などの単語をひとつ投げかけるだけで対話は成立する。現場や目録で見つけた言葉を次々とぶつけてみたまえ。
                     </div>
                 `
             }
@@ -1156,40 +1217,6 @@
             });
         }
 
-        function openSherlockNote(type) {
-            const noteData = generalSherlockNotes[type];
-            if (!noteData) return;
-
-            document.getElementById('sherlockNoteTitle').innerText = noteData.title;
-            document.getElementById('sherlockNoteBody').innerHTML = `
-                <span class="salutation">${noteData.salutation}</span>
-                ${noteData.content}
-                <div class="sherlock-signoff">— S.H.</div>
-            `;
-            document.getElementById('sherlockModal').classList.remove('hidden');
-        }
-
-        function openSuspectSherlockNote(suspectId) {
-            const profile = sherlockSuspectProfiles[suspectId];
-            if (!profile) return;
-
-            document.getElementById('sherlockNoteTitle').innerText = profile.title;
-            document.getElementById('sherlockNoteBody').innerHTML = `
-                <span class="salutation">${profile.salutation}</span>
-                ${profile.content}
-                <div class="sherlock-signoff">— S.H.</div>
-            `;
-            document.getElementById('sherlockModal').classList.remove('hidden');
-        }
-
-        function openCurrentSuspectSherlockNote() {
-            openSuspectSherlockNote(activeSuspectId);
-        }
-
-        function closeSherlockModal() {
-            document.getElementById('sherlockModal').classList.add('hidden');
-        }
-
         function selectSuspect(suspectId) {
             activeSuspectId = suspectId;
             const suspect = suspectsData[suspectId];
@@ -1198,10 +1225,36 @@
             const nameEl = document.getElementById('activeSuspectName');
             const avatarEl = document.getElementById('activeSuspectAvatar');
             const placeholderSuspectName = document.getElementById('placeholderSuspectName');
+            const roomEl = document.getElementById('activeSuspectRoom');
+            const placeholderRoomName = document.getElementById('placeholderRoomName');
+            const videoRoomBadge = document.getElementById('videoRoomBadge');
+            const roomIcon = document.getElementById('roomIcon');
+            const videoContainer = document.getElementById('videoContainer');
+            const pageBody = document.getElementById('pageBody');
 
             if (nameEl) nameEl.innerText = suspect.name;
             if (avatarEl) avatarEl.src = suspect.avatar;
             if (placeholderSuspectName) placeholderSuspectName.innerText = suspect.name;
+            if (roomEl) roomEl.innerText = suspect.room;
+            if (placeholderRoomName) placeholderRoomName.innerText = suspect.room;
+            if (videoRoomBadge) videoRoomBadge.innerText = `LOCATION: ${suspect.room.toUpperCase()}`;
+
+            // Update room icon
+            if (roomIcon) {
+                roomIcon.className = `fa-solid ${suspect.roomIcon} text-burgundy-brass text-xs`;
+            }
+
+            // Update video container stage room background
+            if (videoContainer) {
+                videoContainer.classList.remove('room-stage-kitchen', 'room-stage-library', 'room-stage-trophy', 'room-stage-servants', 'room-stage-drawing');
+                videoContainer.classList.add(suspect.roomClass);
+            }
+
+            // Update global page body theme to match suspect's room atmosphere
+            if (pageBody) {
+                pageBody.classList.remove('theme-kitchen', 'theme-library', 'theme-trophy', 'theme-servants', 'theme-drawing');
+                pageBody.classList.add(suspect.bodyTheme);
+            }
 
             const videoPlayer = document.getElementById('videoPlayer');
             const videoPlaceholder = document.getElementById('videoPlaceholder');
@@ -1216,7 +1269,7 @@
             document.getElementById('videoBadgeState').innerText = 'STANDBY';
             document.getElementById('currentTopicDisplay').innerText = 'None';
             document.getElementById('transcriptStatusBadge').innerText = 'Awaiting Query';
-            document.getElementById('transcriptText').innerText = `Select a topic or type a question to interrogate ${suspect.name}...`;
+            document.getElementById('transcriptText').innerText = `Select a topic or type a question to speak with ${suspect.name} in ${suspect.room}...`;
 
             renderDiscoveredTopics();
             renderSuspectList();
@@ -1235,7 +1288,7 @@
             discoveredTopics.forEach(topic => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
-                btn.className = 'text-[11px] px-2.5 py-0.5 rounded bg-amber-200/80 hover:bg-amber-900 hover:text-amber-100 text-amber-950 border border-amber-900/30 font-medium transition shadow-sm';
+                btn.className = 'text-[11px] px-2.5 py-0.5 rounded bg-amber-200/80 hover:bg-burgundy-900 hover:text-amber-100 text-amber-950 border border-amber-900/30 font-medium transition shadow-sm';
                 btn.innerText = topic;
                 btn.onclick = () => {
                     document.getElementById('questionInput').value = topic;
@@ -1334,6 +1387,40 @@
             document.getElementById('modalUnlockedCount').innerText = discoveredClues.length;
         }
 
+        function openSherlockNote(type) {
+            const noteData = generalSherlockNotes[type];
+            if (!noteData) return;
+
+            document.getElementById('sherlockNoteTitle').innerText = noteData.title;
+            document.getElementById('sherlockNoteBody').innerHTML = `
+                <span class="salutation">${noteData.salutation}</span>
+                ${noteData.content}
+                <div class="sherlock-signoff">— S.H.</div>
+            `;
+            document.getElementById('sherlockModal').classList.remove('hidden');
+        }
+
+        function openSuspectSherlockNote(suspectId) {
+            const profile = sherlockSuspectProfiles[suspectId];
+            if (!profile) return;
+
+            document.getElementById('sherlockNoteTitle').innerText = profile.title;
+            document.getElementById('sherlockNoteBody').innerHTML = `
+                <span class="salutation">${profile.salutation}</span>
+                ${profile.content}
+                <div class="sherlock-signoff">— S.H.</div>
+            `;
+            document.getElementById('sherlockModal').classList.remove('hidden');
+        }
+
+        function openCurrentSuspectSherlockNote() {
+            openSuspectSherlockNote(activeSuspectId);
+        }
+
+        function closeSherlockModal() {
+            document.getElementById('sherlockModal').classList.add('hidden');
+        }
+
         function toggleCaseNotes() {
             const modal = document.getElementById('caseNotesModal');
             const list = document.getElementById('caseNotesList');
@@ -1359,7 +1446,7 @@
                                 itemEl.className = 'p-3 bg-amber-50 border border-amber-900/20 rounded-lg text-xs shadow-sm';
                                 itemEl.innerHTML = `
                                     <div class="flex justify-between items-center text-amber-950 font-bold mb-1">
-                                        <span class="cinzel">${s.name}</span>
+                                        <span class="cinzel">${s.name} <span class="text-[10px] font-normal text-amber-800 font-sans">(${s.room})</span></span>
                                         <span class="text-[10px] bg-amber-200/80 text-amber-900 px-2 py-0.5 rounded border border-amber-300 font-mono">${stmt.title}</span>
                                     </div>
                                     <p class="text-amber-950 typewriter italic">"${stmt.transcript}"</p>
@@ -1374,78 +1461,6 @@
             } else {
                 modal.classList.add('hidden');
             }
-        }
-
-        function openConfigModal() {
-            const modal = document.getElementById('configModal');
-            const container = document.getElementById('configListContainer');
-            container.innerHTML = '';
-
-            Object.values(suspectsData).forEach(s => {
-                const suspectBox = document.createElement('div');
-                suspectBox.className = 'bg-victorian-900 p-3 sm:p-4 rounded-lg border border-victorian-700 space-y-3';
-
-                let statementsHtml = '';
-                s.statements.forEach(stmt => {
-                    statementsHtml += `
-                        <div class="mt-2 text-xs">
-                            <label class="block text-victorian-brass font-medium mb-1">
-                                Topic: <span class="text-victorian-paper">${stmt.title}</span> 
-                                <span class="text-victorian-paperdark text-[10px]">(Keywords: ${stmt.keywords.join(', ')})</span>
-                            </label>
-                            <input type="text" id="url_${s.id}_${stmt.id}" value="${stmt.videoUrl}" 
-                                class="w-full bg-victorian-800 border border-victorian-600 rounded p-2 text-victorian-paper focus:border-victorian-brass focus:outline-none">
-                        </div>
-                    `;
-                });
-
-                suspectBox.innerHTML = `
-                    <h4 class="font-bold text-sm text-victorian-paper cinzel border-b border-victorian-800 pb-1.5">${s.name}</h4>
-                    <div class="text-xs mb-2">
-                        <label class="block text-victorian-paperdark mb-1">Generic Fallback Video URL:</label>
-                        <input type="text" id="url_generic_${s.id}" value="${s.genericVideo}" 
-                            class="w-full bg-victorian-800 border border-victorian-600 rounded p-2 text-victorian-paper focus:border-victorian-brass focus:outline-none">
-                    </div>
-                    ${statementsHtml}
-                `;
-
-                container.appendChild(suspectBox);
-            });
-
-            modal.classList.remove('hidden');
-        }
-
-        function closeConfigModal() {
-            document.getElementById('configModal').classList.add('hidden');
-        }
-
-        function saveVideoUrls() {
-            Object.values(suspectsData).forEach(s => {
-                const genericInput = document.getElementById(`url_generic_${s.id}`);
-                if (genericInput) s.genericVideo = genericInput.value;
-
-                s.statements.forEach(stmt => {
-                    const input = document.getElementById(`url_${s.id}_${stmt.id}`);
-                    if (input) stmt.videoUrl = input.value;
-                });
-            });
-
-            localStorage.setItem('event2_suspects_data', JSON.stringify(suspectsData));
-            closeConfigModal();
-            selectSuspect(activeSuspectId);
-        }
-
-        function resetDefaultUrls() {
-            suspectsData = JSON.parse(JSON.stringify(initialSuspectsData));
-            localStorage.removeItem('event2_suspects_data');
-            localStorage.removeItem('event2_discovered_topics');
-            localStorage.removeItem('event2_discovered_clues');
-            discoveredTopics = [];
-            discoveredClues = [];
-            closeConfigModal();
-            selectSuspect(activeSuspectId);
-            updateDiscoveredCount();
-            renderDiscoveredTopics();
         }
     </script>
 </body>
