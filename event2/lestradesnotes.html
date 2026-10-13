@@ -576,10 +576,6 @@
                     <i class="fa-solid fa-arrow-left mr-2"></i> Previous
                 </button>
                 
-                <span id="pageIndicator" class="cinzel font-bold text-amber-100 text-sm tracking-widest">
-                    PAGE 1 OF 5
-                </span>
-                
                 <button id="nextPageBtn" onclick="turnNotebookPage(1)" class="px-4 py-2 bg-victorian-800 text-victorian-brass rounded shadow hover:bg-victorian-700 transition cinzel text-sm font-bold border border-victorian-brass/40">
                     Next <i class="fa-solid fa-arrow-right ml-2"></i>
                 </button>
@@ -717,8 +713,7 @@
 
             currentNotebookPage = nextPageIndex;
 
-            // Update UI Counters and Buttons
-            document.getElementById('pageIndicator').textContent = `PAGE ${currentNotebookPage} OF ${totalNotebookPages}`;
+            // Update UI Buttons
             document.getElementById('prevPageBtn').disabled = (currentNotebookPage === 1);
             document.getElementById('nextPageBtn').disabled = (currentNotebookPage === totalNotebookPages);
             
