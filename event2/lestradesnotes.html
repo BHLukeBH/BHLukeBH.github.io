@@ -218,55 +218,64 @@
         /* --- 3D PAGE FLIPPING SYSTEM --- */
         .perspective-container {
             perspective: 2500px;
+            display: grid; /* Stacks the pages on top of each other */
         }
 
         .notebook-page {
+            grid-area: 1 / 1;
             width: 100%;
             transform-origin: left center;
             backface-visibility: hidden;
             will-change: transform, opacity;
+            display: none; /* Let CSS classes control visibility */
+            z-index: 1;
         }
 
-        /* Default visible state */
         .notebook-page.active {
             display: block;
+            z-index: 2;
         }
 
-        /* Forward direction (Right to Left) */
-        .page-turn-next {
+        .notebook-page.outgoing {
             display: block;
-            animation: turnPageNext 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+            z-index: 10;
+            pointer-events: none; /* Prevent clicks while animating out */
         }
 
-        /* Backward direction (Left to Right) */
+        /* Prev Page: Incoming from left */
         .page-turn-prev {
-            display: block;
-            animation: turnPagePrev 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+            animation: turnPagePrev 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+            z-index: 10;
         }
 
-        @keyframes turnPageNext {
-            0% {
-                transform: rotateY(85deg) scale(0.98);
-                opacity: 0.2;
-                box-shadow: inset -50px 0 100px rgba(0,0,0,0.1);
-            }
-            100% {
-                transform: rotateY(0deg) scale(1);
-                opacity: 1;
-                box-shadow: inset 0 0 0 rgba(0,0,0,0);
-            }
+        /* Next Page: Current page flips out to left */
+        .page-flip-out {
+            animation: flipOutNext 0.7s ease-in forwards;
         }
 
         @keyframes turnPagePrev {
             0% {
-                transform: rotateY(-85deg) scale(0.98);
-                opacity: 0.2;
+                transform: rotateY(-90deg) scale(0.98);
+                opacity: 0.5;
                 box-shadow: inset 50px 0 100px rgba(0,0,0,0.1);
             }
             100% {
                 transform: rotateY(0deg) scale(1);
                 opacity: 1;
                 box-shadow: inset 0 0 0 rgba(0,0,0,0);
+            }
+        }
+
+        @keyframes flipOutNext {
+            0% {
+                transform: rotateY(0deg);
+                opacity: 1;
+                box-shadow: inset 0 0 0 rgba(0,0,0,0);
+            }
+            100% {
+                transform: rotateY(-90deg);
+                opacity: 0;
+                box-shadow: inset 50px 0 100px rgba(0,0,0,0.2);
             }
         }
 
@@ -382,7 +391,7 @@
                 </div>
 
                 <!-- PAGE 2: Archibald Sterling -->
-                <div class="notebook-page" id="page-2" style="display: none;">
+                <div class="notebook-page" id="page-2">
                     <div class="dossier-paper rounded-lg p-4 sm:p-8 sm:pl-16 relative text-amber-950">
                         <div class="border-b-2 border-amber-900/30 pb-3 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 relative z-10">
                             <div>
@@ -423,7 +432,7 @@
                 </div>
 
                 <!-- PAGE 3: Silas Thorne -->
-                <div class="notebook-page" id="page-3" style="display: none;">
+                <div class="notebook-page" id="page-3">
                     <div class="dossier-paper rounded-lg p-4 sm:p-8 sm:pl-16 relative text-amber-950">
                         <div class="border-b-2 border-amber-900/30 pb-3 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 relative z-10">
                             <div>
@@ -464,7 +473,7 @@
                 </div>
 
                 <!-- PAGE 4: Maple Strand -->
-                <div class="notebook-page" id="page-4" style="display: none;">
+                <div class="notebook-page" id="page-4">
                     <div class="dossier-paper rounded-lg p-4 sm:p-8 sm:pl-16 relative text-amber-950">
                         <div class="border-b-2 border-amber-900/30 pb-3 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 relative z-10">
                             <div>
@@ -505,7 +514,7 @@
                 </div>
 
                 <!-- PAGE 5: Evelyn Ashgrove & Conclusion -->
-                <div class="notebook-page" id="page-5" style="display: none;">
+                <div class="notebook-page" id="page-5">
                     <div class="dossier-paper rounded-lg p-4 sm:p-8 sm:pl-16 relative text-amber-950">
                         <div class="border-b-2 border-amber-900/30 pb-3 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 relative z-10">
                             <div>
@@ -568,7 +577,7 @@
                 </button>
                 
                 <span id="pageIndicator" class="cinzel font-bold text-amber-100 text-sm tracking-widest">
-                    PAGE 1 of 5
+                    PAGE 1 OF 5
                 </span>
                 
                 <button id="nextPageBtn" onclick="turnNotebookPage(1)" class="px-4 py-2 bg-victorian-800 text-victorian-brass rounded shadow hover:bg-victorian-700 transition cinzel text-sm font-bold border border-victorian-brass/40">
@@ -668,30 +677,45 @@
         // Advanced Page Turning Logic
         let currentNotebookPage = 1;
         const totalNotebookPages = 5;
+        let isAnimating = false; // Prevents button spamming during flip
 
         function turnNotebookPage(direction) {
-            // Determine animation class based on forward (+1) or backward (-1)
-            const animClass = direction === 1 ? 'page-turn-next' : 'page-turn-prev';
-            
-            // Hide the outgoing page
+            if (isAnimating) return;
+
+            const nextPageIndex = currentNotebookPage + direction;
+            if (nextPageIndex < 1 || nextPageIndex > totalNotebookPages) return;
+
             const currentPageEl = document.getElementById(`page-${currentNotebookPage}`);
-            if (currentPageEl) {
-                currentPageEl.classList.remove('active', 'page-turn-next', 'page-turn-prev');
-                currentPageEl.style.display = 'none';
+            const newPageEl = document.getElementById(`page-${nextPageIndex}`);
+            
+            isAnimating = true;
+
+            if (direction === 1) {
+                // NEXT PAGE: Current page flips OUT to the left, revealing new page beneath
+                newPageEl.classList.remove('page-turn-prev', 'outgoing', 'page-flip-out');
+                newPageEl.classList.add('active'); 
+                
+                currentPageEl.classList.remove('active');
+                currentPageEl.classList.add('outgoing', 'page-flip-out');
+                
+                setTimeout(() => {
+                    currentPageEl.classList.remove('outgoing', 'page-flip-out');
+                    isAnimating = false;
+                }, 700);
+            } else {
+                // PREV PAGE: New page flips IN from the left, covering current page
+                currentPageEl.classList.remove('active', 'page-turn-prev', 'outgoing', 'page-flip-out');
+                
+                newPageEl.classList.remove('outgoing', 'page-flip-out');
+                newPageEl.classList.add('active', 'page-turn-prev'); 
+                
+                setTimeout(() => {
+                    newPageEl.classList.remove('page-turn-prev');
+                    isAnimating = false;
+                }, 700);
             }
 
-            // Calculate the new page index
-            currentNotebookPage += direction;
-            if (currentNotebookPage < 1) currentNotebookPage = 1;
-            if (currentNotebookPage > totalNotebookPages) currentNotebookPage = totalNotebookPages;
-
-            // Animate in the incoming page
-            const newPageEl = document.getElementById(`page-${currentNotebookPage}`);
-            if (newPageEl) {
-                newPageEl.style.display = 'block'; // Unhide
-                void newPageEl.offsetWidth; // Force a browser reflow to restart the animation
-                newPageEl.classList.add(animClass); // Trigger the directional 3D hinge
-            }
+            currentNotebookPage = nextPageIndex;
 
             // Update UI Counters and Buttons
             document.getElementById('pageIndicator').textContent = `PAGE ${currentNotebookPage} OF ${totalNotebookPages}`;
