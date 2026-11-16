@@ -346,8 +346,24 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: rgba(20, 16, 12, 0.85);
+            background: #120e0b;
             color: #b5a48b;
+        }
+
+        .locked-silhouette {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .locked-overlay span {
+            position: absolute;
+            bottom: 10px;
+            background: rgba(20, 16, 12, 0.78);
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
 
         .item-card.unlocked .locked-overlay {
@@ -1124,6 +1140,7 @@
                 modelLabel: 'Jezail Rifle Stand',
                 aliases: ['jezail', 'jezail plaque', 'rifle', 'riffle', 'jezail rifle stand'],
                 image: 'event2images/jezail_plaque.jpg',
+                hiddenImage: 'event2images/hidden_jezailplaque.jpg',
                 audio: 'event2audio/jezail_plaque.mp3',
                 paragraphs: [
                     "The jezail. A long-barrelled weapon common in Central Asia and British India and parts of the Middle East.",
@@ -1155,6 +1172,7 @@
                 modelLabel: 'Deer Head',
                 aliases: ['deer head', 'deer', 'deers head', 'deer’s head'],
                 image: 'event2images/deers_head.jpg',
+                hiddenImage: 'event2images/hidden_deerhead.jpg',
                 audio: 'event2audio/deers_head.mp3',
                 paragraphs: [
                     "A trophy or souvenir to celebrate the successful hunting of an animal. Common creatures hunted in England include deer, fox, bear. More exotic species include lion, elephant, zebra.",
@@ -1184,6 +1202,7 @@
                 modelLabel: 'Travel Brochure',
                 aliases: ['grand tour brochure', 'grand tour', 'brochure', 'travel brochure'],
                 image: 'event2images/grand_tour_brochure.jpg',
+                hiddenImage: 'event2images/hidden_brochure.jpg',
                 audio: 'event2audio/grand_tour_brochure.mp3',
                 paragraphs: [
                     "The Grand Tour. A slightly outdated tradition amongst the British nobility but still popular amongst other wealthy individuals whereby young men would travel throughout continental Europe affording them the opportunity to immerse themselves in new cultures.",
@@ -1213,6 +1232,7 @@
                 modelLabel: 'Gun',
                 aliases: ['gun', 'revolver', 'smith & wesson', 'pistol'],
                 image: 'event2images/revolver.jpg',
+                hiddenImage: 'event2images/hidden_revolver.jpg',
                 audio: 'event2audio/revolver.mp3',
                 paragraphs: [
                     "Smith & Wesson Revolver.",
@@ -1246,6 +1266,7 @@
                 modelLabel: 'Pot Pourri',
                 aliases: ['pot pourri', 'potpourri'],
                 image: 'event2images/pot_pourri.jpg',
+                hiddenImage: 'event2images/hidden_potpourri.jpg',
                 audio: 'event2audio/pot_pourri.mp3',
                 paragraphs: [
                     "Pot Pourri. A natural air freshener made from fragrant materials such as flowers or herbs. Often displayed in decorative bowls to create a pleasing aesthetic to a room.",
@@ -1276,6 +1297,7 @@
                 modelLabel: 'Magna Carta',
                 aliases: ['magna carta', 'charter'],
                 image: 'event2images/magna_carta.jpg',
+                hiddenImage: 'event2images/hidden_magnacarta.jpg',
                 audio: 'event2audio/magna_carta.mp3',
                 paragraphs: [
                     "Magna Carta, the first document which put into writing the principle that the king and his government were not above the law.",
@@ -1395,7 +1417,7 @@
                     </div>
                     <div class="item-image-container">
                         <div class="locked-overlay">
-                            <i class="fas fa-question-circle locked-icon"></i>
+                            <img src="${item.hiddenImage}" alt="Awaiting Scan" class="locked-silhouette">
                             <span>Awaiting Scan</span>
                         </div>
                         <img src="${item.image}" alt="${item.title}" class="item-image">
