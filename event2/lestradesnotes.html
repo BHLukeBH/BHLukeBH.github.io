@@ -63,6 +63,20 @@
         .typewriter { font-family: 'Special Elite', monospace; }
         .handwriting { font-family: 'Caveat', cursive; }
 
+        /* Lock Animation & Styles */
+        @keyframes shakeLock {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        .shake-anim {
+            animation: shakeLock 0.4s ease-in-out;
+        }
+        .dial-drum {
+            background: linear-gradient(to bottom, #3a2a0d 0%, #b88e28 20%, #f5deb3 50%, #b88e28 80%, #3a2a0d 100%);
+            box-shadow: inset 0 10px 10px rgba(0,0,0,0.8), inset 0 -10px 10px rgba(0,0,0,0.8);
+        }
+
         /* Desk Surface with Binder Ring Margins */
         .dossier-wrapper {
             background: #142328;
@@ -287,7 +301,86 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-red-800 selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-red-800 selection:text-white" style="overflow: hidden;">
+
+    <!-- BRIEFCASE LOCK OVERLAY -->
+    <div id="lock-screen" class="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="text-center mb-8">
+            <h1 class="cinzel text-3xl md:text-5xl font-black text-victorian-brass tracking-widest mb-2 drop-shadow-lg">CLASSIFIED ARCHIVE</h1>
+            <p class="typewriter text-victorian-paperdark text-sm tracking-wider">Scotland Yard // Enter Authorization Cipher</p>
+        </div>
+        
+        <div id="lock-box" class="relative bg-victorian-leather p-8 md:p-12 border-[6px] border-[#5c440f] rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.9),_inset_0_0_30px_rgba(0,0,0,0.9)] flex flex-col items-center">
+            <!-- Brass corner plates -->
+            <div class="absolute top-0 left-0 w-8 h-8 border-b-[4px] border-r-[4px] border-[#b88e28] rounded-br-lg shadow-sm"></div>
+            <div class="absolute top-0 right-0 w-8 h-8 border-b-[4px] border-l-[4px] border-[#b88e28] rounded-bl-lg shadow-sm"></div>
+            <div class="absolute bottom-0 left-0 w-8 h-8 border-t-[4px] border-r-[4px] border-[#b88e28] rounded-tr-lg shadow-sm"></div>
+            <div class="absolute bottom-0 right-0 w-8 h-8 border-t-[4px] border-l-[4px] border-[#b88e28] rounded-tl-lg shadow-sm"></div>
+
+            <div class="flex gap-2 md:gap-4 p-4 bg-black/60 rounded-lg shadow-inner border border-black/90 mb-6">
+                <!-- Dial 0 (L) -->
+                <div class="flex flex-col items-center">
+                    <button onclick="rotateDial(0, -1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl pb-1 transition-colors"><i class="fa-solid fa-caret-up"></i></button>
+                    <div class="w-10 h-16 md:w-14 md:h-20 dial-drum border-x border-[#2c2007] rounded-sm flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none"></div>
+                        <span id="dial-val-0" class="cinzel text-2xl md:text-3xl font-black text-[#1a1205]">Q</span>
+                    </div>
+                    <button onclick="rotateDial(0, 1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl pt-1 transition-colors"><i class="fa-solid fa-caret-down"></i></button>
+                </div>
+                <!-- Dial 1 (O) -->
+                <div class="flex flex-col items-center">
+                    <button onclick="rotateDial(1, -1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl pb-1 transition-colors"><i class="fa-solid fa-caret-up"></i></button>
+                    <div class="w-10 h-16 md:w-14 md:h-20 dial-drum border-x border-[#2c2007] rounded-sm flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none"></div>
+                        <span id="dial-val-1" class="cinzel text-2xl md:text-3xl font-black text-[#1a1205]">E</span>
+                    </div>
+                    <button onclick="rotateDial(1, 1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl pt-1 transition-colors"><i class="fa-solid fa-caret-down"></i></button>
+                </div>
+                <!-- Dial 2 (N) -->
+                <div class="flex flex-col items-center">
+                    <button onclick="rotateDial(2, -1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl pb-1 transition-colors"><i class="fa-solid fa-caret-up"></i></button>
+                    <div class="w-10 h-16 md:w-14 md:h-20 dial-drum border-x border-[#2c2007] rounded-sm flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none"></div>
+                        <span id="dial-val-2" class="cinzel text-2xl md:text-3xl font-black text-[#1a1205]">C</span>
+                    </div>
+                    <button onclick="rotateDial(2, 1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl pt-1 transition-colors"><i class="fa-solid fa-caret-down"></i></button>
+                </div>
+                <!-- Dial 3 (D) -->
+                <div class="flex flex-col items-center">
+                    <button onclick="rotateDial(3, -1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl pb-1 transition-colors"><i class="fa-solid fa-caret-up"></i></button>
+                    <div class="w-10 h-16 md:w-14 md:h-20 dial-drum border-x border-[#2c2007] rounded-sm flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none"></div>
+                        <span id="dial-val-3" class="cinzel text-2xl md:text-3xl font-black text-[#1a1205]">H</span>
+                    </div>
+                    <button onclick="rotateDial(3, 1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl pt-1 transition-colors"><i class="fa-solid fa-caret-down"></i></button>
+                </div>
+                <!-- Dial 4 (O) -->
+                <div class="flex flex-col items-center">
+                    <button onclick="rotateDial(4, -1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl pb-1 transition-colors"><i class="fa-solid fa-caret-up"></i></button>
+                    <div class="w-10 h-16 md:w-14 md:h-20 dial-drum border-x border-[#2c2007] rounded-sm flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none"></div>
+                        <span id="dial-val-4" class="cinzel text-2xl md:text-3xl font-black text-[#1a1205]">U</span>
+                    </div>
+                    <button onclick="rotateDial(4, 1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl pt-1 transition-colors"><i class="fa-solid fa-caret-down"></i></button>
+                </div>
+                <!-- Dial 5 (N) -->
+                <div class="flex flex-col items-center">
+                    <button onclick="rotateDial(5, -1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl pb-1 transition-colors"><i class="fa-solid fa-caret-up"></i></button>
+                    <div class="w-10 h-16 md:w-14 md:h-20 dial-drum border-x border-[#2c2007] rounded-sm flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none"></div>
+                        <span id="dial-val-5" class="cinzel text-2xl md:text-3xl font-black text-[#1a1205]">P</span>
+                    </div>
+                    <button onclick="rotateDial(5, 1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl pt-1 transition-colors"><i class="fa-solid fa-caret-down"></i></button>
+                </div>
+            </div>
+
+            <button onclick="checkLock()" class="cinzel px-8 py-2.5 bg-gradient-to-b from-victorian-brasslight to-victorian-brass text-victorian-900 font-black tracking-widest shadow-[0_4px_10px_rgba(0,0,0,0.5)] rounded-md hover:brightness-110 active:translate-y-1 transition border border-[#5c440f]">
+                UNLATCH
+            </button>
+            <p id="lock-error-msg" class="text-red-500 font-bold typewriter text-sm h-4 mt-3 opacity-0 transition-opacity tracking-widest">INCORRECT CIPHER</p>
+        </div>
+    </div>
+    <!-- END BRIEFCASE LOCK OVERLAY -->
 
     <!-- Header Bar -->
     <header class="border-b-2 border-victorian-brass/50 bg-victorian-900 shadow-xl sticky top-0 z-30 px-3 py-2.5 sm:px-4 sm:py-3">
@@ -668,6 +761,45 @@
         </div>
     </div>
 
+    <!-- Lock Script -->
+    <script>
+        const lockConfig = [
+            { letters: ['Q', 'X', 'L', 'P', 'A', 'Z'], pos: 0 },
+            { letters: ['E', 'Y', 'S', 'O', 'T', 'R'], pos: 0 },
+            { letters: ['C', 'M', 'B', 'F', 'N', 'D'], pos: 0 },
+            { letters: ['H', 'D', 'W', 'K', 'J', 'G'], pos: 0 },
+            { letters: ['U', 'I', 'E', 'A', 'O', 'Y'], pos: 0 },
+            { letters: ['P', 'R', 'V', 'M', 'L', 'N'], pos: 0 }
+        ];
+
+        function rotateDial(dialIndex, direction) {
+            let dial = lockConfig[dialIndex];
+            dial.pos = (dial.pos + direction + 6) % 6;
+            document.getElementById('dial-val-' + dialIndex).innerText = dial.letters[dial.pos];
+            document.getElementById('lock-error-msg').style.opacity = '0';
+        }
+
+        function checkLock() {
+            const attempt = lockConfig.map(d => d.letters[d.pos]).join('');
+            if (attempt === 'LONDON') {
+                const ls = document.getElementById('lock-screen');
+                ls.style.opacity = '0';
+                ls.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    ls.remove();
+                    document.body.style.overflow = 'auto';
+                }, 700);
+            } else {
+                const err = document.getElementById('lock-error-msg');
+                err.style.opacity = '1';
+                const box = document.getElementById('lock-box');
+                box.classList.remove('shake-anim');
+                void box.offsetWidth; // Trigger reflow for re-animation
+                box.classList.add('shake-anim');
+            }
+        }
+    </script>
+
     <!-- Video & Pagination Scripts -->
     <script>
         // Video Modal Logic
@@ -705,7 +837,10 @@
             // Unload the embedded player so audio and playback stop on every close path.
             modalVideo.removeAttribute('src');
             videoModal.classList.add('hidden');
-            document.body.style.overflow = '';
+            // Check if lock screen is still there before unlocking scroll
+            if(!document.getElementById('lock-screen')) {
+                document.body.style.overflow = '';
+            }
         }
 
         videoModal.addEventListener('click', e => { if (e.target === videoModal) closeVideoModal(); });
