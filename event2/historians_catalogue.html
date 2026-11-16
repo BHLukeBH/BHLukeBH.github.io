@@ -1124,9 +1124,6 @@
         </div>
     </div>
 
-    <!-- Audio element for success sound -->
-    <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" preload="auto"></audio>
-
     <script>
         // --- DATA & CONFIGURATION ---
         const DEFAULT_MODEL_URL = 'https://teachablemachine.withgoogle.com/models/k78k70ASC/';
@@ -1327,6 +1324,57 @@
         let unlockedItems = [];
         let currentlyInspectingId = null;
 
+        // --- SOFT BELL CHIME (Web Audio API) ---
+        let audioCtx = null;
+
+        function unlockAudioContext() {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClass) return;
+            if (!audioCtx) {
+                audioCtx = new AudioContextClass();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume().catch(() => {});
+            }
+        }
+
+        function playSoftBellBing() {
+            try {
+                unlockAudioContext();
+                if (!audioCtx) return;
+
+                const now = audioCtx.currentTime;
+
+                // Warm bell harmonics (A5 fundamental + E6 soft overtone)
+                const partials = [
+                    { freq: 880.0, peak: 0.16, decay: 1.25 },
+                    { freq: 1318.51, peak: 0.055, decay: 0.85 },
+                    { freq: 1760.0, peak: 0.025, decay: 0.55 }
+                ];
+
+                partials.forEach(p => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(p.freq, now);
+
+                    // Gentle 15ms attack so there is no click, followed by smooth decay
+                    gain.gain.setValueAtTime(0.0001, now);
+                    gain.gain.linearRampToValueAtTime(p.peak, now + 0.015);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + p.decay);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(now);
+                    osc.stop(now + p.decay + 0.05);
+                });
+            } catch (e) {
+                console.log('Chime playback skipped:', e);
+            }
+        }
+
         // General Sherlock Notes (Header & Progress Counter)
         const generalSherlockNotes = {
             header: {
@@ -1363,6 +1411,10 @@
         window.onload = function() {
             loadProgress();
             renderGrid();
+            // Preload ML model quietly in the background so first scan doesn't wait on network
+            if (typeof tmImage !== 'undefined') {
+                loadModel().catch(() => {});
+            }
         };
 
         function loadProgress() {
@@ -1510,32 +1562,65 @@
         }
 
         // --- TEACHABLE MACHINE SCANNER (iOS Compatible) ---
-        let model, webcam, maxPredictions;
+        let model, modelLoadPromise, webcam, maxPredictions;
         let scannerActive = false;
         let unlockCooldown = false;
 
-        async function initScanner() {
-            const modelURL = DEFAULT_MODEL_URL + "model.json";
-            const metadataURL = DEFAULT_MODEL_URL + "metadata.json";
+        function loadModel() {
+            if (model) return Promise.resolve(model);
+            if (!modelLoadPromise) {
+                if (typeof tmImage === 'undefined') {
+                    return Promise.reject(new Error("Teachable Machine library not loaded."));
+                }
+                const modelURL = DEFAULT_MODEL_URL + "model.json";
+                const metadataURL = DEFAULT_MODEL_URL + "metadata.json";
+                modelLoadPromise = tmImage.load(modelURL, metadataURL)
+                    .then(loaded => {
+                        model = loaded;
+                        maxPredictions = model.getTotalClasses();
+                        return model;
+                    })
+                    .catch(err => {
+                        modelLoadPromise = null;
+                        throw err;
+                    });
+            }
+            return modelLoadPromise;
+        }
 
+        async function initScanner() {
             document.getElementById('scanner-message').innerHTML = `
                 <i class="fas fa-circle-notch fa-spin" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
                 Preparing Investigative Camera...
             `;
 
             try {
-                if (typeof tmImage === 'undefined') {
-                    throw new Error("Teachable Machine library not loaded.");
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    throw new Error("Camera API unavailable in this browser.");
                 }
 
-                model = await tmImage.load(modelURL, metadataURL);
-                maxPredictions = model.getTotalClasses();
+                // Request camera stream immediately within the user gesture while loading model in parallel
+                const streamPromise = navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: "environment" },
+                    audio: false
+                });
+
+                const [stream] = await Promise.all([streamPromise, loadModel()]);
+
+                // If user closed the modal while granting permissions, clean up stream and exit
+                if (!scannerActive) {
+                    stream.getTracks().forEach(track => track.stop());
+                    return;
+                }
 
                 const container = document.getElementById("webcam-container");
                 container.innerHTML = ""; // Clear existing
 
                 // Setup Native Video Element for iOS Safari compatibility
                 const videoElement = document.createElement('video');
+                videoElement.autoplay = true;
+                videoElement.playsInline = true;
+                videoElement.muted = true;
                 videoElement.setAttribute('autoplay', '');
                 videoElement.setAttribute('playsinline', '');
                 videoElement.setAttribute('muted', '');
@@ -1545,24 +1630,30 @@
                 
                 container.appendChild(videoElement);
 
-                // Request camera stream (environment / back camera)
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: "environment" },
-                    audio: false
-                });
-                
-                videoElement.srcObject = stream;
-                
+                // Attach readiness handlers BEFORE assigning srcObject, plus a timeout fallback
+                // so iOS Safari never hangs after the native permission dialog closes
                 await new Promise((resolve) => {
-                    videoElement.onloadedmetadata = () => {
-                        resolve();
+                    let resolved = false;
+                    const done = () => {
+                        if (!resolved) {
+                            resolved = true;
+                            resolve();
+                        }
                     };
+                    videoElement.onloadedmetadata = done;
+                    videoElement.oncanplay = done;
+                    videoElement.srcObject = stream;
+                    if (videoElement.readyState >= 1) {
+                        done();
+                    }
+                    setTimeout(done, 1000);
                 });
 
-                videoElement.play();
+                await videoElement.play().catch(() => {});
+
                 webcam = {
                     canvas: videoElement,
-                    play: () => videoElement.play(),
+                    play: () => videoElement.play().catch(() => {}),
                     pause: () => videoElement.pause(),
                     stop: () => {
                         const tracks = stream.getTracks();
@@ -1599,13 +1690,16 @@
 
         async function loop() {
             if (!scannerActive) return;
-            webcam.play();
+            if (webcam && webcam.canvas && webcam.canvas.paused) {
+                webcam.play();
+            }
             await predict();
             window.requestAnimationFrame(loop);
         }
 
         async function predict() {
             if (unlockCooldown) return;
+            if (!webcam || !webcam.canvas || webcam.canvas.readyState < 2) return;
 
             const prediction = await model.predict(webcam.canvas);
             
@@ -1659,7 +1753,7 @@
             if (matchedItem && !unlockedItems.includes(matchedItem.id)) {
                 unlockCooldown = true;
                 
-                document.getElementById('success-sound').play().catch(e=>console.log(e));
+                playSoftBellBing();
 
                 unlockedItems.push(matchedItem.id);
                 saveProgress();
@@ -1675,6 +1769,7 @@
         }
 
         function openScannerModal() {
+            unlockAudioContext();
             scannerActive = true;
             unlockCooldown = false;
             document.getElementById('scanner-modal').classList.add('active');
