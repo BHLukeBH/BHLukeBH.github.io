@@ -70,6 +70,16 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
+        .dial-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            line-height: 1;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+        }
         @keyframes shakeLock {
             0%, 100% { transform: translateX(0); }
             20%, 60% { transform: translateX(-5px); }
@@ -328,8 +338,8 @@
                 <div class="flex flex-col items-center">
                     <button type="button" onclick="rotateDial(0, -1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl px-1.5 py-1 transition-colors"><i class="fa-solid fa-caret-up"></i></button>
                     <div class="w-10 h-16 md:w-14 md:h-20 dial-drum border-x border-[#2c2007] rounded-sm flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none"></div>
-                        <span id="dial-val-0" class="cinzel text-2xl md:text-3xl font-black text-[#1a1205]">Q</span>
+                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none z-10"></div>
+                        <span id="dial-val-0" class="dial-letter cinzel text-2xl md:text-3xl font-black text-[#1a1205]">Q</span>
                     </div>
                     <button type="button" onclick="rotateDial(0, 1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl px-1.5 py-1 transition-colors"><i class="fa-solid fa-caret-down"></i></button>
                 </div>
@@ -337,8 +347,8 @@
                 <div class="flex flex-col items-center">
                     <button type="button" onclick="rotateDial(1, -1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl px-1.5 py-1 transition-colors"><i class="fa-solid fa-caret-up"></i></button>
                     <div class="w-10 h-16 md:w-14 md:h-20 dial-drum border-x border-[#2c2007] rounded-sm flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none"></div>
-                        <span id="dial-val-1" class="cinzel text-2xl md:text-3xl font-black text-[#1a1205]">E</span>
+                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none z-10"></div>
+                        <span id="dial-val-1" class="dial-letter cinzel text-2xl md:text-3xl font-black text-[#1a1205]">E</span>
                     </div>
                     <button type="button" onclick="rotateDial(1, 1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl px-1.5 py-1 transition-colors"><i class="fa-solid fa-caret-down"></i></button>
                 </div>
@@ -346,8 +356,8 @@
                 <div class="flex flex-col items-center">
                     <button type="button" onclick="rotateDial(2, -1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl px-1.5 py-1 transition-colors"><i class="fa-solid fa-caret-up"></i></button>
                     <div class="w-10 h-16 md:w-14 md:h-20 dial-drum border-x border-[#2c2007] rounded-sm flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none"></div>
-                        <span id="dial-val-2" class="cinzel text-2xl md:text-3xl font-black text-[#1a1205]">C</span>
+                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none z-10"></div>
+                        <span id="dial-val-2" class="dial-letter cinzel text-2xl md:text-3xl font-black text-[#1a1205]">C</span>
                     </div>
                     <button type="button" onclick="rotateDial(2, 1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl px-1.5 py-1 transition-colors"><i class="fa-solid fa-caret-down"></i></button>
                 </div>
@@ -355,8 +365,8 @@
                 <div class="flex flex-col items-center">
                     <button type="button" onclick="rotateDial(3, -1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl px-1.5 py-1 transition-colors"><i class="fa-solid fa-caret-up"></i></button>
                     <div class="w-10 h-16 md:w-14 md:h-20 dial-drum border-x border-[#2c2007] rounded-sm flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none"></div>
-                        <span id="dial-val-3" class="cinzel text-2xl md:text-3xl font-black text-[#1a1205]">H</span>
+                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none z-10"></div>
+                        <span id="dial-val-3" class="dial-letter cinzel text-2xl md:text-3xl font-black text-[#1a1205]">H</span>
                     </div>
                     <button type="button" onclick="rotateDial(3, 1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl px-1.5 py-1 transition-colors"><i class="fa-solid fa-caret-down"></i></button>
                 </div>
@@ -364,8 +374,8 @@
                 <div class="flex flex-col items-center">
                     <button type="button" onclick="rotateDial(4, -1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl px-1.5 py-1 transition-colors"><i class="fa-solid fa-caret-up"></i></button>
                     <div class="w-10 h-16 md:w-14 md:h-20 dial-drum border-x border-[#2c2007] rounded-sm flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none"></div>
-                        <span id="dial-val-4" class="cinzel text-2xl md:text-3xl font-black text-[#1a1205]">U</span>
+                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none z-10"></div>
+                        <span id="dial-val-4" class="dial-letter cinzel text-2xl md:text-3xl font-black text-[#1a1205]">U</span>
                     </div>
                     <button type="button" onclick="rotateDial(4, 1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl px-1.5 py-1 transition-colors"><i class="fa-solid fa-caret-down"></i></button>
                 </div>
@@ -373,8 +383,8 @@
                 <div class="flex flex-col items-center">
                     <button type="button" onclick="rotateDial(5, -1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl px-1.5 py-1 transition-colors"><i class="fa-solid fa-caret-up"></i></button>
                     <div class="w-10 h-16 md:w-14 md:h-20 dial-drum border-x border-[#2c2007] rounded-sm flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none"></div>
-                        <span id="dial-val-5" class="cinzel text-2xl md:text-3xl font-black text-[#1a1205]">P</span>
+                        <div class="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.15)_2px,rgba(0,0,0,0.15)_4px)] pointer-events-none z-10"></div>
+                        <span id="dial-val-5" class="dial-letter cinzel text-2xl md:text-3xl font-black text-[#1a1205]">P</span>
                     </div>
                     <button type="button" onclick="rotateDial(5, 1)" class="text-victorian-brass hover:text-victorian-brasslight text-2xl px-1.5 py-1 transition-colors"><i class="fa-solid fa-caret-down"></i></button>
                 </div>
@@ -386,6 +396,14 @@
             <p id="lock-error-msg" class="text-red-500 font-bold typewriter text-sm h-4 mt-3 opacity-0 transition-opacity tracking-widest">INCORRECT CIPHER</p>
         </div>
     </div>
+    <script>
+        try {
+            if (localStorage.getItem('lestrade_dossier_unlocked') === 'true') {
+                document.getElementById('lock-screen').remove();
+                document.body.style.overflow = '';
+            }
+        } catch (e) {}
+    </script>
     <!-- END BRIEFCASE LOCK OVERLAY -->
 
     <!-- Header Bar -->
@@ -781,13 +799,17 @@
         function rotateDial(dialIndex, direction) {
             let dial = lockConfig[dialIndex];
             dial.pos = (dial.pos + direction + 6) % 6;
-            document.getElementById('dial-val-' + dialIndex).innerText = dial.letters[dial.pos];
+            const el = document.getElementById('dial-val-' + dialIndex);
+            el.textContent = dial.letters[dial.pos];
             document.getElementById('lock-error-msg').style.opacity = '0';
         }
 
         function checkLock() {
             const attempt = lockConfig.map(d => d.letters[d.pos]).join('');
             if (attempt === 'LONDON') {
+                try {
+                    localStorage.setItem('lestrade_dossier_unlocked', 'true');
+                } catch (e) {}
                 const ls = document.getElementById('lock-screen');
                 ls.style.opacity = '0';
                 ls.style.pointerEvents = 'none';
@@ -843,7 +865,9 @@
             // Unload the embedded player so audio and playback stop on every close path.
             modalVideo.removeAttribute('src');
             videoModal.classList.add('hidden');
-            document.body.style.overflow = '';
+            if (!document.getElementById('lock-screen')) {
+                document.body.style.overflow = '';
+            }
         }
 
         videoModal.addEventListener('click', e => { if (e.target === videoModal) closeVideoModal(); });
