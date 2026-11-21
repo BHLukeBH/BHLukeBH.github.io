@@ -594,7 +594,6 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2 shrink-0">
-                        <span class="rubber-stamp">CONFIDENTIAL</span>
                         <span class="rubber-stamp rubber-stamp-brass hidden xs:inline-block">EVIDENCE FILE</span>
                     </div>
                 </div>
@@ -606,9 +605,8 @@
 
                     <div class="flex justify-between items-center mb-2 px-1">
                         <span class="text-[11px] font-bold cinzel text-amber-950 tracking-wider uppercase flex items-center gap-1.5">
-                            <i class="fa-solid fa-users-viewfinder text-amber-800"></i> Select Suspect Photo to Discuss
+                            <i class="fa-solid fa-users-viewfinder text-amber-800"></i> Select witness to ask a question
                         </span>
-                        <span class="handwriting text-sm text-red-900 font-bold">"Witnesses sequestered in designated rooms"</span>
                     </div>
 
                     <!-- Horizontal Scroll Container for Polaroids -->
@@ -632,30 +630,16 @@
                                     <svg class="deerstalker-icon"><use href="#icon-deerstalker"></use></svg>
                                 </button>
                             </div>
-                            <!-- Current Room Location Tag -->
-                            <div class="flex items-center gap-1.5 mt-0.5 text-xs text-amber-900 font-serif">
-                                <i class="fa-solid fa-door-open text-[11px] text-amber-800"></i>
-                                <span>Room: <strong id="activeSuspectRoom" class="text-burgundy-700 font-semibold font-sans">The Kitchen & Scullery</strong></span>
-                            </div>
                         </div>
                     </div>
 
                     <div class="text-right shrink-0 flex items-center gap-2 self-end sm:self-center">
-                        <span id="roomTypeBadge" class="text-[10px] font-mono py-0.5 px-2 rounded bg-amber-100 border border-amber-300 text-amber-900 uppercase">
-                            Room Location
-                        </span>
                         <span class="rubber-stamp text-[10px] py-0.5 px-2">IN CUSTODY</span>
                     </div>
                 </section>
 
                 <section class="bg-burgundy-950 border-2 border-burgundy-800 rounded-xl p-2.5 sm:p-3 shadow-2xl flex flex-col mb-4 relative z-10">
                     <div id="videoContainer" class="video-container rounded-lg aspect-video flex items-center justify-center relative room-stage-kitchen">
-                        
-                        <!-- Room Watermark Banner in Video Stage -->
-                        <div class="absolute bottom-2.5 left-2.5 z-20 pointer-events-none bg-burgundy-950/85 backdrop-blur px-2.5 py-1 rounded border border-burgundy-brass/40 text-[10px] text-burgundy-paper font-mono flex items-center gap-1.5 shadow">
-                            <i id="roomIcon" class="fa-solid fa-utensils text-burgundy-brass text-xs"></i>
-                            <span id="videoRoomBadge">LOCATION: THE KITCHEN & SCULLERY</span>
-                        </div>
 
                         <!-- YouTube Video Player -->
                         <iframe id="videoPlayer" class="w-full h-full border-0 hidden" title="Witness statement"
@@ -669,7 +653,7 @@
                             </div>
                             <h3 id="placeholderTitle" class="cinzel text-base text-burgundy-paper font-semibold">Ready for Discussion</h3>
                             <p id="placeholderSubtitle" class="text-xs text-burgundy-paperdark/90 max-w-sm mt-1">
-                                Enter a question below to speak with <span id="placeholderSuspectName" class="text-burgundy-brass font-semibold">Lady Persimma Sterling</span> in <span id="placeholderRoomName" class="text-burgundy-paper underline font-semibold">The Kitchen & Scullery</span>.
+                                Enter a question below to speak with <span id="placeholderSuspectName" class="text-burgundy-brass font-semibold">Lady Persimma Sterling</span>.
                             </p>
                         </div>
 
@@ -738,13 +722,13 @@
                     </div>
                 </section>
 
-                <!-- Collapsible Interrogation Tips Drawer -->
+                <!-- Collapsible Questioning Tips Drawer -->
                 <section class="bg-[#f2e7d3]/80 rounded-xl border border-amber-900/20 overflow-hidden mb-2 relative z-10">
                     <details class="group">
                         <summary class="flex justify-between items-center p-3 cursor-pointer list-none select-none hover:bg-amber-200/40 transition">
                             <div class="flex items-center gap-2 text-xs font-semibold text-amber-950">
                                 <i class="fa-solid fa-lightbulb text-amber-700"></i>
-                                <span>Interrogation Tips & Phrasing</span>
+                                <span>Questioning Tips & Phrasing</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <!-- Phrasing Sherlock Button -->
@@ -784,7 +768,7 @@
                 <div class="sherlock-seal-group">
                     <div class="sherlock-seal">S.H.</div>
                     <div class="sherlock-header-text">
-                        <h3 id="sherlockNoteTitle">CONFIDENTIAL DISPATCH</h3>
+                        <h3 id="sherlockNoteTitle">DISPATCH</h3>
                         <span>Encoded Transmission — For Fellow Detectives</span>
                     </div>
                 </div>
@@ -1315,8 +1299,8 @@
                 content: `
                     <p>スターリング家の誇り高き当主夫人だ。彼女のような身分の高い婦人は、家族の秘密や不名誉を何よりも覆い隠そうとするものだ。</p>
                     <div class="sherlock-clue-box">
-                        <strong>【観察のポイント — 料理室 (The Kitchen & Scullery)】</strong>
-                        彼女は料理室に退避している。貴族としての体面を保とうとする彼女の言葉の端々に耳を澄ませたまえ。
+                        <strong>【観察のポイント】</strong>
+                        貴族としての体面を保とうとする彼女の言葉の端々に耳を澄ませたまえ。
                     </div>
                     <p><strong>英語表現の手がかり:</strong></p>
                     <ul class="sherlock-vocab-list">
@@ -1333,8 +1317,8 @@
                 content: `
                     <p>屋敷の若き後継者アーチボルドだ。自信ありげに振る舞っているが、家の財政事情や父親の遺産については強いプレッシャーを抱えているようだ。</p>
                     <div class="sherlock-clue-box">
-                        <strong>【観察のポイント — 書斎・図書室 (The Library & Study)】</strong>
-                        彼は書斎や屋敷内の美術品、調度品の変化に敏感だ。彼が何に気付き、何を隠そうとしているかを探りたまえ。
+                        <strong>【観察のポイント】</strong>
+                        彼は屋敷内の美術品や調度品の変化に敏感だ。彼が何に気付き、何を隠そうとしているかを探りたまえ。
                     </div>
                     <p><strong>英語表現の手がかり:</strong></p>
                     <ul class="sherlock-vocab-list">
@@ -1351,8 +1335,8 @@
                 content: `
                     <p>かつて我が友ワトソンと共にアフガニスタンの激戦を生き延びた退役軍人だ。その胸には癒えぬ傷と、戦場で失った仲間への強い情念が渦巻いている。</p>
                     <div class="sherlock-clue-box">
-                        <strong>【観察のポイント — 銃器室・撞球室 (The Billiard & Gun Room)】</strong>
-                        銃器が並ぶこの部屋で、戦場での記憶を語る彼の言葉には深い痛みが滲み出ている。軍務の記憶を丁寧に紐解くのだ。
+                        <strong>【観察のポイント】</strong>
+                        戦場での記憶を語る彼の言葉には深い痛みが滲み出ている。軍務の記憶を丁寧に紐解くのだ。
                     </div>
                     <p><strong>英語表現の手がかり:</strong></p>
                     <ul class="sherlock-vocab-list">
@@ -1369,7 +1353,7 @@
                 content: `
                     <p>屋敷に仕える女中メイプルだ。貴族たちは使用人の存在を意識せずに行動するため、彼女は館内で起きた奇妙な物音や人の動きを最もよく見聞きしている。</p>
                     <div class="sherlock-clue-box">
-                        <strong>【観察のポイント — 使用人室・回廊 (The Servants\' Hall & Gallery)】</strong>
+                        <strong>【観察のポイント】</strong>
                         使用人としての彼女の視線は、住人たちが気付かない細かな変化を捉えている。屋敷内での日常の観察に注目せよ。
                     </div>
                     <p><strong>英語表現の手がかり:</strong></p>
@@ -1387,8 +1371,8 @@
                 content: `
                     <p>事件の夜に晩餐へ招かれていた客人のエヴリンだ。彼女は軍人たちの間で起きた激しい口論を目撃した最後の人物の一人である。</p>
                     <div class="sherlock-clue-box">
-                        <strong>【観察のポイント — 客間・食堂 (The Drawing & Dining Room)】</strong>
-                        華やかな客間に座りながらも、彼女はこの館の過去と人間関係について驚くほど深く通じているようだ。
+                        <strong>【観察のポイント】</strong>
+                        彼女はこの館の過去と人間関係について驚くほど深く通じているようだ。
                     </div>
                     <p><strong>英語表現の手がかり:</strong></p>
                     <ul class="sherlock-vocab-list">
@@ -1405,14 +1389,14 @@
                 title: "容疑者たちとの対話の進め方について",
                 salutation: "My Fellow Detectives,",
                 content: `
-                    <p>事件の真相を解き明かすためには、各部屋に控える容疑者たちの言葉に潜む「鍵」を見つけ出さねばならない。</p>
+                    <p>事件の真相を解き明かすためには、容疑者たちの言葉に潜む「鍵」を見つけ出さねばならない。</p>
                     <div class="sherlock-clue-box">
                         <strong>【対話の手順】</strong>
                         1. 上のポートレート一覧から対話したい容疑者を選択する。<br>
                         2. 下の入力欄に、歴史編纂官の目録や現場で目にした<strong>物・人名・地名・日付</strong>を入力して質問する。<br>
                         3. 容疑者がその話題に心当たりを持っていれば、録画された証言が再生される。
                     </div>
-                    <p>もし容疑者が「心当たりがない」と答えたとしても、失望してはならない。それはその話題が別の部屋の容疑者にとっての急所であることを意味しているのだ。</p>
+                    <p>もし容疑者が「心当たりがない」と答えたとしても、失望してはならない。それはその話題が別の容疑者にとっての急所であることを意味しているのだ。</p>
                 `
             },
             phrasing: {
@@ -1474,24 +1458,12 @@
             const nameEl = document.getElementById('activeSuspectName');
             const avatarEl = document.getElementById('activeSuspectAvatar');
             const placeholderSuspectName = document.getElementById('placeholderSuspectName');
-            const roomEl = document.getElementById('activeSuspectRoom');
-            const placeholderRoomName = document.getElementById('placeholderRoomName');
-            const videoRoomBadge = document.getElementById('videoRoomBadge');
-            const roomIcon = document.getElementById('roomIcon');
             const videoContainer = document.getElementById('videoContainer');
             const pageBody = document.getElementById('pageBody');
 
             if (nameEl) nameEl.innerText = suspect.name;
             if (avatarEl) avatarEl.src = suspect.avatar;
             if (placeholderSuspectName) placeholderSuspectName.innerText = suspect.name;
-            if (roomEl) roomEl.innerText = suspect.room;
-            if (placeholderRoomName) placeholderRoomName.innerText = suspect.room;
-            if (videoRoomBadge) videoRoomBadge.innerText = `LOCATION: ${suspect.room.toUpperCase()}`;
-
-            // Update room icon
-            if (roomIcon) {
-                roomIcon.className = `fa-solid ${suspect.roomIcon} text-burgundy-brass text-xs`;
-            }
 
             // Update video container stage room background
             if (videoContainer) {
@@ -1520,7 +1492,7 @@
             document.getElementById('videoBadgeState').innerText = 'STANDBY';
             document.getElementById('currentTopicDisplay').innerText = 'None';
             document.getElementById('transcriptStatusBadge').innerText = 'Awaiting Query';
-            document.getElementById('transcriptText').innerText = `Select a topic or type a question to speak with ${suspect.name} in ${suspect.room}...`;
+            document.getElementById('transcriptText').innerText = `Select a topic or type a question to speak with ${suspect.name}...`;
 
             renderDiscoveredTopics();
             renderSuspectList();
@@ -1698,7 +1670,7 @@
                                 itemEl.className = 'p-3 bg-amber-50 border border-amber-900/20 rounded-lg text-xs shadow-sm';
                                 itemEl.innerHTML = `
                                     <div class="flex justify-between items-center text-amber-950 font-bold mb-1">
-                                        <span class="cinzel">${s.name} <span class="text-[10px] font-normal text-amber-800 font-sans">(${s.room})</span></span>
+                                        <span class="cinzel">${s.name}</span>
                                         <span class="text-[10px] bg-amber-200/80 text-amber-900 px-2 py-0.5 rounded border border-amber-300 font-mono">${stmt.title}</span>
                                     </div>
                                     <p class="text-amber-950 typewriter italic">"${stmt.transcript}"</p>
