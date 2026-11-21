@@ -704,6 +704,96 @@
                                     <span>Verdict: Watson's Guilt Proven</span>
                                 </div>
                             </div>
+
+                            <!-- Sherlock's Handwritten Note -->
+                            <div class="mt-8 pl-2 sm:pl-6 transform -rotate-1 relative z-20">
+                                <p class="handwriting text-2xl sm:text-3xl text-blue-950 leading-relaxed font-semibold">
+                                    "Lestrade’s interviews seem incomplete. Have you tried asking the witnesses about <a href="#" onclick="turnNotebookPage(1); return false;" class="text-blue-800 underline decoration-blue-900/70 hover:text-blue-600 transition cursor-pointer font-bold">all the key evidence</a>? - Sherlock"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAGE 7: Sherlock's Final Overview & Key Evidence Index -->
+                <div class="notebook-page" id="page-7">
+                    <div class="dossier-paper rounded-lg p-4 sm:p-8 sm:pl-16 relative text-amber-950">
+                        <div class="border-b-2 border-amber-900/30 pb-3 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 relative z-10">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="typewriter text-xs uppercase tracking-widest text-blue-950 font-bold">Consulting Detective's Review</span>
+                                    <span class="rubber-stamp text-[10px] py-0.5 px-2" style="border-color: #1e3a8a; color: #1e3a8a; transform: rotate(3deg);">SHERLOCK HOLMES</span>
+                                </div>
+                                <h2 class="cinzel text-lg sm:text-2xl font-black text-amber-950">Overview of the Witnesses & Key Evidence</h2>
+                                <div class="filigree-divider sm:justify-start">
+                                    <i class="fa-solid fa-circle text-[5px]"></i>
+                                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                                    <i class="fa-solid fa-circle text-[5px]"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6 relative z-10">
+                            <div class="p-4 bg-[#f3f6fb] rounded-lg border border-blue-900/30 relative shadow-sm">
+                                <div class="paperclip"></div>
+                                <p class="handwriting text-xl sm:text-2xl text-blue-950 leading-snug pl-4">
+                                    "Lestrade hears only what confirms his own prejudice. A true investigator cross-examines every witness against the physical facts. Below is the complete ledger of evidence—ensure you have questioned each witness accordingly before drawing your final conclusion."
+                                </p>
+                                <div class="text-right handwriting text-xl text-blue-950 font-bold mt-1">— S. Holmes</div>
+                            </div>
+
+                            <div class="bg-[#fdfbf7] rounded-xl border border-amber-900/25 shadow-md overflow-hidden">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="bg-amber-900/10 border-b-2 border-amber-900/25 text-amber-950 cinzel text-xs sm:text-sm font-black uppercase tracking-wider">
+                                            <th class="py-3 px-4 w-[48%]">Key Evidence</th>
+                                            <th class="py-3 px-4 w-[52%]">Witnesses to Question</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-amber-900/15 text-xs sm:text-sm">
+                                        <tr class="hover:bg-amber-100/40 transition">
+                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Gun / Revolver / Smith &amp; Wesson</td>
+                                            <td class="py-3 px-4 font-medium text-amber-900">Lady Persimma Sterling, Silas Thorne</td>
+                                        </tr>
+                                        <tr class="hover:bg-amber-100/40 transition bg-amber-50/40">
+                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Deer Head</td>
+                                            <td class="py-3 px-4 font-medium text-amber-900">Lady Persimma Sterling, Archibald Sterling</td>
+                                        </tr>
+                                        <tr class="hover:bg-amber-100/40 transition">
+                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Sign-up Paper / Torn Paper</td>
+                                            <td class="py-3 px-4 font-medium text-amber-900">Lady Persimma Sterling, Archibald Sterling</td>
+                                        </tr>
+                                        <tr class="hover:bg-amber-100/40 transition bg-amber-50/40">
+                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Paris / Ticket / Grand Tour</td>
+                                            <td class="py-3 px-4 font-medium text-amber-900">Lady Persimma Sterling, Archibald Sterling, Evelyn Ashgrove</td>
+                                        </tr>
+                                        <tr class="hover:bg-amber-100/40 transition">
+                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Statue / The Thinker</td>
+                                            <td class="py-3 px-4 font-medium text-amber-900">Archibald Sterling, Maple Strand</td>
+                                        </tr>
+                                        <tr class="hover:bg-amber-100/40 transition bg-amber-50/40">
+                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Jezail / Rifle</td>
+                                            <td class="py-3 px-4 font-medium text-amber-900">Archibald Sterling, Silas Thorne</td>
+                                        </tr>
+                                        <tr class="hover:bg-amber-100/40 transition">
+                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Debt Letter / Money / Debt</td>
+                                            <td class="py-3 px-4 font-medium text-amber-900">Archibald Sterling, Maple Strand</td>
+                                        </tr>
+                                        <tr class="hover:bg-amber-100/40 transition bg-amber-50/40">
+                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Retreat / 26th July / 27th July</td>
+                                            <td class="py-3 px-4 font-medium text-amber-900">Silas Thorne, Evelyn Ashgrove</td>
+                                        </tr>
+                                        <tr class="hover:bg-amber-100/40 transition">
+                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Hunting Party / Photo / Brother</td>
+                                            <td class="py-3 px-4 font-medium text-amber-900">Silas Thorne, Evelyn Ashgrove</td>
+                                        </tr>
+                                        <tr class="hover:bg-amber-100/40 transition bg-amber-50/40">
+                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Memoirs / Maiwand / War Documents</td>
+                                            <td class="py-3 px-4 font-medium text-amber-900">Maple Strand, Evelyn Ashgrove</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -865,7 +955,7 @@
 
         // Advanced Page Turning Logic
         let currentNotebookPage = 1;
-        const totalNotebookPages = 6;
+        const totalNotebookPages = 7;
         let isAnimating = false; // Prevents button spamming during flip
 
         function turnNotebookPage(direction) {
