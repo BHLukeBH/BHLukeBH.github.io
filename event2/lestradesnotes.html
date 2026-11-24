@@ -11,7 +11,7 @@
     <!-- Google Fonts: Cinzel, Special Elite, Caveat, Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Cinzel:wght@600;700;900&amp;family=Inter:wght@400;500;600&amp;family=Special+Elite&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Cinzel:wght@600;700;900&amp;family=Inter:wght@400;500;600&amp;family=Nothing+You+Could+Do&amp;family=Special+Elite&amp;display=swap" rel="stylesheet">
 
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -62,6 +62,7 @@
         .cinzel { font-family: 'Cinzel', serif; }
         .typewriter { font-family: 'Special Elite', monospace; }
         .handwriting { font-family: 'Caveat', cursive; }
+        .sherlock-hand { font-family: 'Nothing You Could Do', cursive; font-weight: 400; color: #000000; }
 
         /* Lock Animation & Styles */
         #lock-screen, #lock-screen button {
@@ -788,8 +789,8 @@
 
                             <!-- Sherlock's Handwritten Note -->
                             <div class="mt-8 pl-2 sm:pl-6 transform -rotate-1 relative z-20">
-                                <p class="handwriting text-2xl sm:text-3xl text-blue-950 leading-relaxed font-semibold">
-                                    "Lestrade’s interviews seem incomplete. Have you tried asking the witnesses about <a href="#" onclick="turnNotebookPage(1); return false;" class="text-blue-800 underline decoration-blue-900/70 hover:text-blue-600 transition cursor-pointer font-bold">all the key evidence</a>? - Sherlock"
+                                <p class="sherlock-hand text-2xl sm:text-3xl text-black leading-relaxed font-normal">
+                                    "Lestrade’s interviews seem incomplete. Have you tried asking the witnesses about <a href="#" onclick="turnNotebookPage(1); return false;" class="text-black underline decoration-black/70 hover:text-neutral-700 transition cursor-pointer font-normal">all the key evidence</a>? - Sherlock"
                                 </p>
                             </div>
                         </div>
@@ -818,10 +819,10 @@
                             <!-- Sherlock's Note -->
                             <div class="p-4 bg-[#f3f6fb] rounded-lg border border-blue-900/30 relative shadow-sm">
                                 <div class="paperclip"></div>
-                                <p class="handwriting text-xl sm:text-2xl text-blue-950 leading-snug pl-4">
+                                <p class="sherlock-hand text-xl sm:text-2xl text-black font-normal leading-snug pl-4">
                                     "Lestrade hears only what confirms his own prejudice. A true investigator cross-examines every witness against the physical facts. Select a piece of key evidence below, then choose a witness to hear their response."
                                 </p>
-                                <div class="text-right handwriting text-xl text-blue-950 font-bold mt-1">— S. Holmes</div>
+                                <div class="text-right sherlock-hand text-xl text-black font-normal mt-1">— S. Holmes</div>
                             </div>
 
                             <!-- STEP 1: Select Keyword / Key Evidence -->
