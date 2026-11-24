@@ -202,6 +202,21 @@
             pointer-events: none;
         }
 
+        .masking-tape {
+            position: absolute;
+            top: -7px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 36px;
+            height: 13px;
+            background: rgba(228, 215, 182, 0.85);
+            border-left: 1px dashed rgba(160, 140, 100, 0.4);
+            border-right: 1px dashed rgba(160, 140, 100, 0.4);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            z-index: 12;
+            pointer-events: none;
+        }
+
         /* Statement Card Base */
         .statement-card {
             background: #fdfbf7;
@@ -239,32 +254,71 @@
             pointer-events: none;
         }
 
-        /* Clickable Witness Video Pill on Review Page */
-        .witness-video-link {
-            display: inline-flex;
+        /* Page 7: Evidence Keyword Selector Buttons */
+        .evidence-keyword-btn {
+            display: flex;
             align-items: center;
-            gap: 0.35rem;
-            padding: 0.2rem 0.55rem;
-            margin: 0.15rem 0.2rem 0.15rem 0;
-            background-color: #f7eedc;
-            border: 1px solid rgba(120, 53, 15, 0.35);
-            border-radius: 0.375rem;
+            justify-content: space-between;
+            gap: 0.5rem;
+            width: 100%;
+            text-align: left;
+            padding: 0.65rem 0.85rem;
+            background-color: #fdfbf7;
+            border: 1.5px solid rgba(120, 53, 15, 0.28);
+            border-radius: 0.5rem;
             color: #451a03;
-            font-weight: 600;
-            font-size: 0.78rem;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-            transition: all 0.15s ease;
+            font-family: 'Special Elite', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+            transition: all 0.18s ease;
             cursor: pointer;
         }
-        .witness-video-link:hover {
-            background-color: #8f1d1d;
-            border-color: #8f1d1d;
-            color: #fdfbf7;
+        .evidence-keyword-btn:hover {
+            border-color: #b88e28;
+            background-color: #faf2e1;
             transform: translateY(-1px);
-            box-shadow: 0 3px 6px rgba(143, 29, 29, 0.25);
+            box-shadow: 0 4px 10px rgba(120, 53, 15, 0.14);
         }
-        .witness-video-link:hover i {
+        .evidence-keyword-btn.selected {
+            background-color: #1e3a8a;
+            border-color: #1e3a8a;
+            color: #fdfbf7;
+            box-shadow: 0 5px 14px rgba(30, 58, 138, 0.3);
+            transform: translateY(-1px);
+        }
+        .evidence-keyword-btn.selected .keyword-check {
+            opacity: 1;
             color: #fde68a;
+        }
+        .evidence-keyword-btn .keyword-check {
+            opacity: 0.25;
+            transition: opacity 0.15s ease;
+        }
+
+        /* Page 7: Witness Portrait Polaroid Cards */
+        .review-witness-card {
+            transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            background: #fdfbf7;
+            border: 1.5px solid #d8cdb8;
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.18);
+            position: relative;
+            transform: rotate(-1.2deg);
+        }
+        .review-witness-card:nth-child(even) { transform: rotate(1.4deg); }
+        .review-witness-card:nth-child(3n) { transform: rotate(-0.6deg); }
+        .review-witness-card:hover {
+            border-color: #8f1d1d;
+            transform: translateY(-5px) rotate(0deg) scale(1.03);
+            box-shadow: 0 10px 20px rgba(143, 29, 29, 0.22);
+            z-index: 15;
+        }
+        .review-witness-card:hover img {
+            filter: grayscale(0%);
+        }
+        .review-witness-card:active {
+            transform: scale(0.98) rotate(0deg);
         }
 
         /* Scrollbar */
@@ -743,7 +797,7 @@
                     </div>
                 </div>
 
-                <!-- PAGE 7: Sherlock's Final Overview & Key Evidence Index -->
+                <!-- PAGE 7: Sherlock's Final Overview & Key Evidence Cross-Examination -->
                 <div class="notebook-page" id="page-7">
                     <div class="dossier-paper rounded-lg p-4 sm:p-8 sm:pl-16 relative text-amber-950">
                         <div class="border-b-2 border-amber-900/30 pb-3 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 relative z-10">
@@ -752,7 +806,7 @@
                                     <span class="typewriter text-xs uppercase tracking-widest text-blue-950 font-bold">Consulting Detective's Review</span>
                                     <span class="rubber-stamp text-[10px] py-0.5 px-2" style="border-color: #1e3a8a; color: #1e3a8a; transform: rotate(3deg);">SHERLOCK HOLMES</span>
                                 </div>
-                                <h2 class="cinzel text-lg sm:text-2xl font-black text-amber-950">Overview of the Witnesses & Key Evidence</h2>
+                                <h2 class="cinzel text-lg sm:text-2xl font-black text-amber-950">Overview of the Witnesses &amp; Key Evidence</h2>
                                 <div class="filigree-divider sm:justify-start">
                                     <i class="fa-solid fa-circle text-[5px]"></i>
                                     <i class="fa-solid fa-magnifying-glass text-xs"></i>
@@ -762,139 +816,51 @@
                         </div>
 
                         <div class="space-y-6 relative z-10">
+                            <!-- Sherlock's Note -->
                             <div class="p-4 bg-[#f3f6fb] rounded-lg border border-blue-900/30 relative shadow-sm">
                                 <div class="paperclip"></div>
                                 <p class="handwriting text-xl sm:text-2xl text-blue-950 leading-snug pl-4">
-                                    "Lestrade hears only what confirms his own prejudice. A true investigator cross-examines every witness against the physical facts. Select any witness beside a piece of evidence below to review their recorded testimony."
+                                    "Lestrade hears only what confirms his own prejudice. A true investigator cross-examines every witness against the physical facts. Select a piece of key evidence below, then choose a witness to hear their response."
                                 </p>
                                 <div class="text-right handwriting text-xl text-blue-950 font-bold mt-1">— S. Holmes</div>
                             </div>
 
-                            <div class="bg-[#fdfbf7] rounded-xl border border-amber-900/25 shadow-md overflow-hidden">
-                                <table class="w-full text-left border-collapse">
-                                    <thead>
-                                        <tr class="bg-amber-900/10 border-b-2 border-amber-900/25 text-amber-950 cinzel text-xs sm:text-sm font-black uppercase tracking-wider">
-                                            <th class="py-3 px-4 w-[44%]">Key Evidence</th>
-                                            <th class="py-3 px-4 w-[56%]">Witnesses to Question (Click to View)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-amber-900/15 text-xs sm:text-sm">
-                                        <tr class="hover:bg-amber-100/30 transition">
-                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Gun / Revolver / Smith &amp; Wesson</td>
-                                            <td class="py-3 px-4">
-                                                <button type="button" onclick="openVideoModal('Lady Persimma Sterling — Gun / Revolver', 'https://youtu.be/p-wrOj1w7vw')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Lady Persimma Sterling
-                                                </button>
-                                                <button type="button" onclick="openVideoModal('Silas Thorne — Gun / Revolver', 'https://youtu.be/761GdQ_ZCTw')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Silas Thorne
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="hover:bg-amber-100/30 transition bg-amber-50/40">
-                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Deer Head</td>
-                                            <td class="py-3 px-4">
-                                                <button type="button" onclick="openVideoModal('Lady Persimma Sterling — Deer Head', 'https://youtu.be/UWYtPfXPIl8')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Lady Persimma Sterling
-                                                </button>
-                                                <button type="button" onclick="openVideoModal('Archibald Sterling — Deer Head', 'https://youtu.be/n6N5ADSIUFw')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Archibald Sterling
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="hover:bg-amber-100/30 transition">
-                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Sign-up Paper / Torn Paper</td>
-                                            <td class="py-3 px-4">
-                                                <button type="button" onclick="openVideoModal('Lady Persimma Sterling — Sign-up Paper / Torn Paper', 'https://youtu.be/-3WLMeqd2ts')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Lady Persimma Sterling
-                                                </button>
-                                                <button type="button" onclick="openVideoModal('Archibald Sterling — Sign-up Paper / Torn Paper', 'https://youtu.be/3OJo4JX-rlE')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Archibald Sterling
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="hover:bg-amber-100/30 transition bg-amber-50/40">
-                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Paris / Ticket / Grand Tour</td>
-                                            <td class="py-3 px-4">
-                                                <button type="button" onclick="openVideoModal('Lady Persimma Sterling — Paris / Ticket / Grand Tour', 'https://youtu.be/khuO0vLY_f0')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Lady Persimma Sterling
-                                                </button>
-                                                <button type="button" onclick="openVideoModal('Archibald Sterling — Paris / Ticket / Grand Tour', 'https://youtu.be/NMsoGMJ-5rY')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Archibald Sterling
-                                                </button>
-                                                <button type="button" onclick="openVideoModal('Evelyn Ashgrove — Paris / Ticket / Grand Tour', 'https://youtu.be/bGkEsbsXDhU')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Evelyn Ashgrove
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="hover:bg-amber-100/30 transition">
-                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Statue / The Thinker</td>
-                                            <td class="py-3 px-4">
-                                                <button type="button" onclick="openVideoModal('Archibald Sterling — Statue / The Thinker', 'https://youtu.be/3eE2jmeiV14')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Archibald Sterling
-                                                </button>
-                                                <button type="button" onclick="openVideoModal('Maple Strand — Statue / The Thinker', 'https://youtu.be/5WRSWXF_WeQ')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Maple Strand
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="hover:bg-amber-100/30 transition bg-amber-50/40">
-                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Jezail / Rifle</td>
-                                            <td class="py-3 px-4">
-                                                <button type="button" onclick="openVideoModal('Archibald Sterling — Jezail / Rifle', 'https://youtu.be/69AeokpPOtk')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Archibald Sterling
-                                                </button>
-                                                <button type="button" onclick="openVideoModal('Silas Thorne — Jezail / Rifle', 'https://youtu.be/iqb0QFep_nI')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Silas Thorne
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="hover:bg-amber-100/30 transition">
-                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Debt Letter / Money / Debt</td>
-                                            <td class="py-3 px-4">
-                                                <button type="button" onclick="openVideoModal('Archibald Sterling — Debt Letter / Money', 'https://youtu.be/Psz0jko-wvI')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Archibald Sterling
-                                                </button>
-                                                <button type="button" onclick="openVideoModal('Maple Strand — Debt Letter / Money', 'https://youtu.be/Gl4KzsJH2Z8')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Maple Strand
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="hover:bg-amber-100/30 transition bg-amber-50/40">
-                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Retreat / 26th July / 27th July</td>
-                                            <td class="py-3 px-4">
-                                                <button type="button" onclick="openVideoModal('Silas Thorne — Retreat / 26th & 27th July', 'https://youtu.be/aIJqSCZx-SM')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Silas Thorne
-                                                </button>
-                                                <button type="button" onclick="openVideoModal('Evelyn Ashgrove — Retreat / 26th & 27th July', 'https://youtu.be/1YH2xuFDEdI')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Evelyn Ashgrove
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="hover:bg-amber-100/30 transition">
-                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Hunting Party / Photo / Brother</td>
-                                            <td class="py-3 px-4">
-                                                <button type="button" onclick="openVideoModal('Silas Thorne — Hunting Party / Photo / Brother', 'https://youtu.be/IlTx4RukAv4?si=vLypXPtHeDuxlEmg')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Silas Thorne
-                                                </button>
-                                                <button type="button" onclick="openVideoModal('Evelyn Ashgrove — Hunting Party / Photo / Brother', 'https://youtu.be/B9p5WBDmbMI')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Evelyn Ashgrove
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="hover:bg-amber-100/30 transition bg-amber-50/40">
-                                            <td class="py-3 px-4 typewriter font-bold text-amber-950">Memoirs / Maiwand / War Documents</td>
-                                            <td class="py-3 px-4">
-                                                <button type="button" onclick="openVideoModal('Maple Strand — Memoirs / Maiwand / War Documents', 'https://youtu.be/i2UXeBOx8gg')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Maple Strand
-                                                </button>
-                                                <button type="button" onclick="openVideoModal('Evelyn Ashgrove — Memoirs / Maiwand / War Documents', 'https://youtu.be/y8usSB_xaQE')" class="witness-video-link">
-                                                    <i class="fa-solid fa-circle-play text-red-800"></i> Evelyn Ashgrove
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <!-- STEP 1: Select Keyword / Key Evidence -->
+                            <section id="evidenceSelectorBox" class="bg-[#fdfbf7] rounded-xl border border-amber-900/25 p-4 shadow-md relative">
+                                <div class="staple" style="top: 8px; left: 16px; transform: rotate(-4deg);"></div>
+                                <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2 border-b border-amber-900/20">
+                                    <span class="cinzel text-xs sm:text-sm font-black uppercase tracking-wider text-amber-950 flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-blue-950 text-amber-100 text-[11px] flex items-center justify-center font-mono">1</span>
+                                        Select Key Evidence
+                                    </span>
+                                    <span id="selectedEvidenceBadge" class="text-[11px] font-mono text-amber-900/80 bg-amber-100/80 px-2.5 py-0.5 rounded border border-amber-900/20">
+                                        None selected
+                                    </span>
+                                </div>
+                                <div id="reviewKeywordGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+                            </section>
+
+                            <!-- STEP 2: Select Witness to Ask -->
+                            <section class="bg-[#f2e7d3]/85 rounded-xl border border-amber-900/25 p-4 shadow-inner relative">
+                                <div class="staple" style="top: 8px; left: 16px; transform: rotate(-5deg);"></div>
+                                <div class="staple" style="top: 8px; right: 16px; transform: rotate(7deg);"></div>
+
+                                <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2 border-b border-amber-900/20">
+                                    <span class="cinzel text-xs sm:text-sm font-black uppercase tracking-wider text-amber-950 flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-full bg-red-900 text-amber-100 text-[11px] flex items-center justify-center font-mono">2</span>
+                                        Select Witness to Ask a Question
+                                    </span>
+                                    <span id="witnessPromptHint" class="text-[11px] typewriter text-red-900 font-bold opacity-0 transition-opacity">
+                                        Select a piece of evidence first!
+                                    </span>
+                                </div>
+
+                                <div id="reviewWitnessGrid" class="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-1">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+                            </section>
                         </div>
                     </div>
                 </div>
@@ -1001,7 +967,7 @@
         }
     </script>
 
-    <!-- Video & Pagination Scripts -->
+    <!-- Video, Page 7 Cross-Examination & Pagination Scripts -->
     <script>
         // Video Modal Logic
         const videoModal = document.getElementById('videoModal');
@@ -1053,6 +1019,287 @@
                 }
             });
         });
+
+        // --- PAGE 7: CROSS-EXAMINATION DATA & LOGIC (Synced with questioning_room.html) ---
+        const reviewWitnesses = {
+            persimma: {
+                id: 'persimma',
+                name: 'Lady Persimma Sterling',
+                shortName: 'Lady Persimma',
+                avatar: './event2images/persimma.jpg',
+                genericVideos: [
+                    'https://youtu.be/_YvYdu_8OV0',
+                    'https://youtu.be/3edphkrg5fI',
+                    'https://youtu.be/DyBRfaa14UE'
+                ]
+            },
+            archibald: {
+                id: 'archibald',
+                name: 'Archibald Sterling',
+                shortName: 'Archibald',
+                avatar: './event2images/archibald.jpg',
+                genericVideos: [
+                    'https://youtu.be/uyXCh2K-hzo',
+                    'https://youtu.be/UY4puSMihMQ'
+                ]
+            },
+            silas: {
+                id: 'silas',
+                name: 'Silas Thorne',
+                shortName: 'Silas',
+                avatar: './event2images/silas.jpg',
+                genericVideos: [
+                    'https://youtu.be/EvlqwPkwajk',
+                    'https://youtu.be/eKbZOClBhE8'
+                ]
+            },
+            maple: {
+                id: 'maple',
+                name: 'Maple Strand',
+                shortName: 'Maple',
+                avatar: './event2images/maple.jpg',
+                genericVideos: [
+                    'https://youtu.be/Yr_DNT3b_dU',
+                    'https://youtu.be/D9n5pk7VBVE'
+                ]
+            },
+            evelyn: {
+                id: 'evelyn',
+                name: 'Evelyn Ashgrove',
+                shortName: 'Evelyn',
+                avatar: './event2images/evelyn.jpg',
+                genericVideos: [
+                    'https://youtu.be/uAyjuV91FsE',
+                    'https://youtu.be/sxfcRuYgNRY'
+                ]
+            }
+        };
+
+        const reviewReferralVideos = {
+            persimma: {
+                archibald: 'https://youtu.be/bhAgv7wrJe8?si=Qanej-HWe6HweEuZ',
+                silas: 'https://youtu.be/60uc05nISY0?si=pilPX7mDoRfJ_qp5',
+                maple: 'https://youtu.be/G9YFDYj-XlY?si=9Hdkh7VkZ-4J-WSk',
+                evelyn: 'https://youtu.be/sl_S1v2hkj0?si=hHJjNMS4UnVi5_Ve'
+            },
+            archibald: {
+                persimma: 'https://youtu.be/m6_MONp5hXg?si=SLW_8aQONdsS3Nkx',
+                silas: 'https://youtu.be/mWnKAfO5mDo?si=Nh1NKk6WiNZrBqFw',
+                maple: 'https://youtu.be/v0mcObDnG2U?si=62cUYbPZ3eIrFcUM',
+                evelyn: 'https://youtu.be/rWI0k4xsXU4?si=uhcYOcr1JvKQkWNh'
+            },
+            silas: {
+                persimma: 'https://youtu.be/vRJBNCRtQdw?si=W7FgWs_tOir9400n',
+                archibald: 'https://youtu.be/z5WxLjAGsY0?si=oLtpSJ2mq63tvJ29',
+                maple: 'https://youtu.be/UVZx7DuGD14?si=4PMLDgr4lLkd8h3l',
+                evelyn: 'https://youtu.be/T-2FMVzxKd4?si=k4uQMoOgwBz4Amb-'
+            },
+            maple: {
+                persimma: 'https://youtu.be/qapI-8iDzDI?si=BPyhfp0UrRkayvp7',
+                archibald: 'https://youtu.be/UE_olHCxAxE?si=f00etvSkY_uV_FLK',
+                silas: 'https://youtu.be/T36RvuUmhfc?si=b_KfEHSAYTbUdPNE',
+                evelyn: 'https://youtu.be/w1-CTYVtXrM?si=9GRJixCFOCAmchtB'
+            },
+            evelyn: {
+                persimma: 'https://youtu.be/2eUqfF1uwkk?si=Zv1rfLQo89jY9Ofc',
+                archibald: 'https://youtu.be/y76GawHsCDg?si=B1i3xu5ii6pB0ATr',
+                silas: 'https://youtu.be/xi5yMUsNSg4?si=0zB43PqE1SL2e3YA',
+                maple: 'https://youtu.be/7TfsdlTc_-c?si=KlccR73_eYEU9wM9'
+            }
+        };
+
+        const reviewEvidenceTopics = [
+            {
+                id: 'gun',
+                label: 'Gun / Revolver / Smith & Wesson',
+                witnesses: ['persimma', 'silas'],
+                videos: {
+                    persimma: 'https://youtu.be/p-wrOj1w7vw',
+                    silas: 'https://youtu.be/761GdQ_ZCTw'
+                }
+            },
+            {
+                id: 'deer',
+                label: 'Deer Head',
+                witnesses: ['persimma', 'archibald'],
+                videos: {
+                    persimma: 'https://youtu.be/UWYtPfXPIl8',
+                    archibald: 'https://youtu.be/n6N5ADSIUFw'
+                }
+            },
+            {
+                id: 'paper',
+                label: 'Sign-up Paper / Torn Paper',
+                witnesses: ['persimma', 'archibald'],
+                videos: {
+                    persimma: 'https://youtu.be/-3WLMeqd2ts',
+                    archibald: 'https://youtu.be/3OJo4JX-rlE'
+                }
+            },
+            {
+                id: 'paris',
+                label: 'Paris / Ticket / Grand Tour',
+                witnesses: ['persimma', 'archibald', 'evelyn'],
+                videos: {
+                    persimma: 'https://youtu.be/khuO0vLY_f0',
+                    archibald: 'https://youtu.be/NMsoGMJ-5rY',
+                    evelyn: 'https://youtu.be/bGkEsbsXDhU'
+                }
+            },
+            {
+                id: 'statue',
+                label: 'Statue / The Thinker',
+                witnesses: ['archibald', 'maple'],
+                videos: {
+                    archibald: 'https://youtu.be/3eE2jmeiV14',
+                    maple: 'https://youtu.be/5WRSWXF_WeQ'
+                }
+            },
+            {
+                id: 'rifle',
+                label: 'Jezail / Rifle',
+                witnesses: ['archibald', 'silas'],
+                videos: {
+                    archibald: 'https://youtu.be/69AeokpPOtk',
+                    silas: 'https://youtu.be/iqb0QFep_nI'
+                }
+            },
+            {
+                id: 'debt',
+                label: 'Debt Letter / Money / Debt',
+                witnesses: ['archibald', 'maple'],
+                videos: {
+                    archibald: 'https://youtu.be/Psz0jko-wvI',
+                    maple: 'https://youtu.be/Gl4KzsJH2Z8'
+                }
+            },
+            {
+                id: 'retreat',
+                label: 'Retreat / 26th July / 27th July',
+                witnesses: ['silas', 'evelyn'],
+                videos: {
+                    silas: 'https://youtu.be/aIJqSCZx-SM',
+                    evelyn: 'https://youtu.be/1YH2xuFDEdI'
+                }
+            },
+            {
+                id: 'hunting',
+                label: 'Hunting Party / Photo / Brother',
+                witnesses: ['silas', 'evelyn'],
+                videos: {
+                    silas: 'https://youtu.be/IlTx4RukAv4?si=vLypXPtHeDuxlEmg',
+                    evelyn: 'https://youtu.be/B9p5WBDmbMI'
+                }
+            },
+            {
+                id: 'memoirs',
+                label: 'Memoirs / Maiwand / War Documents',
+                witnesses: ['maple', 'evelyn'],
+                videos: {
+                    maple: 'https://youtu.be/i2UXeBOx8gg',
+                    evelyn: 'https://youtu.be/y8usSB_xaQE'
+                }
+            }
+        ];
+
+        let selectedReviewTopicId = null;
+        const reviewReferralIndexes = {};
+        const reviewGenericIndexes = {};
+
+        function renderReviewPage() {
+            const keywordGrid = document.getElementById('reviewKeywordGrid');
+            const witnessGrid = document.getElementById('reviewWitnessGrid');
+            if (!keywordGrid || !witnessGrid) return;
+
+            keywordGrid.innerHTML = '';
+            reviewEvidenceTopics.forEach(topic => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.dataset.topicId = topic.id;
+                btn.className = `evidence-keyword-btn ${selectedReviewTopicId === topic.id ? 'selected' : ''}`;
+                btn.innerHTML = `
+                    <span>${topic.label}</span>
+                    <i class="fa-solid fa-circle-check keyword-check shrink-0"></i>
+                `;
+                btn.onclick = () => selectReviewTopic(topic.id);
+                keywordGrid.appendChild(btn);
+            });
+
+            witnessGrid.innerHTML = '';
+            Object.values(reviewWitnesses).forEach(witness => {
+                const card = document.createElement('button');
+                card.type = 'button';
+                card.className = 'review-witness-card flex flex-col items-center p-2.5 rounded-lg text-center';
+                card.onclick = () => askReviewWitness(witness.id);
+                card.innerHTML = `
+                    <div class="masking-tape"></div>
+                    <div class="relative mb-1.5 mt-1">
+                        <img src="${witness.avatar}" alt="${witness.name}" class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-amber-900/40 object-cover grayscale transition duration-200 shadow-sm">
+                    </div>
+                    <span class="text-[11px] font-bold text-amber-950 cinzel leading-tight">${witness.shortName}</span>
+                `;
+                witnessGrid.appendChild(card);
+            });
+        }
+
+        function selectReviewTopic(topicId) {
+            selectedReviewTopicId = topicId;
+            const topic = reviewEvidenceTopics.find(t => t.id === topicId);
+
+            document.querySelectorAll('#reviewKeywordGrid .evidence-keyword-btn').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.topicId === topicId);
+            });
+
+            const badge = document.getElementById('selectedEvidenceBadge');
+            if (badge && topic) {
+                badge.textContent = topic.label;
+                badge.classList.remove('text-amber-900/80', 'bg-amber-100/80');
+                badge.classList.add('text-blue-950', 'bg-blue-100', 'font-bold');
+            }
+
+            const hint = document.getElementById('witnessPromptHint');
+            if (hint) hint.style.opacity = '0';
+        }
+
+        function askReviewWitness(witnessId) {
+            if (!selectedReviewTopicId) {
+                const hint = document.getElementById('witnessPromptHint');
+                const box = document.getElementById('evidenceSelectorBox');
+                if (hint) hint.style.opacity = '1';
+                if (box) {
+                    box.classList.remove('shake-anim');
+                    void box.offsetWidth;
+                    box.classList.add('shake-anim');
+                }
+                return;
+            }
+
+            const witness = reviewWitnesses[witnessId];
+            const topic = reviewEvidenceTopics.find(t => t.id === selectedReviewTopicId);
+            if (!witness || !topic) return;
+
+            let videoUrl = topic.videos[witnessId];
+
+            if (!videoUrl) {
+                // Witness does not have direct testimony: play their referral video (cycling through relevant witnesses)
+                const refKey = `${witnessId}_${topic.id}`;
+                const refIdx = reviewReferralIndexes[refKey] || 0;
+                const targetId = topic.witnesses[refIdx % topic.witnesses.length];
+                reviewReferralIndexes[refKey] = refIdx + 1;
+                videoUrl = reviewReferralVideos[witnessId]?.[targetId];
+            }
+
+            if (!videoUrl) {
+                // Fallback to witness's generic "I don't know anything about that" video
+                const genIdx = reviewGenericIndexes[witnessId] || 0;
+                videoUrl = witness.genericVideos[genIdx % witness.genericVideos.length];
+                reviewGenericIndexes[witnessId] = genIdx + 1;
+            }
+
+            openVideoModal(`${witness.name} — ${topic.label}`, videoUrl);
+        }
+
+        window.addEventListener('DOMContentLoaded', renderReviewPage);
 
         // Advanced Page Turning Logic
         let currentNotebookPage = 1;
